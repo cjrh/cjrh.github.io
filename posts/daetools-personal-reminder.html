@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Your Name">
-    <title>First post on Github/Nikola | Demo Site</title>
+    <title>daetools personal reminder | Demo Site</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -51,7 +51,7 @@
             
                 
     <li>
-    <a href="first-post-on-githubnikola.rst" id="sourcelink">Source</a>
+    <a href="daetools-personal-reminder.rst" id="sourcelink">Source</a>
     </li>
 
         </ul>
@@ -67,22 +67,33 @@
             
     <div class="postbox">
     
-    <h1>First post on Github/Nikola</h1>
+    <h1>daetools personal reminder</h1>
 
     <hr>
     <small>
-        Posted: <time class="published" datetime="2013-10-26T13:25:43">2013-10-26 13:25</time>
+        Posted: <time class="published" datetime="2012-10-26T14:34:48">2012-10-26 14:34</time>
         
 
         
 
     </small>
     <hr>
-    <p>This is my first post on my shiny new Github Pages blog.</p>
+    <p>Note: in daetools you can't do this:</p>
+<pre class="code python literal-block">
+<span class="n">var</span><span class="o">.</span><span class="n">AssignValue</span><span class="p">()</span>
+</pre>
+<p>if var is a differential variable.  You must create an equation for it that results in it being constant, e.g.</p>
+<pre class="code python literal-block">
+<span class="n">eq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">CreateEquation</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">)</span>
+<span class="n">eq</span><span class="o">.</span><span class="n">Residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span><span class="p">()</span> <span class="o">-</span> <span class="n">Constant</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">unit</span><span class="p">)</span>
+</pre>
     
     <ul class="pager">
         <li class="previous">
-            <a href="easy-spyder-ide-hacking-setup.html">← Previous post</a>
+            <a href="futureproofing.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="cython-helper-generator.html">Next post →</a>
         </li>
     </ul>
 
@@ -91,9 +102,9 @@
         <div id="disqus_thread"></div>
         <script type="text/javascript">
         var disqus_shortname ="nikolademo";
-            var disqus_url="http://getnikola.com/posts/first-post-on-githubnikola.html";
-        var disqus_title="First post on Github/Nikola";
-        var disqus_identifier="cache/posts/first-post-on-githubnikola.html";
+            var disqus_url="http://getnikola.com/posts/daetools-personal-reminder.html";
+        var disqus_title="daetools personal reminder";
+        var disqus_identifier="cache/posts/daetools-personal-reminder.html";
         var disqus_config = function () {
             this.language = "en";
         };

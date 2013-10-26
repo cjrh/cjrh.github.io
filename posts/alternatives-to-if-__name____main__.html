@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Your Name">
-    <title>First post on Github/Nikola | Demo Site</title>
+    <title>Alternatives to if __name__=='__main__': | Demo Site</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -51,7 +51,7 @@
             
                 
     <li>
-    <a href="first-post-on-githubnikola.rst" id="sourcelink">Source</a>
+    <a href="alternatives-to-if-__name____main__.rst" id="sourcelink">Source</a>
     </li>
 
         </ul>
@@ -67,22 +67,45 @@
             
     <div class="postbox">
     
-    <h1>First post on Github/Nikola</h1>
+    <h1>Alternatives to if __name__=='__main__':</h1>
 
     <hr>
     <small>
-        Posted: <time class="published" datetime="2013-10-26T13:25:43">2013-10-26 13:25</time>
+        Posted: <time class="published" datetime="2012-12-01T17:59:00">2012-12-01 17:59</time>
         
 
         
 
     </small>
     <hr>
-    <p>This is my first post on my shiny new Github Pages blog.</p>
+    <p>So I find this irritating:</p>
+<pre class="code python literal-block">
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Hello'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre>
+<p>I played around a bit and ended up with something that lets one do this:
+from mainfunc import main</p>
+<pre class="code python literal-block">
+<span class="nd">@main</span>
+<span class="k">def</span> <span class="nf">runme</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'runme'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">norunme</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'norunme'</span><span class="p">)</span>
+</pre>
+<p>When this script is run, "runme" is printed, but not "norunme".  Anyone guess
+what mainfunc.main() looks like? (By the way, my implementation doesn't work
+properly, but it's just a thought experiment for now).</p>
     
     <ul class="pager">
         <li class="previous">
-            <a href="easy-spyder-ide-hacking-setup.html">← Previous post</a>
+            <a href="cython-helper-generator.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="easy-spyder-ide-hacking-setup.html">Next post →</a>
         </li>
     </ul>
 
@@ -91,9 +114,9 @@
         <div id="disqus_thread"></div>
         <script type="text/javascript">
         var disqus_shortname ="nikolademo";
-            var disqus_url="http://getnikola.com/posts/first-post-on-githubnikola.html";
-        var disqus_title="First post on Github/Nikola";
-        var disqus_identifier="cache/posts/first-post-on-githubnikola.html";
+            var disqus_url="http://getnikola.com/posts/alternatives-to-if-__name____main__.html";
+        var disqus_title="Alternatives to if __name__=='__main__':";
+        var disqus_identifier="cache/posts/alternatives-to-if-__name____main__.html";
         var disqus_config = function () {
             this.language = "en";
         };

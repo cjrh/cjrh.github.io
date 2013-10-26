@@ -5,22 +5,23 @@
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="This is a demo site for Nikola.">
     <meta name="author" content="Your Name">
-    <title>Demo Site | Demo Site</title>
+    <title>Anaconda Python, getting the Matplotlib widget to work in the Qt designer | Demo Site</title>
     
-            <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
     
-    
+
+
+
     
 </head>
 <body>
@@ -34,14 +35,14 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href=".">Demo Site</a>
+        <a class="navbar-brand" href="../">Demo Site</a>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
             
-                <li><a href="archive.html">Archives</a>
-                </li><li><a href="categories/index.html">Tags</a>
-                </li><li><a href="rss.xml">RSS</a>
+                <li><a href="../archive.html">Archives</a>
+                </li><li><a href="../categories/index.html">Tags</a>
+                </li><li><a href="../rss.xml">RSS</a>
 
         </li></ul>
 
@@ -49,6 +50,10 @@
             
             
                 
+    <li>
+    <a href="anaconda-python-getting-the-matplotlib-widget-to-work-in-the-qt-designer.rst" id="sourcelink">Source</a>
+    </li>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -60,198 +65,20 @@
         <!--Body content-->
         <div class="row">
             
-        <div class="postbox">
-        <h1><a href="posts/first-post-on-githubnikola.html">First post on Github/Nikola</a>
-        <small>  
-             Posted: <time class="published" datetime="2013-10-26T13:25:43">2013-10-26 13:25</time>
-        </small></h1>
-        <hr>
-        <p>This is my first post on my shiny new Github Pages blog.</p>
-            
+    <div class="postbox">
+    
+    <h1>Anaconda Python, getting the Matplotlib widget to work in the Qt designer</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2012-05-28T16:57:34">2012-05-28 16:57</time>
         
-    <p>
-        <a href="posts/first-post-on-githubnikola.html#disqus_thread" data-disqus-identifier="cache/posts/first-post-on-githubnikola.html">Comments</a>
 
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/easy-spyder-ide-hacking-setup.html">Easy Spyder IDE hacking setup</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-12-20T17:32:00">2012-12-20 17:32</time>
-        </small></h1>
-        <hr>
-        <p>I am using pythonxy. I quite like the Spyder IDE that is provided with the
-distro. If you want to set things up so that you can easily hack on Spyder
-while keeping your python path setup sane, it is quite easy:</p>
-<ol class="arabic simple">
-<li>Delete <cite>site-packagesspyderlib</cite></li>
-<li>Delete <cite>site-packagesspyderplugins</cite></li>
-<li>Create <cite>site-packagesspyderlib.pth</cite> with contents:
-<cite>D:pathtospyderlibhgrepo</cite></li>
-</ol>
-<p>This setup makes it easy to hack on Spyder, bugfixes, enhancements,
-etc. and pull new versions of spyder while still working easily from your main
-python (e.g. pythonxy) distro.</p>
-            
         
-    <p>
-        <a href="posts/easy-spyder-ide-hacking-setup.html#disqus_thread" data-disqus-identifier="cache/posts/easy-spyder-ide-hacking-setup.html">Comments</a>
 
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/alternatives-to-if-__name____main__.html">Alternatives to if __name__=='__main__':</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-12-01T17:59:00">2012-12-01 17:59</time>
-        </small></h1>
-        <hr>
-        <p>So I find this irritating:</p>
-<pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'Hello'</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</pre>
-<p>I played around a bit and ended up with something that lets one do this:
-from mainfunc import main</p>
-<pre class="code python literal-block">
-<span class="nd">@main</span>
-<span class="k">def</span> <span class="nf">runme</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'runme'</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">norunme</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'norunme'</span><span class="p">)</span>
-</pre>
-<p>When this script is run, "runme" is printed, but not "norunme".  Anyone guess
-what mainfunc.main() looks like? (By the way, my implementation doesn't work
-properly, but it's just a thought experiment for now).</p>
-            
-        
-    <p>
-        <a href="posts/alternatives-to-if-__name____main__.html#disqus_thread" data-disqus-identifier="cache/posts/alternatives-to-if-__name____main__.html">Comments</a>
-
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/cython-helper-generator.html">Cython helper generator</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-11-27T16:46:49">2012-11-27 16:46</time>
-        </small></h1>
-        <hr>
-        <p>I call this makeext.py.  You call it like so:</p>
-<pre class="code literal-block">
-makeext.py helloworld.pyx module1.pyx module2.pyx
-</pre>
-<p>or</p>
-<pre class="code literal-block">
-makeext.py *.pyx
-</pre>
-<p>and it converts all the given pyx files into pyd binary modules.  Basically, no
-setup.py intermediate is required. This is great for small utility-type
-applications, but will obviously not be suitable for more complex and
-specialized builds.</p>
-<p>The code:</p>
-<pre class="code python literal-block">
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span>
-
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'You must supply one or more .pyx filenames.'</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'*.pyx'</span><span class="p">:</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">'.'</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="n">extensions</span> <span class="o">=</span> <span class="p">[(</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'.pyx'</span><span class="p">]</span>
-
-<span class="c"># No pyx files given.</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'No .pyx filenames were supplied.  Exiting.'</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-
-<span class="c"># Checking for missing files</span>
-<span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">extensions</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span>
-<span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'One or more given files were missing:'</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">missing</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">'    {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">'Aborting.'</span>
-
-<span class="c"># Restore distutils command line args</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">'build_ext'</span><span class="p">,</span> <span class="s">'--inplace'</span><span class="p">]</span>
-
-<span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
-<span class="kn">from</span> <span class="nn">distutils.extension</span> <span class="kn">import</span> <span class="n">Extension</span>
-<span class="kn">from</span> <span class="nn">Cython.Distutils</span> <span class="kn">import</span> <span class="n">build_ext</span>
-
-<span class="n">setup</span><span class="p">(</span>
-    <span class="n">cmdclass</span> <span class="o">=</span> <span class="p">{</span><span class="s">'build_ext'</span><span class="p">:</span> <span class="n">build_ext</span><span class="p">},</span>
-    <span class="n">ext_modules</span> <span class="o">=</span> <span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="n">f</span><span class="p">])</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">]</span>
-<span class="p">)</span>
-
-<span class="c"># Cleanup: delete intermediate C files.</span>
-<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="s">'.c'</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="s">'.c'</span><span class="p">)</span>
-</pre>
-            
-        
-    <p>
-        <a href="posts/cython-helper-generator.html#disqus_thread" data-disqus-identifier="cache/posts/cython-helper-generator.html">Comments</a>
-
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/daetools-personal-reminder.html">daetools personal reminder</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-10-26T14:34:48">2012-10-26 14:34</time>
-        </small></h1>
-        <hr>
-        <p>Note: in daetools you can't do this:</p>
-<pre class="code python literal-block">
-<span class="n">var</span><span class="o">.</span><span class="n">AssignValue</span><span class="p">()</span>
-</pre>
-<p>if var is a differential variable.  You must create an equation for it that results in it being constant, e.g.</p>
-<pre class="code python literal-block">
-<span class="n">eq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">CreateEquation</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">)</span>
-<span class="n">eq</span><span class="o">.</span><span class="n">Residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span><span class="p">()</span> <span class="o">-</span> <span class="n">Constant</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">unit</span><span class="p">)</span>
-</pre>
-            
-        
-    <p>
-        <a href="posts/daetools-personal-reminder.html#disqus_thread" data-disqus-identifier="cache/posts/daetools-personal-reminder.html">Comments</a>
-
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/futureproofing.html">Futureproofing</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-08-27T15:52:38">2012-08-27 15:52</time>
-        </small></h1>
-        <hr>
-        <p>In preparation for transition from Python 2.7 to Python 3.x, it is a really
-good idea to set up your editor so that the template for new python modules
-carries this line at the top by default:</p>
-<pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
-</pre>
-            
-        
-    <p>
-        <a href="posts/futureproofing.html#disqus_thread" data-disqus-identifier="cache/posts/futureproofing.html">Comments</a>
-
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/anaconda-python-getting-the-matplotlib-widget-to-work-in-the-qt-designer.html">Anaconda Python, getting the Matplotlib widget to work in the Qt designer</a>
-        <small>  
-             Posted: <time class="published" datetime="2012-05-28T16:57:34">2012-05-28 16:57</time>
-        </small></h1>
-        <hr>
-        <p>I want to capture my recent experience trying to get the Matplotlib widget to
+    </small>
+    <hr>
+    <p>I want to capture my recent experience trying to get the Matplotlib widget to
 work in Qt designer using Anaconda CE / Python 2.7 / x64 (Windows edition).</p>
 <p>Note that the support files come from the Python(x,y) project.</p>
 <ol class="arabic">
@@ -470,26 +297,37 @@ that the line declaring the backend looks like</p>
 <pre class="code python literal-block">
 <span class="n">backend</span><span class="o">.</span><span class="n">qt4</span> <span class="p">:</span> <span class="n">PyQt4</span>        <span class="c"># PyQt4 | PySide</span>
 </pre>
-            
-        
-    <p>
-        <a href="posts/anaconda-python-getting-the-matplotlib-widget-to-work-in-the-qt-designer.html#disqus_thread" data-disqus-identifier="cache/posts/anaconda-python-getting-the-matplotlib-widget-to-work-in-the-qt-designer.html">Comments</a>
-
-
-        </p></div>
     
-<div>
-<ul class="pager">
-</ul>
-</div>
+    <ul class="pager">
+        <li class="next">
+            <a href="futureproofing.html">Next post →</a>
+        </li>
+    </ul>
+
+        
+        
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="nikolademo";
+            var disqus_url="http://getnikola.com/posts/anaconda-python-getting-the-matplotlib-widget-to-work-in-the-qt-designer.html";
+        var disqus_title="Anaconda Python, getting the Matplotlib widget to work in the Qt designer";
+        var disqus_identifier="cache/posts/anaconda-python-getting-the-matplotlib-widget-to-work-in-the-qt-designer.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
     
-        
-       <script type="text/javascript">var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.type="text/javascript";a.src="http://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("HEAD")[0]||document.getElementsByTagName("BODY")[0]).appendChild(a)}());</script>
 
-
-	
-
+    </div>
 
         </div>
         <!--End of body content-->
@@ -501,9 +339,9 @@ that the line declaring the backend looks like</p>
 </div>
 
 
-            <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+            <script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
 
 
 	

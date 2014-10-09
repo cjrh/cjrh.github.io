@@ -2,13 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- <meta http-equiv="refresh" content="3" > -->
     <title>cjrh blog</title>
     <link href='http://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="base.css">
+    <link href='http://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <script>
+        window.onresize = displayWindowSize;
+        window.onload = displayWindowSize;
+
+        function displayWindowSize() {
+            myWidth = window.innerWidth;
+            myHeight = window.innerHeight;
+            // your size calculation code here
+            document.getElementById("dimensions").innerHTML = myWidth + "x" + myHeight;
+        };
+    </script>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li id="dimensions">test</li>
+            <li>Date</li>
+            <li>Time</li>
+        </ul>
+    </nav>
     <div id="banner">
         <h1>In development.</h1>
     </div>
+    <!-- <script> -->
+    <!--     window.onresize = displayWindowSize; -->
+    <!--     window.onload = displayWindowSize; -->
+    <!--     function displayWindowSize() { -->
+    <!--         // your size calculation code here -->
+    <!--         document.getElementById("dimensions").innerHTML = myWidth + "x" + myHeight; -->
+    <!--     }; -->
+    <!--  </script> -->
 </body>
 </html>

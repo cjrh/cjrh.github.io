@@ -1,0 +1,67 @@
+@import "compass/css3/border-radius"
+@import "compass/css3/inline-block"
+@import "compass/css3/text-shadow"
+@import "compass/css3/images"
+@import "compass/css3/box-shadow"
+
+
+$nav-text-shadow: 2px
+$nav-fc: #eee
+$nav-bg: #555
+$nav-fs: 0.9em
+
+$body-bc: #fff
+
+body
+    margin: auto
+    height: 100%
+    background-repeat: no-repeat
+    background-attachment: fixed
+    +background-image(linear-gradient(to bottom, $body-bc, #112))
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
+    body
+        +background-image(linear-gradient(to bottom, #333, #112))
+
+h1
+    font-family: Schoolbell, serif
+
+nav
+    font-family: Rajdhani, serif
+    font-size: $nav-fs
+    background: $nav-bg
+    +box-shadow(-2px -2px 2px 0px #222 inset, 2px 2px 2px 0px #ddd inset)
+    +border-radius(5px)
+    ul
+        margin: 0
+        padding: 5px
+        list-style-type: none
+        li
+            text-align: center
+            width: 50px
+            color: $nav-fc
+            +text-shadow(#000 $nav-text-shadow $nav-text-shadow 4px)
+            +inline-block()
+
+#banner
+    width: 300px
+    margin: 50px auto
+    background-color: #99CC8F
+    box-shadow: 2px 2px 20px #000000
+    border: 2px solid
+    +border-radius(25px)
+    padding: 12px 30px 15px 30px
+    text-align: center
+
+@media screen and (max-width: 400px)
+    h1
+        font-size: 1.2em
+    nav ul
+        padding: 2px
+    #banner
+        margin: 5% auto
+        width: 150px
+        padding: 5px
+        border-radius: 10px
+
+

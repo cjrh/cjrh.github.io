@@ -1,0 +1,30 @@
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="The-combination-of-OS-X,-zsh,-vim,-and-Anaconda-Python">The combination of OS X, zsh, vim, and Anaconda Python<a class="anchor-link" href="#The-combination-of-OS-X,-zsh,-vim,-and-Anaconda-Python">&#182;</a></h1>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have for some time now been writing Python code using the four tools in the heading; however, something has been bugging me. When launching vim from a terminal (actually iTerm2), it would find and use the system Python in <code>usr/local/bin</code> rather than the Anaconda Python I had installed in my home folder, but added to my shell path.  </p>
+<p>This did not happen with the <code>bash</code> shell, but that didn&#39;t occur to me at the time. <a href="https://github.com/sstephenson/rbenv/wiki/Unix-shell-initialization">This excellent guide</a> explains how different dot files are loaded.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It turns out that zsh installs <code>/etc/zshenv</code> and this file uses <em>path_handler</em> to prepend system paths to <code>$PATH</code>. <code>~/.zprofile</code> is sourced <em>before</em> this happens, so no matter what you put in your custom <code>zprofile</code>, it will be clobbered by system paths.</p>
+</div>
+</div>
+</div>

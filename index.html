@@ -36,10 +36,12 @@
         window.onload = loadContent;
 
         function loadContent() {
-            var element = document.getElementById("content");
-            element.innerHTML=loadPage("posts/First post.html");
-            // You have to render the dynamically-loaded content manually.
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
+            var post = getFromUrl("post");
+            if (post === "") {
+                showPost("First post");
+            } else {
+                showPost(post);
+            };
         };
 
         function loadPage(href)
@@ -49,9 +51,44 @@
             xmlhttp.send();
             return xmlhttp.responseText;
         };
+
+        function showPost(name) {
+            var element = document.getElementById("content");
+            var postref = "posts/" + name + ".html";
+            console.log(postref);
+            element.innerHTML=loadPage(postref);
+            // You have to render the dynamically-loaded content manually.
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
+            showlocation("pathname");
+        }
+
+        function getFromUrl(val) {
+            var result = "",
+                tmp = [];
+            location.search
+            //.replace ( "?", "" )
+            // this is better, there might be a question mark inside
+            .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+            });
+            return result;
+        };
+
+        function showlocation(element_name) {
+            var element = document.getElementById(element_name);
+            element.innerHTML = getFromUrl("post");
+            // Append an item
+            var newElement = document.createElement('div');
+            newElement.innerHTML = window.location.search.replace("?", "");
+            element.appendChild(newElement);
+        };
     </script>
 </head>
 <body>
+    <div id="pathname">test</div>
     <div id="banner">
         <div class="ttext">Python, Numbers, Music, Art</div>
     </div>

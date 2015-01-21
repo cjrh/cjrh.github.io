@@ -37,12 +37,28 @@
 
         function loadContent() {
             var post = getFromUrl("post");
+            console.log("loadContent, post: "+post);
             if (post === "") {
                 // TODO Actually this should be the latest post.
-                showPost("First post");
+                latest = JSON.parse(loadPage("posts/latest.json"));
+                console.log(latest);
+                showPost(latest.post);
+                // showPost("First post");
             } else {
                 showPost(post);
             };
+        };
+
+        function set_href(id, value) {
+            var a = document.getElementById(id);
+            a.href = value;
+            a.innerHTML = value;
+        };
+
+        function setPostLinks(id, post) {
+            var a = document.getElementById(id);
+            a.href = "?post=" + post;
+            a.innerHTML = post;
         };
 
         function loadPage(href)
@@ -60,10 +76,18 @@
             element.innerHTML=loadPage(postref);
             // You have to render the dynamically-loaded content manually.
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
-            showlocation("pathname");
+            console.log( "posts/" + name + ".json");
+            console.log(loadPage("posts/" + name + ".json"));
+            var metadata = JSON.parse(loadPage("posts/" + name + ".json"));
+            console.log("boing");
+            console.log("metadata.next_post: " + metadata.next_post);
+            console.log("metadata.previous_post: " + metadata.previous_post);
+            setPostLinks("nexta", metadata.next_post);
+            setPostLinks("preva", metadata.previous_post);
         }
 
         function getFromUrl(val) {
+            console.log("getFromURL: " + val);
             var result = "",
                 tmp = [];
             location.search
@@ -78,29 +102,29 @@
             return result;
         };
 
-        function showlocation(element_name) {
-            var element = document.getElementById(element_name);
-            element.innerHTML = getFromUrl("post");
-            // Append an item
-            var newElement = document.createElement('div');
-            newElement.innerHTML = window.location.search.replace("?", "");
-            element.appendChild(newElement);
-        };
     </script>
 </head>
 <body>
-    <div id="pathname">test</div>
     <div id="banner">
         <div class="ttext">Python, Numbers, Music, Art</div>
     </div>
-    <aside>
-        <span>Archive</span>
-        <span>Twitter</span>
-        <span>Github</span>
-        <span>Bitbucket</span>
-        <span>LinkedIn</span>
-        <span>Resume</span>
-    </aside>
-    <div id="content"></div>
+    <div id="main">
+        <aside>
+            <ul>
+                <li>Archive</li>
+                <li>Twitter</li>
+                <li>Github</li>
+                <li>Bitbucket</li>
+                <li>LinkedIn</li>
+                <li>Resume</li>
+                <li class="break"></li>
+            </ul>
+        </aside>
+        <div id="content-container">
+            <div class="left"><p>Previous: <a id="preva"></a></p></div>
+            <div class="right"><p>Next: <a id="nexta"></a></p></div>
+            <div id="content"></div>
+        </div>
+    </div>
 </body>
 </html>

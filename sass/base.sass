@@ -4,6 +4,7 @@
 @import "compass/css3/images"
 @import "compass/css3/box-shadow"
 @import "compass/css3/transform"
+@import "compass/css3/columns"
 
 // @import url(http://fonts.googleapis.com/css?family=Open+Sans)
 // @import url(http://fonts.googleapis.com/css?family=Schoolbell)
@@ -30,13 +31,6 @@ body
     position: relative
     font-size: 0.8em
     font-family: Rajdhani, sans-serif
-    // font-family: Michroma, sans-serif
-    // font-family: Open Sans, sans-serif
-    // +single-text-shadow(2px, 2px, 4px, 0, #000)
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
-    body
-        +background-image(linear-gradient(to bottom, $body-bc1, $body-bc2))
 
 h1, h2, h3, h4, h5, h6
     font-family: 'Medula One', cursive
@@ -59,55 +53,53 @@ h2
     line-height: 23px
     margin: 0 0 23px 0
 
+h1
+    +column-span(all)
+
 p
     font-family: 'Droid Serif', serif
     font-size: 15px
     line-height: 23px
     margin: 0 0 23px 0
+    text-align: justify
 
-
-nav
-    margin: 0.5em
-    font-family: Michroma, sans-serif
-    font-size: $nav-fs
-    background: $nav-bg
-    +box-shadow(-2px -2px 2px 0px #222 inset, 2px 2px 2px 0px #ddd inset)
-    +border-radius(5px)
-    ul
-        margin: 0
-        padding: 5px
-        list-style-type: none
-        li
-            text-align: center
-            width: 8em
-            color: $nav-fc
-            +text-shadow(#000 $nav-text-shadow $nav-text-shadow 4px)
-            +inline-block()
+div#main
+    float: left
+    width: 100%
 
 aside
+    clear: left
     float: left
-    width: 100px
-    margin-left: 20px
+    display: inline
+    width: 10%
     font-family: Oswald, sans-serif
     font-size: 1.4em
-    span
+    li
         color: #332F00
         display: block
+        text-align: right
+
+#content-container
+    float: left
+    display: inline
+    width: 80%
+    margin: 0 auto 0 3em
+
 
 div#content
-    // float: right
-    position: relative
-    // left: 210px
-    width: 60%
-    margin: 0 auto 0 auto
+    clear: left
+    float: right
+    +column-width(30em)  // 30-35 optimal
+
+.left
+    float: left
+
+.right
+    float: right
 
 #banner
     width: 100%
-    margin: 1em auto 1em auto
-    // background-color: #99CC8F
-    // border-top: 2px solid #eee
-    // border-bottom: 2px solid #eee
-    // +border-radius(0)
+    margin: 0.5em auto 0.5em auto
     text-align: center
     overflow: hidden
     font-family: Yellowtail, cursive
@@ -146,23 +138,26 @@ svg
 .prompt
     display: none
 
+
 @media screen and (max-width: 760px)
     body
         font-size: 0.8em
     #banner
         font-size: 45px
-        margin: 0.5em auto 0.5em auto
+        margin: 0em auto 0em auto
     aside
-        width: 100%
+        clear: left
         float: none
         font-size: 1.3em
-        text-align: center
-        margin-bottom: 1em
-        span
-            padding-right: 20px
-            display: inline
-    div#content
-        width: 80%
+        text-align: justify
+        li
+            display: inline-block
+        ul:after
+            content: ''
+            display: inline-block
+            width: 100%
+            border-style: solid
+            border-top: thick double #ff0000
 
 
 @media screen and (max-width: 400px)

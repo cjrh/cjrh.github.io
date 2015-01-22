@@ -71,7 +71,7 @@ aside
     clear: left
     float: left
     display: inline
-    width: 10%
+    width: 120px
     font-family: Oswald, sans-serif
     font-size: 1.4em
     li
@@ -82,14 +82,18 @@ aside
 #content-container
     float: left
     display: inline
-    width: 80%
+    width: 580px
     margin: 0 auto 0 3em
 
 
 div#content
     clear: left
     float: right
-    +column-width(30em)  // 30-35 optimal
+    // +column-width(20em)  // 30-35 optimal
+    // +column-gap(50px)
+
+.left p, .right p
+    font-size: 0.9em
 
 .left
     float: left
@@ -99,15 +103,18 @@ div#content
 
 #banner
     width: 100%
-    margin: 0.5em auto 0.5em auto
+    margin: 0 auto 2em auto
     text-align: center
     overflow: hidden
     font-family: Yellowtail, cursive
-    font-size: 5em
+    // background-color: rgba(255, 20, 20, 0.2)
     // background: rgba(20,20,20,0.6)
     color: #000
     .ttext
+        font-size: 5em
         vertical-align: center
+    .minstrel
+        font-size: 2em
     #leadin
         font-family: Michroma, serif
         font-style: italic
@@ -143,8 +150,11 @@ svg
     body
         font-size: 0.8em
     #banner
-        font-size: 45px
+        font-size: 0.8em
         margin: 0em auto 0em auto
+        // border-style: solid
+    #content-container
+        width: 80%
     aside
         clear: left
         float: none
@@ -156,8 +166,6 @@ svg
             content: ''
             display: inline-block
             width: 100%
-            border-style: solid
-            border-top: thick double #ff0000
 
 
 @media screen and (max-width: 400px)

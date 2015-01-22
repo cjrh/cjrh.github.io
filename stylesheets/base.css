@@ -71,7 +71,7 @@ aside {
   clear: left;
   float: left;
   display: inline;
-  width: 10%;
+  width: 120px;
   font-family: Oswald, sans-serif;
   font-size: 1.4em;
 }
@@ -86,7 +86,7 @@ aside li {
 #content-container {
   float: left;
   display: inline;
-  width: 80%;
+  width: 580px;
   margin: 0 auto 0 3em;
 }
 
@@ -94,36 +94,42 @@ aside li {
 div#content {
   clear: left;
   float: right;
-  -moz-column-width: 30em;
-  -webkit-column-width: 30em;
-  column-width: 30em;
 }
 
-/* line 94, ../sass/base.sass */
+/* line 95, ../sass/base.sass */
+.left p, .right p {
+  font-size: 0.9em;
+}
+
+/* line 98, ../sass/base.sass */
 .left {
   float: left;
 }
 
-/* line 97, ../sass/base.sass */
+/* line 101, ../sass/base.sass */
 .right {
   float: right;
 }
 
-/* line 100, ../sass/base.sass */
+/* line 104, ../sass/base.sass */
 #banner {
   width: 100%;
-  margin: 0.5em auto 0.5em auto;
+  margin: 0 auto 2em auto;
   text-align: center;
   overflow: hidden;
   font-family: Yellowtail, cursive;
-  font-size: 5em;
   color: #000;
 }
-/* line 109, ../sass/base.sass */
+/* line 113, ../sass/base.sass */
 #banner .ttext {
+  font-size: 5em;
   vertical-align: center;
 }
-/* line 111, ../sass/base.sass */
+/* line 116, ../sass/base.sass */
+#banner .minstrel {
+  font-size: 2em;
+}
+/* line 118, ../sass/base.sass */
 #banner #leadin {
   font-family: Michroma, serif;
   font-style: italic;
@@ -137,7 +143,7 @@ div#content {
   text-align: center;
 }
 
-/* line 127, ../sass/base.sass */
+/* line 134, ../sass/base.sass */
 svg {
   background: #FFFFFF;
   -moz-border-radius: 20px;
@@ -149,75 +155,78 @@ svg {
   height: 100%;
 }
 
-/* line 138, ../sass/base.sass */
+/* line 145, ../sass/base.sass */
 .prompt {
   display: none;
 }
 
 @media screen and (max-width: 760px) {
-  /* line 143, ../sass/base.sass */
+  /* line 150, ../sass/base.sass */
   body {
     font-size: 0.8em;
   }
 
-  /* line 145, ../sass/base.sass */
+  /* line 152, ../sass/base.sass */
   #banner {
-    font-size: 45px;
+    font-size: 0.8em;
     margin: 0em auto 0em auto;
   }
 
-  /* line 148, ../sass/base.sass */
+  /* line 156, ../sass/base.sass */
+  #content-container {
+    width: 80%;
+  }
+
+  /* line 158, ../sass/base.sass */
   aside {
     clear: left;
     float: none;
     font-size: 1.3em;
     text-align: justify;
   }
-  /* line 153, ../sass/base.sass */
+  /* line 163, ../sass/base.sass */
   aside li {
     display: inline-block;
   }
-  /* line 155, ../sass/base.sass */
+  /* line 165, ../sass/base.sass */
   aside ul:after {
     content: "";
     display: inline-block;
     width: 100%;
-    border-style: solid;
-    border-top: thick double #ff0000;
   }
 }
 @media screen and (max-width: 400px) {
-  /* line 164, ../sass/base.sass */
+  /* line 172, ../sass/base.sass */
   body {
     font-size: 0.7em;
   }
 
-  /* line 166, ../sass/base.sass */
+  /* line 174, ../sass/base.sass */
   nav ul {
     padding: 2px;
   }
 
-  /* line 168, ../sass/base.sass */
+  /* line 176, ../sass/base.sass */
   #banner {
     margin: 10px auto;
     width: 90%;
   }
-  /* line 171, ../sass/base.sass */
+  /* line 179, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 173, ../sass/base.sass */
+  /* line 181, ../sass/base.sass */
   aside {
     margin: 0 10px 20px 10px;
   }
 
-  /* line 176, ../sass/base.sass */
+  /* line 184, ../sass/base.sass */
   div#content {
     width: 95%;
   }
 
-  /* line 179, ../sass/base.sass */
+  /* line 187, ../sass/base.sass */
   nav {
     display: none;
   }

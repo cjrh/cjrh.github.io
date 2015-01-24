@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Oswald:700|Droid+Serif:400,700italic);
 @import url(http://fonts.googleapis.com/css?family=Yellowtail);
-/* line 25, ../sass/base.sass */
+/* line 20, ../sass/base.sass */
 body {
   margin: auto;
   height: 100%;
@@ -17,14 +17,14 @@ body {
   font-family: Rajdhani, sans-serif;
 }
 
-/* line 35, ../sass/base.sass */
+/* line 30, ../sass/base.sass */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Medula One", cursive;
   text-shadow: none;
   color: #000433;
 }
 
-/* line 40, ../sass/base.sass */
+/* line 35, ../sass/base.sass */
 h1 {
   font-family: "Oswald", sans-serif;
   font-weight: 700;
@@ -34,7 +34,7 @@ h1 {
   margin: 0 0 23px 0;
 }
 
-/* line 48, ../sass/base.sass */
+/* line 43, ../sass/base.sass */
 h2 {
   font-family: "Droid Serif", serif;
   font-weight: 400;
@@ -44,14 +44,14 @@ h2 {
   margin: 0 0 23px 0;
 }
 
-/* line 56, ../sass/base.sass */
+/* line 51, ../sass/base.sass */
 h1 {
   -moz-column-span: all;
   -webkit-column-span: all;
   column-span: all;
 }
 
-/* line 59, ../sass/base.sass */
+/* line 54, ../sass/base.sass */
 p {
   font-family: "Droid Serif", serif;
   font-size: 15px;
@@ -60,29 +60,28 @@ p {
   text-align: justify;
 }
 
-/* line 66, ../sass/base.sass */
+/* line 61, ../sass/base.sass */
 div#main {
   float: left;
   width: 100%;
 }
 
-/* line 70, ../sass/base.sass */
+/* line 65, ../sass/base.sass */
 aside {
-  clear: left;
   float: left;
   display: inline;
   width: 120px;
   font-family: Oswald, sans-serif;
   font-size: 1.4em;
 }
-/* line 77, ../sass/base.sass */
+/* line 71, ../sass/base.sass */
 aside li {
   color: #332F00;
   display: block;
   text-align: right;
 }
 
-/* line 82, ../sass/base.sass */
+/* line 76, ../sass/base.sass */
 #content-container {
   float: left;
   display: inline;
@@ -90,28 +89,28 @@ aside li {
   margin: 0 auto 0 3em;
 }
 
-/* line 89, ../sass/base.sass */
+/* line 82, ../sass/base.sass */
 div#content {
-  clear: left;
-  float: right;
+  float: left;
+  width: 580px;
 }
 
-/* line 95, ../sass/base.sass */
+/* line 88, ../sass/base.sass */
 .left p, .right p {
   font-size: 0.9em;
 }
 
-/* line 98, ../sass/base.sass */
+/* line 91, ../sass/base.sass */
 .left {
   float: left;
 }
 
-/* line 101, ../sass/base.sass */
+/* line 94, ../sass/base.sass */
 .right {
   float: right;
 }
 
-/* line 104, ../sass/base.sass */
+/* line 97, ../sass/base.sass */
 #banner {
   width: 100%;
   margin: 0 auto 2em auto;
@@ -120,16 +119,16 @@ div#content {
   font-family: Yellowtail, cursive;
   color: #000;
 }
-/* line 113, ../sass/base.sass */
+/* line 106, ../sass/base.sass */
 #banner .ttext {
   font-size: 5em;
   vertical-align: center;
 }
-/* line 116, ../sass/base.sass */
+/* line 109, ../sass/base.sass */
 #banner .minstrel {
   font-size: 2em;
 }
-/* line 118, ../sass/base.sass */
+/* line 111, ../sass/base.sass */
 #banner #leadin {
   font-family: Michroma, serif;
   font-style: italic;
@@ -143,7 +142,7 @@ div#content {
   text-align: center;
 }
 
-/* line 134, ../sass/base.sass */
+/* line 127, ../sass/base.sass */
 svg {
   background: #FFFFFF;
   -moz-border-radius: 20px;
@@ -155,40 +154,40 @@ svg {
   height: 100%;
 }
 
-/* line 145, ../sass/base.sass */
+/* line 138, ../sass/base.sass */
 .prompt {
   display: none;
 }
 
 @media screen and (max-width: 760px) {
-  /* line 150, ../sass/base.sass */
+  /* line 143, ../sass/base.sass */
   body {
     font-size: 0.8em;
   }
 
-  /* line 152, ../sass/base.sass */
+  /* line 145, ../sass/base.sass */
   #banner {
     font-size: 0.8em;
     margin: 0em auto 0em auto;
   }
 
-  /* line 156, ../sass/base.sass */
+  /* line 149, ../sass/base.sass */
   #content-container {
     width: 80%;
   }
 
-  /* line 158, ../sass/base.sass */
+  /* line 151, ../sass/base.sass */
   aside {
     clear: left;
     float: none;
     font-size: 1.3em;
     text-align: justify;
   }
-  /* line 163, ../sass/base.sass */
+  /* line 156, ../sass/base.sass */
   aside li {
     display: inline-block;
   }
-  /* line 165, ../sass/base.sass */
+  /* line 158, ../sass/base.sass */
   aside ul:after {
     content: "";
     display: inline-block;
@@ -196,37 +195,37 @@ svg {
   }
 }
 @media screen and (max-width: 400px) {
-  /* line 172, ../sass/base.sass */
+  /* line 165, ../sass/base.sass */
   body {
     font-size: 0.7em;
   }
 
-  /* line 174, ../sass/base.sass */
+  /* line 167, ../sass/base.sass */
   nav ul {
     padding: 2px;
   }
 
-  /* line 176, ../sass/base.sass */
+  /* line 169, ../sass/base.sass */
   #banner {
     margin: 10px auto;
     width: 90%;
   }
-  /* line 179, ../sass/base.sass */
+  /* line 172, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 181, ../sass/base.sass */
+  /* line 174, ../sass/base.sass */
   aside {
     margin: 0 10px 20px 10px;
   }
 
-  /* line 184, ../sass/base.sass */
+  /* line 177, ../sass/base.sass */
   div#content {
     width: 95%;
   }
 
-  /* line 187, ../sass/base.sass */
+  /* line 180, ../sass/base.sass */
   nav {
     display: none;
   }

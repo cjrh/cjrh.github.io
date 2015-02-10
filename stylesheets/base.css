@@ -1,6 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Oswald:700|Droid+Serif:400,700italic);
 @import url(http://fonts.googleapis.com/css?family=Yellowtail);
-/* line 20, ../sass/base.sass */
+@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+/* line 28, ../sass/base.sass */
 body {
   margin: auto;
   height: 100%;
@@ -15,16 +17,17 @@ body {
   position: relative;
   font-size: 0.8em;
   font-family: Rajdhani, sans-serif;
+  font-family: Lato, sans-serif;
 }
 
-/* line 30, ../sass/base.sass */
+/* line 39, ../sass/base.sass */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Medula One", cursive;
   text-shadow: none;
   color: #000433;
 }
 
-/* line 35, ../sass/base.sass */
+/* line 44, ../sass/base.sass */
 h1 {
   font-family: "Oswald", sans-serif;
   font-weight: 700;
@@ -34,7 +37,7 @@ h1 {
   margin: 0 0 23px 0;
 }
 
-/* line 43, ../sass/base.sass */
+/* line 52, ../sass/base.sass */
 h2 {
   font-family: "Droid Serif", serif;
   font-weight: 400;
@@ -44,17 +47,16 @@ h2 {
   margin: 0 0 23px 0;
 }
 
-/* line 51, ../sass/base.sass */
+/* line 60, ../sass/base.sass */
 h1 {
   -moz-column-span: all;
   -webkit-column-span: all;
   column-span: all;
 }
 
-/* line 54, ../sass/base.sass */
-p {
-  font-family: "Droid Serif", serif;
-  font-size: 15px;
+/* line 63, ../sass/base.sass */
+p, li {
+  font-size: 18px;
   line-height: 23px;
   margin: 0 0 23px 0;
   text-align: justify;

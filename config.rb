@@ -14,3 +14,4 @@ sass_options = {:debug_info=>false} # by Fire.app
 sourcemap = false # by Fire.app 
 fireapp_coffeescript_options = {:bare=>false} # by Fire.app 
 fireapp_livescript_options = {:bare=>false} # by Fire.app 
+require 'sassy-buttons'

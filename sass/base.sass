@@ -5,6 +5,7 @@
 @import "compass/css3/box-shadow"
 @import "compass/css3/transform"
 @import "compass/css3/columns"
+@import "sassy-buttons"
 
 @import url(http://fonts.googleapis.com/css?family=Oswald:700|Droid+Serif:400,700italic)
 @import url(http://fonts.googleapis.com/css?family=Yellowtail)
@@ -20,6 +21,11 @@ $nav-fs: 0.6em
 $body-bc1: #FEFFFC
 $body-bc2: #FDFFFC
 
+// Horizontal dimensions
+$main-width: 80%
+$nav-width: 20%
+$content-width: 60%
+
 body
     margin: auto
     height: 100%
@@ -32,7 +38,7 @@ body
     font-family: Lato, sans-serif
 
 h1, h2, h3, h4, h5, h6
-    font-family: 'Medula One', cursive
+    font-family: 'Lato', cursive
     +text-shadow(none)
     color: #000433
 
@@ -45,10 +51,10 @@ h1
     margin: 0 0 23px 0
 
 h2
-    font-family: 'Droid Serif', serif
+    // font-family: 'Droid Serif', serif
     font-weight: 400
     font-style: italic
-    font-size: 1.5em
+    font-size: 2.0em
     line-height: 23px
     margin: 0 0 23px 0
 
@@ -59,44 +65,75 @@ p, li
     // font-family: 'Droid Serif', serif
     font-size: 18px
     line-height: 23px
-    margin: 0 0 23px 0
     text-align: justify
 
+p
+    margin: 0 0 23px 0
+
 div#main
-    float: left
-    width: 100%
+    margin: 0 auto 0 auto
+    width: $main-width
 
 aside
     float: left
     display: inline
-    width: 120px
-    font-family: Oswald, sans-serif
-    font-size: 1.4em
+    width: $nav-width
+    margin: 0 5px 0 5px
     li
+        font-family: Oswald, sans-serif
+        font-size: 1.4em
         color: #332F00
         display: block
         text-align: right
+        a
+            text-decoration: none
+            color: #332F00
+
+ul
+    margin: 0
+    padding: 0
+
+aside#left-aside
+    // This was only for debugging, to see where the block goes.
+    // background-color: #FF0000
+
+aside#right-aside
+    background-color: #FF0000
+    li
+        text-align: left
+
+footer
+    clear: left
+    display: block
+    width: 100%
 
 #content-container
     float: left
-    display: inline
-    width: 580px
-    margin: 0 auto 0 3em
+    width: $content-width
+    margin: 0 auto 0 auto
+    overflow: auto
 
 div#content
     float: left
-    width: 580px
+    width: 100%
     // +column-width(20em)  // 30-35 optimal
     // +column-gap(50px)
 
 .left p, .right p
     font-size: 0.9em
+    width: 10em
+    
 
 .left
     float: left
 
 .right
     float: right
+
+.button
+    @include sassy-button("shiny", 10px, 1em, #73DEFF, #14A1CC, #333, "raised")
+    padding: 4px 4px 4px 4px
+    margin: 0
 
 #banner
     width: 100%
@@ -138,25 +175,36 @@ svg
     width: 100%
     height: 100%
 
-
 .prompt
     display: none
 
-
 @media screen and (max-width: 760px)
     body
-        font-size: 0.8em
+        font-size: 0.7em
     #banner
-        font-size: 0.8em
+        font-size: 0.7em
         margin: 0em auto 0em auto
         // border-style: solid
-    #content-container
-        width: 80%
-    aside
-        clear: left
+    div#main
+        width: 100%
+    p
+        font-size: 1.3em
+    .minstrel
+        display: none
+    div#content-container
         float: none
+        width: 70%
+        margin: 0px auto 0px auto
+        // margin-left: auto
+        // margin-right: auto
+        // display: block
+    aside
+        float: none
+        display: block
         font-size: 1.3em
         text-align: justify
+        width: 70%
+        margin: 0px auto 0px auto
         li
             display: inline-block
         ul:after
@@ -177,11 +225,8 @@ svg
             width: 60px
     aside
         margin: 0 10px 20px 10px
-
+    #content-container
+        width: 100%
     div#content
-        width: 95%
-
-    nav
-        display: none
-
+        width: 100%
 

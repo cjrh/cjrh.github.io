@@ -22,9 +22,10 @@ $body-bc1: #FEFFFC
 $body-bc2: #FDFFFC
 
 // Horizontal dimensions
-$main-width: 80%
-$nav-width: 20%
-$content-width: 60%
+$main-width: 900px
+$content-width: 700px
+$aside-left: 100px
+$aside-right: 100px
 
 body
     margin: auto
@@ -61,11 +62,12 @@ h2
 h1
     +column-span(all)
 
-p, li
+p
     // font-family: 'Droid Serif', serif
     font-size: 18px
     line-height: 23px
     text-align: justify
+    text-indent: 50px
 
 p
     margin: 0 0 23px 0
@@ -77,7 +79,7 @@ div#main
 aside
     float: left
     display: inline
-    width: $nav-width
+    width: $aside-left
     margin: 0 5px 0 5px
     li
         font-family: Oswald, sans-serif
@@ -99,6 +101,7 @@ aside#left-aside
 
 aside#right-aside
     background-color: #FF0000
+    width: $aside-right
     li
         text-align: left
 
@@ -178,22 +181,22 @@ svg
 .prompt
     display: none
 
-@media screen and (max-width: 760px)
+@media screen and (max-width: 900px)
     body
-        font-size: 0.7em
+        // font-size: 0.7em
     #banner
-        font-size: 0.7em
+        // font-size: 0.7em
         margin: 0em auto 0em auto
         // border-style: solid
     div#main
         width: 100%
     p
-        font-size: 1.3em
+        // font-size: 1.3em
     .minstrel
         display: none
     div#content-container
         float: none
-        width: 70%
+        width: 95%
         margin: 0px auto 0px auto
         // margin-left: auto
         // margin-right: auto
@@ -215,7 +218,7 @@ svg
 
 @media screen and (max-width: 400px)
     body
-        font-size: 0.7em
+        // font-size: 0.7em
     nav ul
         padding: 2px
     #banner

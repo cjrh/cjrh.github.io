@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Yellowtail);
 @import url(http://fonts.googleapis.com/css?family=Lato);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
-/* line 29, ../sass/base.sass */
+/* line 30, ../sass/base.sass */
 body {
   margin: auto;
   height: 100%;
@@ -20,14 +20,14 @@ body {
   font-family: Lato, sans-serif;
 }
 
-/* line 40, ../sass/base.sass */
+/* line 41, ../sass/base.sass */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", cursive;
   text-shadow: none;
   color: #000433;
 }
 
-/* line 45, ../sass/base.sass */
+/* line 46, ../sass/base.sass */
 h1 {
   font-family: "Oswald", sans-serif;
   font-weight: 700;
@@ -37,7 +37,7 @@ h1 {
   margin: 0 0 23px 0;
 }
 
-/* line 53, ../sass/base.sass */
+/* line 54, ../sass/base.sass */
 h2 {
   font-weight: 400;
   font-style: italic;
@@ -46,39 +46,40 @@ h2 {
   margin: 0 0 23px 0;
 }
 
-/* line 61, ../sass/base.sass */
+/* line 62, ../sass/base.sass */
 h1 {
   -moz-column-span: all;
   -webkit-column-span: all;
   column-span: all;
 }
 
-/* line 64, ../sass/base.sass */
-p, li {
+/* line 65, ../sass/base.sass */
+p {
   font-size: 18px;
   line-height: 23px;
   text-align: justify;
+  text-indent: 50px;
 }
 
-/* line 70, ../sass/base.sass */
+/* line 72, ../sass/base.sass */
 p {
   margin: 0 0 23px 0;
 }
 
-/* line 73, ../sass/base.sass */
+/* line 75, ../sass/base.sass */
 div#main {
   margin: 0 auto 0 auto;
-  width: 80%;
+  width: 900px;
 }
 
-/* line 77, ../sass/base.sass */
+/* line 79, ../sass/base.sass */
 aside {
   float: left;
   display: inline;
-  width: 20%;
+  width: 100px;
   margin: 0 5px 0 5px;
 }
-/* line 82, ../sass/base.sass */
+/* line 84, ../sass/base.sass */
 aside li {
   font-family: Oswald, sans-serif;
   font-size: 1.4em;
@@ -86,65 +87,66 @@ aside li {
   display: block;
   text-align: right;
 }
-/* line 88, ../sass/base.sass */
+/* line 90, ../sass/base.sass */
 aside li a {
   text-decoration: none;
   color: #332F00;
 }
 
-/* line 92, ../sass/base.sass */
+/* line 94, ../sass/base.sass */
 ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 100, ../sass/base.sass */
+/* line 102, ../sass/base.sass */
 aside#right-aside {
   background-color: #FF0000;
+  width: 100px;
 }
-/* line 102, ../sass/base.sass */
+/* line 105, ../sass/base.sass */
 aside#right-aside li {
   text-align: left;
 }
 
-/* line 105, ../sass/base.sass */
+/* line 108, ../sass/base.sass */
 footer {
   clear: left;
   display: block;
   width: 100%;
 }
 
-/* line 110, ../sass/base.sass */
+/* line 113, ../sass/base.sass */
 #content-container {
   float: left;
-  width: 60%;
+  width: 700px;
   margin: 0 auto 0 auto;
   overflow: auto;
 }
 
-/* line 116, ../sass/base.sass */
+/* line 119, ../sass/base.sass */
 div#content {
   float: left;
   width: 100%;
 }
 
-/* line 122, ../sass/base.sass */
+/* line 125, ../sass/base.sass */
 .left p, .right p {
   font-size: 0.9em;
   width: 10em;
 }
 
-/* line 127, ../sass/base.sass */
+/* line 130, ../sass/base.sass */
 .left {
   float: left;
 }
 
-/* line 130, ../sass/base.sass */
+/* line 133, ../sass/base.sass */
 .right {
   float: right;
 }
 
-/* line 133, ../sass/base.sass */
+/* line 136, ../sass/base.sass */
 .button {
   font-size: 1em;
   padding: 0.5em 1.5em;
@@ -169,11 +171,11 @@ div#content {
   padding: 4px 4px 4px 4px;
   margin: 0;
 }
-/* line 15, ../../../../../../.compass/extensions/Sassy-Buttons/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 15, ../../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:hover {
   text-decoration: none;
 }
-/* line 24, ../../../../../../.compass/extensions/Sassy-Buttons/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 24, ../../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:hover {
   background-color: #14A1CC;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4ZmFmZiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMTRhMWNjIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTA4NGE3Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
@@ -182,13 +184,13 @@ div#content {
   background: -webkit-linear-gradient(#e8faff, #14a1cc 50%, #1084a7);
   background: linear-gradient(#e8faff, #14a1cc 50%, #1084a7);
 }
-/* line 27, ../../../../../../.compass/extensions/Sassy-Buttons/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 27, ../../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:active {
   -moz-box-shadow: #1084a7 0 1px 2px inset;
   -webkit-box-shadow: #1084a7 0 1px 2px inset;
   box-shadow: #1084a7 0 1px 2px inset;
 }
-/* line 6, ../../../../../../.compass/extensions/Sassy-Buttons/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 6, ../../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button.disabled, .button[disabled] {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6;
@@ -198,13 +200,13 @@ div#content {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 74, ../../../../../../.compass/extensions/Sassy-Buttons/stylesheets/_sassy-buttons.sass */
+/* line 74, ../../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/sassy-buttons-0.2.6/stylesheets/_sassy-buttons.sass */
 .button::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
 
-/* line 138, ../sass/base.sass */
+/* line 141, ../sass/base.sass */
 #banner {
   width: 100%;
   margin: 0 auto 2em auto;
@@ -213,16 +215,16 @@ div#content {
   font-family: Yellowtail, cursive;
   color: #000;
 }
-/* line 147, ../sass/base.sass */
+/* line 150, ../sass/base.sass */
 #banner .ttext {
   font-size: 5em;
   vertical-align: center;
 }
-/* line 150, ../sass/base.sass */
+/* line 153, ../sass/base.sass */
 #banner .minstrel {
   font-size: 2em;
 }
-/* line 152, ../sass/base.sass */
+/* line 155, ../sass/base.sass */
 #banner #leadin {
   font-family: Michroma, serif;
   font-style: italic;
@@ -236,7 +238,7 @@ div#content {
   text-align: center;
 }
 
-/* line 168, ../sass/base.sass */
+/* line 171, ../sass/base.sass */
 svg {
   background: #FFFFFF;
   -moz-border-radius: 20px;
@@ -248,46 +250,35 @@ svg {
   height: 100%;
 }
 
-/* line 178, ../sass/base.sass */
+/* line 181, ../sass/base.sass */
 .prompt {
   display: none;
 }
 
-@media screen and (max-width: 760px) {
-  /* line 182, ../sass/base.sass */
-  body {
-    font-size: 0.7em;
-  }
-
-  /* line 184, ../sass/base.sass */
+@media screen and (max-width: 900px) {
+  /* line 187, ../sass/base.sass */
   #banner {
-    font-size: 0.7em;
     margin: 0em auto 0em auto;
   }
 
-  /* line 188, ../sass/base.sass */
+  /* line 191, ../sass/base.sass */
   div#main {
     width: 100%;
   }
 
-  /* line 190, ../sass/base.sass */
-  p {
-    font-size: 1.3em;
-  }
-
-  /* line 192, ../sass/base.sass */
+  /* line 195, ../sass/base.sass */
   .minstrel {
     display: none;
   }
 
-  /* line 194, ../sass/base.sass */
+  /* line 197, ../sass/base.sass */
   div#content-container {
     float: none;
-    width: 70%;
+    width: 95%;
     margin: 0px auto 0px auto;
   }
 
-  /* line 201, ../sass/base.sass */
+  /* line 204, ../sass/base.sass */
   aside {
     float: none;
     display: block;
@@ -296,11 +287,11 @@ svg {
     width: 70%;
     margin: 0px auto 0px auto;
   }
-  /* line 208, ../sass/base.sass */
+  /* line 211, ../sass/base.sass */
   aside li {
     display: inline-block;
   }
-  /* line 210, ../sass/base.sass */
+  /* line 213, ../sass/base.sass */
   aside ul:after {
     content: "";
     display: inline-block;
@@ -308,37 +299,32 @@ svg {
   }
 }
 @media screen and (max-width: 400px) {
-  /* line 217, ../sass/base.sass */
-  body {
-    font-size: 0.7em;
-  }
-
-  /* line 219, ../sass/base.sass */
+  /* line 222, ../sass/base.sass */
   nav ul {
     padding: 2px;
   }
 
-  /* line 221, ../sass/base.sass */
+  /* line 224, ../sass/base.sass */
   #banner {
     margin: 10px auto;
     width: 90%;
   }
-  /* line 224, ../sass/base.sass */
+  /* line 227, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 226, ../sass/base.sass */
+  /* line 229, ../sass/base.sass */
   aside {
     margin: 0 10px 20px 10px;
   }
 
-  /* line 228, ../sass/base.sass */
+  /* line 231, ../sass/base.sass */
   #content-container {
     width: 100%;
   }
 
-  /* line 230, ../sass/base.sass */
+  /* line 233, ../sass/base.sass */
   div#content {
     width: 100%;
   }

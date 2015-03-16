@@ -28,6 +28,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* line 46, ../sass/base.sass */
+h2, h3, h4, h5, h6 {
+  padding-top: 15px;
+  font-family: "Yellowtail", sans-serif;
+  font-style: bold;
+}
+
+/* line 52, ../sass/base.sass */
 h1 {
   font-family: "Oswald", sans-serif;
   font-weight: 700;
@@ -37,23 +44,22 @@ h1 {
   margin: 0 0 23px 0;
 }
 
-/* line 54, ../sass/base.sass */
+/* line 60, ../sass/base.sass */
 h2 {
   font-weight: 400;
-  font-style: italic;
   font-size: 2em;
   line-height: 23px;
   margin: 0 0 23px 0;
 }
 
-/* line 62, ../sass/base.sass */
+/* line 68, ../sass/base.sass */
 h1 {
   -moz-column-span: all;
   -webkit-column-span: all;
   column-span: all;
 }
 
-/* line 65, ../sass/base.sass */
+/* line 71, ../sass/base.sass */
 p {
   font-size: 18px;
   line-height: 23px;
@@ -61,62 +67,62 @@ p {
   text-indent: 50px;
 }
 
-/* line 72, ../sass/base.sass */
+/* line 78, ../sass/base.sass */
 p {
   margin: 0 0 23px 0;
 }
 
-/* line 75, ../sass/base.sass */
+/* line 81, ../sass/base.sass */
 div#main {
   margin: 0 auto 0 auto;
   width: 900px;
 }
 
-/* line 79, ../sass/base.sass */
+/* line 85, ../sass/base.sass */
 aside {
   float: left;
   display: inline;
   width: 100px;
-  margin: 0 5px 0 5px;
+  padding: 0 30px 0 30px;
 }
-/* line 84, ../sass/base.sass */
+/* line 90, ../sass/base.sass */
 aside li {
-  font-family: Oswald, sans-serif;
-  font-size: 1.4em;
+  font-family: Yellowtail, sans-serif;
+  font-size: 2em;
   color: #332F00;
   display: block;
   text-align: right;
 }
-/* line 90, ../sass/base.sass */
+/* line 97, ../sass/base.sass */
 aside li a {
   text-decoration: none;
   color: #332F00;
 }
 
-/* line 94, ../sass/base.sass */
+/* line 101, ../sass/base.sass */
 ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 102, ../sass/base.sass */
+/* line 109, ../sass/base.sass */
 aside#right-aside {
   background-color: #FF0000;
   width: 100px;
 }
-/* line 105, ../sass/base.sass */
+/* line 112, ../sass/base.sass */
 aside#right-aside li {
   text-align: left;
 }
 
-/* line 108, ../sass/base.sass */
+/* line 115, ../sass/base.sass */
 footer {
   clear: left;
   display: block;
   width: 100%;
 }
 
-/* line 113, ../sass/base.sass */
+/* line 120, ../sass/base.sass */
 #content-container {
   float: left;
   width: 700px;
@@ -124,29 +130,29 @@ footer {
   overflow: auto;
 }
 
-/* line 119, ../sass/base.sass */
+/* line 126, ../sass/base.sass */
 div#content {
   float: left;
   width: 100%;
 }
 
-/* line 125, ../sass/base.sass */
+/* line 132, ../sass/base.sass */
 .left p, .right p {
   font-size: 0.9em;
   width: 10em;
 }
 
-/* line 130, ../sass/base.sass */
+/* line 137, ../sass/base.sass */
 .left {
   float: left;
 }
 
-/* line 133, ../sass/base.sass */
+/* line 140, ../sass/base.sass */
 .right {
   float: right;
 }
 
-/* line 136, ../sass/base.sass */
+/* line 143, ../sass/base.sass */
 .button {
   font-size: 1em;
   padding: 0.5em 1.5em;
@@ -206,7 +212,7 @@ div#content {
   margin: -1px !important;
 }
 
-/* line 141, ../sass/base.sass */
+/* line 148, ../sass/base.sass */
 #banner {
   width: 100%;
   margin: 0 auto 2em auto;
@@ -215,16 +221,16 @@ div#content {
   font-family: Yellowtail, cursive;
   color: #000;
 }
-/* line 150, ../sass/base.sass */
+/* line 157, ../sass/base.sass */
 #banner .ttext {
   font-size: 5em;
   vertical-align: center;
 }
-/* line 153, ../sass/base.sass */
+/* line 160, ../sass/base.sass */
 #banner .minstrel {
   font-size: 2em;
 }
-/* line 155, ../sass/base.sass */
+/* line 162, ../sass/base.sass */
 #banner #leadin {
   font-family: Michroma, serif;
   font-style: italic;
@@ -238,7 +244,7 @@ div#content {
   text-align: center;
 }
 
-/* line 171, ../sass/base.sass */
+/* line 178, ../sass/base.sass */
 svg {
   background: #FFFFFF;
   -moz-border-radius: 20px;
@@ -250,81 +256,89 @@ svg {
   height: 100%;
 }
 
-/* line 181, ../sass/base.sass */
+/* line 188, ../sass/base.sass */
 .prompt {
   display: none;
 }
 
 @media screen and (max-width: 900px) {
-  /* line 187, ../sass/base.sass */
+  /* line 194, ../sass/base.sass */
   #banner {
+    font-size: 0.7em;
     margin: 0em auto 0em auto;
   }
 
-  /* line 191, ../sass/base.sass */
+  /* line 198, ../sass/base.sass */
   div#main {
     width: 100%;
   }
 
-  /* line 195, ../sass/base.sass */
+  /* line 200, ../sass/base.sass */
+  h1 {
+    font-size: 2.6em;
+  }
+
+  /* line 204, ../sass/base.sass */
   .minstrel {
     display: none;
   }
 
-  /* line 197, ../sass/base.sass */
+  /* line 206, ../sass/base.sass */
   div#content-container {
     float: none;
     width: 95%;
     margin: 0px auto 0px auto;
   }
 
-  /* line 204, ../sass/base.sass */
+  /* line 213, ../sass/base.sass */
   aside {
     float: none;
     display: block;
-    font-size: 1.3em;
+    font-size: 1em;
     text-align: justify;
     width: 70%;
     margin: 0px auto 0px auto;
   }
-  /* line 211, ../sass/base.sass */
+  /* line 220, ../sass/base.sass */
   aside li {
     display: inline-block;
   }
-  /* line 213, ../sass/base.sass */
+  /* line 222, ../sass/base.sass */
   aside ul:after {
     content: "";
     display: inline-block;
     width: 100%;
   }
 }
-@media screen and (max-width: 400px) {
-  /* line 222, ../sass/base.sass */
-  nav ul {
-    padding: 2px;
-  }
-
-  /* line 224, ../sass/base.sass */
+@media screen and (max-width: 500px) {
+  /* line 231, ../sass/base.sass */
   #banner {
+    font-size: 0.5em;
     margin: 10px auto;
     width: 90%;
   }
-  /* line 227, ../sass/base.sass */
+  /* line 235, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 229, ../sass/base.sass */
-  aside {
-    margin: 0 10px 20px 10px;
+  /* line 237, ../sass/base.sass */
+  h1 {
+    font-size: 2.5em;
   }
 
-  /* line 231, ../sass/base.sass */
+  /* line 239, ../sass/base.sass */
+  aside {
+    margin: 0 10px 20px 10px;
+    font-size: 0.8em;
+  }
+
+  /* line 242, ../sass/base.sass */
   #content-container {
     width: 100%;
   }
 
-  /* line 233, ../sass/base.sass */
+  /* line 244, ../sass/base.sass */
   div#content {
     width: 100%;
   }

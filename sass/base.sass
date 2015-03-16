@@ -43,6 +43,12 @@ h1, h2, h3, h4, h5, h6
     +text-shadow(none)
     color: #000433
 
+h2, h3, h4, h5, h6
+    // font-weight: 1500
+    padding-top: 15px
+    font-family: 'Yellowtail', sans-serif
+    font-style: bold 
+
 h1
     font-family: 'Oswald', sans-serif
     font-weight: 700
@@ -54,7 +60,7 @@ h1
 h2
     // font-family: 'Droid Serif', serif
     font-weight: 400
-    font-style: italic
+    // font-style: italic bold
     font-size: 2.0em
     line-height: 23px
     margin: 0 0 23px 0
@@ -80,10 +86,11 @@ aside
     float: left
     display: inline
     width: $aside-left
-    margin: 0 5px 0 5px
+    padding: 0 30px 0 30px
     li
-        font-family: Oswald, sans-serif
-        font-size: 1.4em
+        // font-family: Oswald, sans-serif
+        font-family: Yellowtail, sans-serif
+        font-size: 2em
         color: #332F00
         display: block
         text-align: right
@@ -185,11 +192,13 @@ svg
     body
         // font-size: 0.7em
     #banner
-        // font-size: 0.7em
+        font-size: 0.7em
         margin: 0em auto 0em auto
         // border-style: solid
     div#main
         width: 100%
+    h1
+        font-size: 2.6em
     p
         // font-size: 1.3em
     .minstrel
@@ -204,7 +213,7 @@ svg
     aside
         float: none
         display: block
-        font-size: 1.3em
+        font-size: 1em
         text-align: justify
         width: 70%
         margin: 0px auto 0px auto
@@ -216,18 +225,20 @@ svg
             width: 100%
 
 
-@media screen and (max-width: 400px)
+@media screen and (max-width: 500px)
     body
         // font-size: 0.7em
-    nav ul
-        padding: 2px
     #banner
+        font-size: 0.5em
         margin: 10px auto
         width: 90%
         #leadin
             width: 60px
+    h1
+        font-size: 2.5em
     aside
         margin: 0 10px 20px 10px
+        font-size: 0.8em
     #content-container
         width: 100%
     div#content

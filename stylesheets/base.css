@@ -61,7 +61,7 @@ h1 {
 
 /* line 71, ../sass/base.sass */
 p {
-  font-size: 18px;
+  font-size: 2em;
   line-height: 23px;
   text-align: justify;
   text-indent: 50px;
@@ -318,7 +318,7 @@ svg {
 @media screen and (max-device-width: 900px) {
   /* line 231, ../sass/base.sass */
   body {
-    font-size: 3em;
+    font-size: 2em;
   }
 }
 @media screen and (max-width: 500px), screen and (max-device-width: 500px) {
@@ -357,6 +357,6 @@ svg {
 @media screen and (max-device-width: 500px) {
   /* line 254, ../sass/base.sass */
   body {
-    font-size: 3em;
+    font-size: 2em;
   }
 }

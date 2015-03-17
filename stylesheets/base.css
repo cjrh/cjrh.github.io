@@ -15,7 +15,6 @@ body {
   background-image: -webkit-linear-gradient(top, #fefffc, #fdfffc);
   background-image: linear-gradient(to bottom, #fefffc, #fdfffc);
   position: relative;
-  font-size: 0.8em;
   font-family: Rajdhani, sans-serif;
   font-family: Lato, sans-serif;
 }
@@ -275,35 +274,35 @@ svg {
 }
 
 @media screen and (max-width: 900px), screen and (max-device-width: 900px) {
-  /* line 200, ../sass/base.sass */
+  /* line 198, ../sass/base.sass */
   #banner {
     font-size: 0.7em;
     margin: 0em auto 0em auto;
   }
 
-  /* line 204, ../sass/base.sass */
+  /* line 202, ../sass/base.sass */
   div#main {
     width: 100%;
   }
 
-  /* line 206, ../sass/base.sass */
+  /* line 204, ../sass/base.sass */
   h1 {
     font-size: 2.6em;
   }
 
-  /* line 210, ../sass/base.sass */
+  /* line 208, ../sass/base.sass */
   .minstrel {
     display: none;
   }
 
-  /* line 212, ../sass/base.sass */
+  /* line 210, ../sass/base.sass */
   div#content-container {
     float: none;
     width: 95%;
     margin: 0px auto 0px auto;
   }
 
-  /* line 219, ../sass/base.sass */
+  /* line 214, ../sass/base.sass */
   aside {
     float: none;
     display: block;
@@ -312,11 +311,11 @@ svg {
     width: 70%;
     margin: 0px auto 0px auto;
   }
-  /* line 226, ../sass/base.sass */
+  /* line 221, ../sass/base.sass */
   aside li {
     display: inline-block;
   }
-  /* line 228, ../sass/base.sass */
+  /* line 223, ../sass/base.sass */
   aside ul:after {
     content: "";
     display: inline-block;
@@ -324,34 +323,34 @@ svg {
   }
 }
 @media screen and (max-width: 500px), screen and (max-device-width: 500px) {
-  /* line 240, ../sass/base.sass */
+  /* line 229, ../sass/base.sass */
   #banner {
     font-size: 0.5em;
     margin: 0px auto;
     width: 100%;
   }
-  /* line 244, ../sass/base.sass */
+  /* line 233, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 246, ../sass/base.sass */
+  /* line 235, ../sass/base.sass */
   h1 {
     font-size: 2.5em;
   }
 
-  /* line 248, ../sass/base.sass */
+  /* line 237, ../sass/base.sass */
   aside {
     margin: 0 10px 20px 10px;
     font-size: 0.8em;
   }
 
-  /* line 251, ../sass/base.sass */
+  /* line 240, ../sass/base.sass */
   #content-container {
     width: 100%;
   }
 
-  /* line 253, ../sass/base.sass */
+  /* line 242, ../sass/base.sass */
   div#content {
     width: 100%;
   }

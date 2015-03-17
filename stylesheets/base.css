@@ -315,36 +315,48 @@ svg {
     width: 100%;
   }
 }
+@media screen and (max-device-width: 900px) {
+  /* line 231, ../sass/base.sass */
+  body {
+    font-size: 3em;
+  }
+}
 @media screen and (max-width: 500px), screen and (max-device-width: 500px) {
-  /* line 234, ../sass/base.sass */
+  /* line 237, ../sass/base.sass */
   #banner {
     font-size: 0.5em;
     margin: 10px auto;
     width: 90%;
   }
-  /* line 238, ../sass/base.sass */
+  /* line 241, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 240, ../sass/base.sass */
+  /* line 243, ../sass/base.sass */
   h1 {
     font-size: 2.5em;
   }
 
-  /* line 242, ../sass/base.sass */
+  /* line 245, ../sass/base.sass */
   aside {
     margin: 0 10px 20px 10px;
     font-size: 0.8em;
   }
 
-  /* line 245, ../sass/base.sass */
+  /* line 248, ../sass/base.sass */
   #content-container {
     width: 100%;
   }
 
-  /* line 247, ../sass/base.sass */
+  /* line 250, ../sass/base.sass */
   div#content {
     width: 100%;
+  }
+}
+@media screen and (max-device-width: 500px) {
+  /* line 254, ../sass/base.sass */
+  body {
+    font-size: 3em;
   }
 }

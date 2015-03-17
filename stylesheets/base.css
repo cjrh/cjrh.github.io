@@ -266,7 +266,7 @@ svg {
   display: none;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 900px), screen and (max-device-width: 900px) {
   /* line 197, ../sass/base.sass */
   #banner {
     font-size: 0.7em;
@@ -315,7 +315,7 @@ svg {
     width: 100%;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 500px), screen and (max-device-width: 500px) {
   /* line 234, ../sass/base.sass */
   #banner {
     font-size: 0.5em;

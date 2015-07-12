@@ -29,28 +29,12 @@
 
         function loadContent() {
             var post = getFromUrl("post");
-            console.log("loadContent, post: "+post);
             if (post === "") {
-                // TODO Actually this should be the latest post.
                 latest = JSON.parse(loadPage("posts/latest.json"));
-                console.log(latest);
                 showPost(latest.post);
-                // showPost("First post");
             } else {
                 showPost(post);
             };
-        };
-
-        function set_href(id, value) {
-            var a = document.getElementById(id);
-            a.href = value;
-            a.innerHTML = value;
-        };
-
-        function setPostLinks(id, post) {
-            var a = document.getElementById(id);
-            a.href = "?post=" + post;
-            a.innerHTML = post;
         };
 
         function loadPage(href)
@@ -75,20 +59,22 @@
             console.log("metadata.previous_post: " + metadata.previous_post);
 
             // Wire up the next and prev buttons
-            document.getElementById("prev-button").onclick = function() {
-                console.log("back");
-                showPost(metadata.previous_post);
+            var prevevent = null;
+            if (metadata.previous_post !== null) {
+                prevevent = function() { showPost(metadata.previous_post); }
             }
-            document.getElementById("next-button").onclick = function() {
-                showPost(metadata.next_post);
-            }
+            document.getElementById("prev-button").onclick = prevevent;
 
-            setPostLinks("nexta", metadata.next_post);
-            setPostLinks("preva", metadata.previous_post);
+            var nextevent = null;
+            if (metadata.next_post !== null) {
+                nextevent = function() { showPost(metadata.next_post); }
+            }
+            document.getElementById("next-button").onclick = nextevent;
+
+            window.history.pushState("", "", '?post='+name);
         }
 
         function getFromUrl(val) {
-            console.log("getFromURL: " + val);
             var result = "",
                 tmp = [];
             location.search
@@ -97,9 +83,9 @@
             .substr(1)
                 .split("&")
                 .forEach(function (item) {
-                tmp = item.split("=");
-                if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
-            });
+                    tmp = item.split("=");
+                    if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+                });
             return result;
         };
 

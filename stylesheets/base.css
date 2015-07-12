@@ -71,7 +71,6 @@ p {
   font-size: 1em;
   line-height: 1.5em;
   text-align: left;
-  text-indent: 50px;
   color: #D5D5D5;
   font-weight: 300;
 }
@@ -298,45 +297,43 @@ svg {
   display: none;
 }
 
-/* line 200, ../sass/base.sass */
-.highlight {
-  background: #b4b4b4;
-}
-/* line 203, ../sass/base.sass */
-.highlight span {
+/* line 201, ../sass/base.sass */
+pre {
   font-size: 0.7em;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 @media screen and (max-width: 900px), screen and (max-device-width: 900px) {
-  /* line 207, ../sass/base.sass */
+  /* line 209, ../sass/base.sass */
   #banner {
     font-size: 0.7em;
     margin: 0em auto 0em auto;
   }
 
-  /* line 211, ../sass/base.sass */
+  /* line 213, ../sass/base.sass */
   div#main {
     width: 100%;
   }
 
-  /* line 213, ../sass/base.sass */
+  /* line 215, ../sass/base.sass */
   h1 {
     font-size: 2.6em;
   }
 
-  /* line 217, ../sass/base.sass */
+  /* line 219, ../sass/base.sass */
   .minstrel {
     display: none;
   }
 
-  /* line 219, ../sass/base.sass */
+  /* line 221, ../sass/base.sass */
   div#content-container {
     float: none;
     width: 95%;
     margin: 0px auto 0px auto;
   }
 
-  /* line 223, ../sass/base.sass */
+  /* line 225, ../sass/base.sass */
   aside {
     float: none;
     display: block;
@@ -345,11 +342,11 @@ svg {
     width: 70%;
     margin: 0px auto 0px auto;
   }
-  /* line 230, ../sass/base.sass */
+  /* line 232, ../sass/base.sass */
   aside li {
     display: inline-block;
   }
-  /* line 232, ../sass/base.sass */
+  /* line 234, ../sass/base.sass */
   aside ul:after {
     content: "";
     display: inline-block;
@@ -357,34 +354,34 @@ svg {
   }
 }
 @media screen and (max-width: 500px), screen and (max-device-width: 500px) {
-  /* line 238, ../sass/base.sass */
+  /* line 240, ../sass/base.sass */
   #banner {
     font-size: 0.5em;
     margin: 0px auto;
     width: 100%;
   }
-  /* line 242, ../sass/base.sass */
+  /* line 244, ../sass/base.sass */
   #banner #leadin {
     width: 60px;
   }
 
-  /* line 244, ../sass/base.sass */
+  /* line 246, ../sass/base.sass */
   h1 {
     font-size: 2.5em;
   }
 
-  /* line 246, ../sass/base.sass */
+  /* line 248, ../sass/base.sass */
   aside {
     margin: 0 10px 20px 10px;
     font-size: 0.8em;
   }
 
-  /* line 249, ../sass/base.sass */
+  /* line 251, ../sass/base.sass */
   #content-container {
     width: 100%;
   }
 
-  /* line 251, ../sass/base.sass */
+  /* line 253, ../sass/base.sass */
   div#content {
     width: 100%;
   }

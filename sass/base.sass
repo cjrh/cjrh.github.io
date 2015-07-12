@@ -22,11 +22,11 @@ $content-width: 700px
 $aside-left: 100px
 $aside-right: 100px
 
-$font-title-color:#FEC30A 
+$font-title-color:#FEC30A
 $font-heading-color: #D5D5D5
 $font-color: #D5D5D5
 $nav-font-color: adjust-lightness($font-color, -40)
-$anchor-color: adjust-lightness($body-bc1, 10) 
+$anchor-color: adjust-lightness($body-bc1, 10)
 $link-color: #80DBFF
 
 html
@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6
 
 h2, h3, h4, h5, h6
     font-family: 'Lato', sans-serif
-    font-style: bold 
+    font-style: bold
 
 h1
     font-family: 'Lato', sans-serif
@@ -73,8 +73,8 @@ h1
 p
     font-size: 1.0em
     line-height: 1.5em
-    text-align: left  
-    text-indent: 50px
+    text-align: left
+    // text-indent: 50px
     color: $font-color
     font-weight: 300
 
@@ -111,7 +111,7 @@ aside
             // single-transition(color, 1)
             transition: color 0.5s
         a:hover
-            color: $font-title-color 
+            color: $font-title-color
 
 ul
     margin: 0
@@ -197,11 +197,13 @@ svg
 .prompt
     display: none
 
-.highlight
-    $tmpnum: 180
-    background: rgba($tmpnum,$tmpnum,$tmpnum,1)
-    span
-        font-size: 0.7em
+
+pre
+    font-size: 0.7em
+    margin-left: 5%
+    margin-right: 5%
+    // border: 2px solid #111
+
 
 @media screen and (max-width: 900px), screen and (max-device-width: 900px)
     #banner

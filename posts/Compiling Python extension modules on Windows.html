@@ -8,13 +8,13 @@
 </div>
 </div>
 </div>
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Compiling binary extension modules on Windows is regarded as difficult. It is so, and one of the reasons is that it is difficult to obtain the exact knowledge required to even set up the build environment.  This post will help to set that up.</p>
+
 </div>
 </div>
 </div>
@@ -27,17 +27,17 @@
 </div>
 </div>
 </div>
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The SDK includes C/C++ compilers for <strong>both x86 and x64</strong>. Wikipedia has a <a href="http://en.wikipedia.org/wiki/Microsoft_Windows_SDK">great page</a> on all the various versions of the SDK, but you don&#39;t need everything: You only need <strong>SDK v7.0 for Python 2.7.x</strong> and <strong>SDK v7.1 for Python 3.x</strong>.</p>
+<p>The SDK includes C/C++ compilers for <strong>both x86 and x64</strong>. Wikipedia has a <a href="http://en.wikipedia.org/wiki/Microsoft_Windows_SDK">great page</a> on all the various versions of the SDK, but you don't need everything: You only need <strong>SDK v7.0 for Python 2.7.x</strong> and <strong>SDK v7.1 for Python 3.x</strong>.</p>
 <ul>
 <li>The link to the <strong>ISO</strong> download for SDK v7.0: <a href="http://www.microsoft.com/en-us/download/details.aspx?id=18950">http://www.microsoft.com/en-us/download/details.aspx?id=18950</a></li>
 <li>The link to the <strong>ISO</strong> download for SDK v7.1: <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8442">http://www.microsoft.com/en-us/download/details.aspx?id=8442</a></li>
 </ul>
+
 </div>
 </div>
 </div>
@@ -47,6 +47,7 @@
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Download those and install both. Note that certain applications, such as <a href="https://code.google.com/p/mactype/">MacType</a> can interfere with the installation process. It nearly drove me made trying to find what was breaking my most recent SDK install. <em>I strongly recommend you close as many other programs (including on the system tray) as you can while installing the SDKs.</em></p>
+
 </div>
 </div>
 </div>
@@ -59,22 +60,23 @@
 </div>
 </div>
 </div>
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Compilation of Python extension modules is normally done from the command prompt (<code>cmd</code>). I have found it very useful to have a batch file &quot;activate&quot; the path and environment for the Microsoft compilers. I make two of these batch files, one for each SDK, and <strong>place these somewhere on my system path.</strong> Editing the system path is painful so I use an excellent freeware product called (Rapid Environment Editor)[<a href="http://www.rapidee.com/en/about">http://www.rapidee.com/en/about</a>] to add new path entries, or check whether my existing path entries are valid: non-existing paths will be highlighted in red.  This is a great application.</p>
+<p>Compilation of Python extension modules is normally done from the command prompt (<code>cmd</code>). I have found it very useful to have a batch file "activate" the path and environment for the Microsoft compilers. I make two of these batch files, one for each SDK, and <strong>place these somewhere on my system path.</strong> Editing the system path is painful so I use an excellent freeware product called (Rapid Environment Editor)[<a href="http://www.rapidee.com/en/about">http://www.rapidee.com/en/about</a>] to add new path entries, or check whether my existing path entries are valid: non-existing paths will be highlighted in red.  This is a great application.</p>
 <p>I first make a batch file called <strong><code>env_SDK70.bat</code></strong>, with contents:</p>
+
 <pre><code>SET MSSdk=1
 SET DISTUTILS_USE_SDK=1
-C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K &quot;C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin\SetEnv.cmd&quot;
-</code></pre><p>Then, I make another batch file, called <strong><code>env_SDK71.bat</code></strong>, with contents:</p>
+C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K "C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin\SetEnv.cmd"</code></pre>
+<p>Then, I make another batch file, called <strong><code>env_SDK71.bat</code></strong>, with contents:</p>
+
 <pre><code>SET MSSdk=1
 SET DISTUTILS_USE_SDK=1
-C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K &quot;C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd&quot;
-</code></pre>
+C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd"</code></pre>
+
 </div>
 </div>
 </div>
@@ -83,8 +85,9 @@ C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K &quot;C:\Program Files\Microsof
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, when you need to build extension modules, you just open a command prompt, change to the correct folder and run the appropriate <strong><code>env_*</code></strong> batch file in order to activate the path and environment to the correct compiler. If you need to <code>pip install &lt;package&gt;</code> and the package requires a compiler, then you <em>first</em> run the &quot;<code>env_</code>&quot; command, and then <code>pip install</code> in the normal way.</p>
-<p>That&#39;s all you need, and you should be able to compile any Python extension modules yourself.</p>
+<p>Now, when you need to build extension modules, you just open a command prompt, change to the correct folder and run the appropriate <strong><code>env_*</code></strong> batch file in order to activate the path and environment to the correct compiler. If you need to <code>pip install &lt;package&gt;</code> and the package requires a compiler, then you <em>first</em> run the "<code>env_</code>" command, and then <code>pip install</code> in the normal way.</p>
+<p>That's all you need, and you should be able to compile any Python extension modules yourself.</p>
+
 </div>
 </div>
 </div>

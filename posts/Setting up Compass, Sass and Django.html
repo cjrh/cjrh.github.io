@@ -1,0 +1,82 @@
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Setting-up-Compass,-Sass-and-Django">Setting up Compass, Sass and Django<a class="anchor-link" href="#Setting-up-Compass,-Sass-and-Django">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Brandon Rhodes gives a <a href="http://rhodesmill.org/brandon/2011/adding-compass/">great tutorial</a> on how to add Compass to a <a href="https://www.djangoproject.com/">Django</a> project. In that tutorial, the first step is to create a <code>compass</code> folder, and inside that folder, run an <code>install.sh</code> script to create the gems required for Compass.  I had trouble with the line inside this script that looks like this:</p>
+<div class="highlight"><pre><span class="nv">BASE</span><span class="o">=</span><span class="k">$(</span>dirname <span class="k">$(</span>readlink -f <span class="k">$(</span>which <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)))</span>
+</pre></div>
+<p>For some reason on my Mac, <code>readlink</code> was missing. Instead, I <a href="http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in">found</a> a different way of obtaining the folder in which a script resides, and so my <code>install.sh</code> looks like this:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># compass/install.sh - install Compass under the &quot;./Gem&quot; directory</span>
+
+<span class="k">if</span> ! which gem &gt;/dev/null <span class="p">;</span><span class="k">then</span>
+    <span class="nb">echo</span> <span class="s1">&#39;Error: no &quot;gem&quot; command available&#39;</span>
+    <span class="nb">echo</span> <span class="s1">&#39;Please install Ruby.&#39;</span>
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+<span class="nv">BASE</span><span class="o">=</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span> dirname <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">)</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> <span class="k">)</span>
+<span class="nb">cd</span> <span class="nv">$BASE</span>  <span class="c"># the directory where this script lives</span>
+gem install -i Gem compass
+gem install -i Gem compass-susy-plugin
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The same occurs in the second script, <code>compass.sh</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># compass/compass.sh - properly invoke the &quot;Compass&quot; program</span>
+
+<span class="nv">BASE</span><span class="o">=</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span> dirname <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">)</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> <span class="k">)</span>
+<span class="nb">export </span><span class="nv">GEM_HOME</span><span class="o">=</span><span class="nv">$BASE</span>/Gem
+<span class="nb">export </span><span class="nv">RUBYLIB</span><span class="o">=</span><span class="nv">$BASE</span>/Gem/lib
+<span class="nv">$BASE</span>/Gem/bin/compass <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The remainder of the tutorial remains the same.</p>
+
+</div>
+</div>
+</div>

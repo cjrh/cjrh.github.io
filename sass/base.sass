@@ -29,6 +29,11 @@ $nav-font-color: adjust-lightness($font-color, -40)
 $anchor-color: adjust-lightness($body-bc1, 10)
 $link-color: #80DBFF
 
+$button-color1: #1290B6
+// $button-color1: $link-color
+$button-color2: adjust-lightness($button-color1, -20)
+$button-textcolor: #FFF
+
 html
     font-size: 16pt
 
@@ -156,9 +161,16 @@ div#content
     float: right
 
 .button
-    @include sassy-button("shiny", 10px, 1em, #73DEFF, #14A1CC, #333, "raised")
+    @include sassy-button("simple", 5px, 0.7em, $button-color1, $button-color2, $button-textcolor, "inset")
     padding: 4px 4px 4px 4px
     margin: 0
+    width: 150px
+    line-height: 2
+    height: 40px
+    text-align: center
+    margin-bottom: 10px
+    &:focus
+        outline: 0
 
 #banner
     width: 100%

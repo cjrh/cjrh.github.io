@@ -71,9 +71,18 @@
             console.log( "posts/" + name + ".json");
             console.log(loadPage("posts/" + name + ".json"));
             var metadata = JSON.parse(loadPage("posts/" + name + ".json"));
-            console.log("boing");
             console.log("metadata.next_post: " + metadata.next_post);
             console.log("metadata.previous_post: " + metadata.previous_post);
+
+            // Wire up the next and prev buttons
+            document.getElementById("prev-button").onclick = function() {
+                console.log("back");
+                showPost(metadata.previous_post);
+            }
+            document.getElementById("next-button").onclick = function() {
+                showPost(metadata.next_post);
+            }
+
             setPostLinks("nexta", metadata.next_post);
             setPostLinks("preva", metadata.previous_post);
         }
@@ -115,8 +124,12 @@
         </aside>
         <div id="content-container">
             <div id="content"></div>
-            <div class="left button"><p>Previous<br><a id="preva"></a></p></div>
-            <div class="right button"><p>Next<br><a id="nexta"></a></p></div>
+            <!-- <div class="left button"><p>Previous<br><a id="preva"></a></p></div> -->
+            <!-- <div class="right button"><p>Next<br><a id="nexta"></a></p></div> -->
+
+            <button id="prev-button" class="left button">Previous</button>
+            <button id="next-button" class="right button">Next</button>
+
             <!-- <div id="disqus_thread"></div> -->
             <!-- <script type="text/javascript"> -->
             <!--     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */ -->

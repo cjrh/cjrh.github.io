@@ -170,7 +170,11 @@ div#content
     text-align: center
     margin-bottom: 10px
     &:focus
-        outline: 0
+        outline: 0 !important
+        // This is so that you can see when the
+        // button is focused, for accessibility.
+        color: #DC143C
+
 
 #banner
     width: 100%

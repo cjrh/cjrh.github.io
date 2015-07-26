@@ -1,0 +1,96 @@
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Keynode-code-snippets-from-vim">Keynode code snippets from vim<a class="anchor-link" href="#Keynode-code-snippets-from-vim">&#182;</a></h1><p>In preparation for <a href="http://2015.pycon-au.org/">PyCon Australia</a> coming up next weekend, I'm getting my tools together to make slides for my <a href="http://2015.pycon-au.org/schedule/30051/view_talk?day=sunday">Cython talk</a>.</p>
+<p>I had been intending to use the <a href="http://ipython.org/notebook.html">IPython Notebook</a> to create the content, and then convert to slides using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a>; the conversion process is supported by the Notebook itself, using the <code>nbconvert</code> command-line tool.</p>
+<p>Unfortunately, I failed to quite get all the styling how I wanted it, since some parts the Notebook css styles carry through to the final revealjs slides, and therefore revealjs themes don't fully apply in the final deck.</p>
+<p>Alas, I return to <a href="https://www.apple.com/au/mac/keynote/">Keynote</a>. For a coding talk, a bit issue is obviously having your code presented neatly and so I looked at ways of supporting this. My code editor is <a href="http://www.vim.org/">vim-plus-plugins</a> (If anyone reading this would like to see a screencast of what vim on steroids looks like, particularly for Python-centric dev, let me know!). While Keynote is not the new hotness, it retains several redeeming features such as simplicity, great defaults, and easy conversion to bulletproof PDF: the absolute last thing I want to be doing two minutes before my talk is trying to figure out why my <code>$fancytool</code> slides won't work, or are glitching, or don't look the same on the podium machine if for some reason my machine breaks on the day.</p>
+<p>I wanted to find the shortest distance between getting code from my editor into a Keynote text box, and I think I have found one, at least for a system that has a command-line tool called <code>pbcopy</code>. As far as I know, this means Mac and Ubuntu, but I haven't looked for options on Windows, since my time on Windows seems to have ended when I left my last job.</p>
+<h3 id="Requirements">Requirements<a class="anchor-link" href="#Requirements">&#182;</a></h3><ul>
+<li>Vim</li>
+<li>a command-line application called <code>pbcopy</code></li>
+<li>A Python library called <a href="http://pygments.org/">Pygments</a> (install with <code>pip install Pygments</code>)</li>
+</ul>
+<p>Installing Pygments <em>should</em> also install a command-line program called <code>pygmentize</code>, which is what we'll be using. If after installing Pygments, you <em>don't</em> have <code>pygmentize</code> available, then something is wrong and you need to fix that first before continuing.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-1:-Basics">Step 1: Basics<a class="anchor-link" href="#Step-1:-Basics">&#182;</a></h2><p>Add two new key mapping to vim:</p>
+<div class="highlight"><pre><span class="n">nmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="o">%</span><span class="p">:</span><span class="n">w</span> <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
+<span class="n">vmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="s">&#39;&lt;,&#39;</span><span class="o">&gt;</span><span class="p">:</span><span class="n">w</span> <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
+</pre></div>
+<p>The <code>nmap</code> creates a new mapping in <em>normal</em> mode that will run the current buffer contents through the shell command. The shell command begins with <code>!</code>, and in this case is <code>pygmentize</code>. The output format of <code>pygmentize</code> is set to be Rich Text Format (rtf), and is piped to the command-line program <code>pbcopy</code>, which transfer all the output onto the system clipboard.  Then you, as the user, can paste from the clipboard directly into a text box in Keynote, and your code will be immaculately presented.</p>
+<p>The way you <em>use</em> the command is to hit the right sequence of keys, i.e., <kbd>\</kbd>,<kbd>p</kbd>,<kbd>c</kbd> (the mnemonic is "pasteboard-copy"). Then you will be able to paste the contents into a new text-box in your Keynote slides.</p>
+<p>The <code>vmap</code> creates a mapping for <em>visual</em> mode, and passes only the currently-selected visual block through <code>pygmentize</code>; everything else is the same.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-2:-Customization">Step 2: Customization<a class="anchor-link" href="#Step-2:-Customization">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I prefer a bigger font size, and the <a href="https://en.wikipedia.org/wiki/Liberation_fonts">Liberation Mono</a> font. These and further customizations can be applied directly in the commands. Also, for presentations I prefer the plain black and white theme <code>bw</code>. My vim key maps in my <code>.vimrc</code> look like the following:</p>
+
+<pre><code>nmap &lt;leader&gt;pc &lt;esc&gt;:%:w
+    \ !pygmentize -g -f rtf
+    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;
+
+vmap &lt;leader&gt;pc &lt;esc&gt;:'&lt;,'&gt;:w
+    \ !pygmentize -g -f rtf
+    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;
+
+nmap &lt;leader&gt;pcc &lt;esc&gt;:%:w
+    \ !pygmentize -g -f rtf -l cython
+    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;
+
+vmap &lt;leader&gt;pcc &lt;esc&gt;:'&lt;,'&gt;:w
+    \ !pygmentize -g -f rtf -l cython
+    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;</code></pre>
+<p>Here we are using the <em>line continuation</em> character <code>\</code> so that we don't suffer from having a single, long line wrap. I duplicated both <code>nmap</code> and <code>vmap</code> with a longer command, <code>\pcc</code>, specifically for cython-formatting which is what my PyCon AU talk will be based on. Pygments does do auto-detection, and it is pretty good, but Cython and Python seem to be too similar for the auto-detection to work without help.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-3:-Test">Step 3: Test<a class="anchor-link" href="#Step-3:-Test">&#182;</a></h2><p>That's it.  After you restart vim, you should be able to mark a block of code, then type <code>\pc</code>, and then be able to paste from the clipboard into a new text box inside Keynote.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>

@@ -50,22 +50,22 @@
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I prefer a bigger font size, and the <a href="https://en.wikipedia.org/wiki/Liberation_fonts">Liberation Mono</a> font. These and further customizations can be applied directly in the commands. Also, for presentations I prefer the plain black and white theme <code>bw</code>. My vim key maps in my <code>.vimrc</code> look like the following:</p>
+<div class="highlight"><pre><span class="n">nmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="o">%</span><span class="p">:</span><span class="n">w</span>
+    \ <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span>
+    \ <span class="o">-</span><span class="n">O</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;bw,fontface=Liberation Mono,fontsize=48&quot;</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
 
-<pre><code>nmap &lt;leader&gt;pc &lt;esc&gt;:%:w
-    \ !pygmentize -g -f rtf
-    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;
+<span class="n">vmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="s">&#39;&lt;,&#39;</span><span class="o">&gt;</span><span class="p">:</span><span class="n">w</span>
+    \ <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span>
+    \ <span class="o">-</span><span class="n">O</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;bw,fontface=Liberation Mono,fontsize=48&quot;</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
 
-vmap &lt;leader&gt;pc &lt;esc&gt;:'&lt;,'&gt;:w
-    \ !pygmentize -g -f rtf
-    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;
+<span class="n">nmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pcc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="o">%</span><span class="p">:</span><span class="n">w</span>
+    \ <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span> <span class="o">-</span><span class="n">l</span> <span class="n">cython</span>
+    \ <span class="o">-</span><span class="n">O</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;bw,fontface=Liberation Mono,fontsize=48&quot;</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
 
-nmap &lt;leader&gt;pcc &lt;esc&gt;:%:w
-    \ !pygmentize -g -f rtf -l cython
-    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;
-
-vmap &lt;leader&gt;pcc &lt;esc&gt;:'&lt;,'&gt;:w
-    \ !pygmentize -g -f rtf -l cython
-    \ -O style="bw,fontface=Liberation Mono,fontsize=48" \| pbcopy&lt;CR&gt;</code></pre>
+<span class="n">vmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pcc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="s">&#39;&lt;,&#39;</span><span class="o">&gt;</span><span class="p">:</span><span class="n">w</span>
+    \ <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span> <span class="o">-</span><span class="n">l</span> <span class="n">cython</span>
+    \ <span class="o">-</span><span class="n">O</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;bw,fontface=Liberation Mono,fontsize=48&quot;</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
+</pre></div>
 <p>Here we are using the <em>line continuation</em> character <code>\</code> so that we don't suffer from having a single, long line wrap. I duplicated both <code>nmap</code> and <code>vmap</code> with a longer command, <code>\pcc</code>, specifically for cython-formatting which is what my PyCon AU talk will be based on. Pygments does do auto-detection, and it is pretty good, but Cython and Python seem to be too similar for the auto-detection to work without help.</p>
 
 </div>
@@ -80,17 +80,4 @@ vmap &lt;leader&gt;pcc &lt;esc&gt;:'&lt;,'&gt;:w
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>

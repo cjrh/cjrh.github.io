@@ -46,7 +46,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Download those and install both. Note that certain applications, such as <a href="https://code.google.com/p/mactype/">MacType</a> can interfere with the installation process. It nearly drove me made trying to find what was breaking my most recent SDK install. <em>I strongly recommend you close as many other programs (including on the system tray) as you can while installing the SDKs.</em></p>
+<p>Download those and install both. Note that certain applications, such as <a href="https://code.google.com/p/mactype/">MacType</a> can interfere with the installation process. It nearly drove me mad trying to find what was breaking my most recent SDK install. <em>I strongly recommend you close as many other programs (including on the system tray) as you can while installing the SDKs.</em></p>
 
 </div>
 </div>
@@ -65,7 +65,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Compilation of Python extension modules is normally done from the command prompt (<code>cmd</code>). I have found it very useful to have a batch file "activate" the path and environment for the Microsoft compilers. I make two of these batch files, one for each SDK, and <strong>place these somewhere on my system path.</strong> Editing the system path is painful so I use an excellent freeware product called (Rapid Environment Editor)[<a href="http://www.rapidee.com/en/about">http://www.rapidee.com/en/about</a>] to add new path entries, or check whether my existing path entries are valid: non-existing paths will be highlighted in red.  This is a great application.</p>
+<p>Compilation of Python extension modules is normally done from the command prompt (<code>cmd</code>). I have found it very useful to have a batch file "activate" the path and environment for the Microsoft compilers. I make two of these batch files, one for each SDK, and <strong>place these somewhere on my system path.</strong> Editing the system path is painful so I use an excellent freeware product called <a href="http://www.rapidee.com/en/about">Rapid Environment Editor</a> to add new path entries, or check whether my existing path entries are valid: non-existing paths will be highlighted in red.  This is a great application.</p>
 <p>I first make a batch file called <strong><code>env_SDK70.bat</code></strong>, with contents:</p>
 
 <pre><code>SET MSSdk=1
@@ -76,6 +76,7 @@ C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K "C:\Program Files\Microsoft SDK
 <pre><code>SET MSSdk=1
 SET DISTUTILS_USE_SDK=1
 C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd"</code></pre>
+<p>There are long lines in the above snippets: be sure to copy everything.</p>
 
 </div>
 </div>

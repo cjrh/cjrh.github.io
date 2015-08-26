@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Wherein I blog about my four main interests.">
+    <meta name="description"
+          content="Caleb Hattingh's blog about mostly computing and web design, but also about
+                   math and chemical engineering, and occasionally about art and music.">
     <meta name="author" content="Caleb Hattingh">
-    <meta name="keywords" content="Python,math,IPython,Cython,Guitar,Piano,Drawing">
+    <meta name="keywords" content="Python,javascript,Sass,CSS,animation,math,IPython,Cython,Guitar,Piano,Drawing">
     <meta name="viewport" content="width=device-width">
     <!-- <meta property="og:title" content=""> -->
     <!-- <meta property="og:image" content=""> -->
@@ -22,29 +24,46 @@
     <script type="text/javascript"
       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/syntax.css">
     <link rel="stylesheet" href="stylesheets/base.css">
 </head>
 <body>
     <div id="banner">
+        <p class='navinfo'>You can navigate by keyboard: use <kbd>tab</kbd> to move focus and
+        <kbd>enter</kbd> to hit buttons and links.</p>
         <div class="ttext">Python, Numbers, Music, Art</div>
         <div class="minstrel">Caleb Hattingh</div>
     </div>
     <div id="main">
         <aside id="left-aside">
-            <ul>
-                <!-- <li>Archive</li> -->
-                <li><a href="https://twitter.com/caleb_hattingh" target="_blank">Twitter</a></li>
-                <li><a href="https://github.com/cjrh" target="_blank">Github</a></li>
-                <li><a href="https://bitbucket.org/cjrh" target="_blank">Bitbucket</a></li>
-                <li><a href="http://au.linkedin.com/in/calebhattingh" target="_blank">LinkedIn</a></li>
-                <!-- <li>Resume</li> -->
-                <li class="break"></li>
-            </ul>
+            <div class="pad10">
+                <ul>
+                    <!-- <li>Archive</li> -->
+                    <li><a href="https://twitter.com/caleb_hattingh" target="_blank">
+                        <i class="fa fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://github.com/cjrh" target="_blank">
+                        <i class="fa fa-github"></i> Github</a></li>
+                    <li><a href="https://bitbucket.org/cjrh" target="_blank">
+                        <i class="fa fa-bitbucket"></i> Bitbucket</a></li>
+                    <li><a href="http://au.linkedin.com/in/calebhattingh" target="_blank">
+                        <i class="fa fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="http://codepen.io/cjrh/" target="_blank">
+                        <i class="fa fa-codepen"></i> Codepen</a></li>
+                    <!-- <li>Resume</li> -->
+                    <li class="break"></li>
+                </ul>
+            </div>
         </aside>
         <div id="content-container">
-            <button id="prev-button" class="left button">Previous</button>
-            <button id="next-button" class="right button">Next</button>
+            <button id="prev-button" class="left button">
+                <i class="fa fa-arrow-circle-left"></i>
+                Previous
+            </button>
+            <button id="next-button" class="right button">
+                Next
+                <i class="fa fa-arrow-circle-right"></i>
+            </button>
             <div id="content"></div>
 
             <!-- <div id="disqus_thread"></div> -->
@@ -61,21 +80,16 @@
             <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
         </div>
         <aside id="right-aside">
-            <!-- <ul> -->
-                <!-- <!&#45;&#45; <li>Archive</li> &#45;&#45;> -->
-                <!-- <a href="">Twitter</a> -->
-                <!-- <a>Github</a> -->
-                <!-- <a>Bitbucket</a> -->
-                <!-- <a>LinkedIn</a> -->
-                <!-- <!&#45;&#45; <li>Resume</li> &#45;&#45;> -->
-                <!-- <li class="break"></li> -->
-            <!-- </ul> -->
+            <div class="pad10"></div>
         </aside>
         <div id=comment></div>
     </div>
     <footer><p></p></footer>
     <!-- Load scripts last. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.ui.min.js"></script>
     <script>
+        var content = document.getElementById('content');
         window.onload = loadContent;
 
         function loadContent() {
@@ -96,6 +110,7 @@
             return xmlhttp.responseText;
         };
 
+        var load_dirn = 'Left';
         function showPost(name) {
             var element = document.getElementById("content");
             var postref = "posts/" + name + ".html";
@@ -110,17 +125,28 @@
             // Wire up the next and prev buttons
             var prevevent = null;
             if (metadata.previous_post !== null) {
-                prevevent = function() { showPost(metadata.previous_post); }
+                prevevent = function() {
+                    load_dirn = 'Left';
+                    unloadingAnimation('Right', function () {
+                        showPost(metadata.previous_post);
+                    });
+                }
             }
             document.getElementById("prev-button").onclick = prevevent;
 
             var nextevent = null;
             if (metadata.next_post !== null) {
-                nextevent = function() { showPost(metadata.next_post); }
-            }
+                nextevent = function() {
+                    load_dirn = 'Right';
+                    unloadingAnimation('Left', function () {
+                        showPost(metadata.next_post);
+                    });
+                }
+            };
             document.getElementById("next-button").onclick = nextevent;
 
             window.history.pushState("", "", '?post='+name);
+            loadingAnimation();
             element.parentElement.style.webkitTransform = 'scale(1)';
         }
 
@@ -139,6 +165,41 @@
             return result;
         };
 
+        function filter_prompt(elems) {
+            // I have to remove div.prompt manually. Velocity will
+            // make it appear if it happens to be in the list, regardless
+            // of what I specified in the stylesheet. So we first remove
+            // these from the list before animating.
+            var out = [];
+            for (var i=0;i<elems.length;i+=1) {
+                if (!elems[i].classList.contains("prompt")) {
+                    out.push(elems[i]);
+                }
+            };
+            return out;
+        };
+
+        function animation(name, stagger, complete) {
+            var elems = filter_prompt(
+            content.querySelectorAll('.text_cell_render>*, .input_area>*, .output>*'));
+            window.elems = elems;
+            Velocity(elems, name, {
+                duration: 300,
+                stagger: stagger,
+                easing: "spring",
+                drag: true,
+                complete: complete
+            });
+        }
+
+        function loadingAnimation() {
+            console.log('transition.slide' + load_dirn + 'BigIn');
+            animation('transition.slide' + load_dirn + 'BigIn', 80);
+        }
+
+        function unloadingAnimation(dir, complete) {
+            animation('transition.slide' + dir + 'BigOut', 20, complete);
+        }
     </script>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

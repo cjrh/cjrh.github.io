@@ -8,19 +8,19 @@
 @import "compass/css3/transition"
 @import "sassy-buttons"
 
-@import url(http://fonts.googleapis.com/css?family=Oswald:700|Droid+Serif:400,700italic)
-@import url(http://fonts.googleapis.com/css?family=Yellowtail)
 @import url(http://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic,900)
-@import url(http://fonts.googleapis.com/css?family=Open+Sans)
+@import url(http://fonts.googleapis.com/css?family=Courgette)
+
+$body-font: Lato, sans-serif
+$title-font: Courgette, cursive
 
 $body-bc1: #262626
 $body-bc2: #262626
 
 // Horizontal dimensions
 $main-width: 900px
-$content-width: 700px
-$aside-left: 100px
-$aside-right: 100px
+$content-width: 70%
+$aside-width: 30%
 
 $font-title-color:#FEC30A
 $font-heading-color: #D5D5D5
@@ -33,44 +33,36 @@ $button-color1: #1290B6
 // $button-color1: $link-color
 $button-color2: adjust-lightness($button-color1, -20)
 $button-textcolor: #FFF
+$base-font-size: 18px
 
 html
-    font-size: 16pt
+    font-size: $base-font-size
 
 body
-    margin: auto
     height: 100%
-    background-repeat: no-repeat
-    background-attachment: fixed
     +background-image(linear-gradient(to bottom, $body-bc1, $body-bc2))
-    position: relative
-    font-family: Lato, sans-serif
+    font-family: $body-font
+    overflow-x: hidden
+    overflow-y: scroll
 
 h1, h2, h3, h4, h5, h6
-    font-family: 'Lato', cursive
-    +text-shadow(none)
+    font-family: $body-font
     color: $font-heading-color
-    text-indent: none
 
 h2, h3, h4, h5, h6
-    font-family: 'Lato', sans-serif
     font-style: bold
 
 h1
-    font-family: 'Lato', sans-serif
     font-weight: 400
-    font-size: 2em
-    line-height: 1.3em
+    font-size: $base-font-size * 2
+    line-height: 1.2em
 
 h2
     font-weight: 400
-    font-size: 1.2em
+    font-size: $base-font-size * 1.2
     font-style: italic
     color: $font-title-color
     line-height: 1.5em
-
-h1
-    +column-span(all)
 
 .text_cell_render
     color: $font-color
@@ -79,7 +71,6 @@ p
     font-size: 1.0em
     line-height: 1.5em
     text-align: left
-    // text-indent: 50px
     color: $font-color
     font-weight: 300
 
@@ -88,12 +79,29 @@ p > code
     font-size: 0.9em
     color: $font-color
 
+p.navinfo
+    position: absolute
+    font-size: $base-font-size * 0.6
+    color: lighten($body-bc1, 15%)
+    top: 0px
+    left: 50%
+    +transform(translateX(-50%))
+
 ul
     list-style-type: circle
     list-style-position: inside
 
 a
     color: $link-color
+    text-decoration: none
+    +text-shadow(none)
+    transition: all 450ms
+    &:hover
+        +text-shadow(0px 0px 15px 500px lighten($link-color, 50%))
+        color: lighten($link-color, 0%)
+
+.pad10
+    padding: 0 10px 0 10px
 
 div#main
     margin: 0 auto 0 auto
@@ -101,12 +109,11 @@ div#main
 
 aside
     float: left
-    display: inline
-    width: $aside-left
-    padding: 0 30px 0 30px
+    // display: inline
+    width: $aside-width / 2
+    // padding: 0 10px 0 10px
     li
-        // font-family: Oswald, sans-serif
-        font-family: Lato, sans-serif
+        font-family: $body-font
         font-size: 1.0em
         color: $nav-font-color
         display: block
@@ -123,16 +130,6 @@ ul
     margin: 0
     padding: 0
 
-aside#left-aside
-    // This was only for debugging, to see where the block goes.
-    // background-color: #FF0000
-
-aside#right-aside
-    background-color: #FF0000
-    width: $aside-right
-    li
-        text-align: left
-
 footer
     clear: left
     display: block
@@ -141,8 +138,6 @@ footer
 #content-container
     float: left
     width: $content-width
-    margin: 0 auto 0 auto
-    overflow: auto
 
 .anchor-link
     color: $anchor-color
@@ -163,45 +158,43 @@ div#content
 
 .button
     @include sassy-button("simple", 5px, 0.7em, $button-color1, $button-color2, $button-textcolor, "inset")
-    padding: 4px 4px 4px 4px
+    padding: 4px
+    font-size: 80%
     margin: 0
-    width: 150px
+    width: 120px
     line-height: 2
-    height: 40px
     text-align: center
-    margin-bottom: 10px
+    display: inline-block
     &:focus
         outline: 0 !important
         // This is so that you can see when the
         // button is focused, for accessibility.
-        color: #DC143C
-
+        color: lighten(#DC143C, 30%)
+    & > i
+        font-size: $base-font-size * 1.5
+        vertical-align: middle
 
 #banner
     width: 100%
-    margin: 3em auto 3em auto
+    margin: 0 auto 0 auto
+    padding-top: 1%
     text-align: center
     overflow: hidden
-    font-family: Lato, cursive
+    font-family: $body-font, cursive
     +background-image(linear-gradient(to bottom, $body-bc1, $body-bc1))
     color: $font-title-color
     .ttext
+        font-family: $title-font
         font-size: 2em
-        vertical-align: center
+        +text-shadow(none)
+        transition: all 450ms
+        &:hover
+            +text-shadow(0px 0px 25px 10px yellow)
+            color: lighten($font-title-color, 20%)
+
     .minstrel
         font-size: 1.0em
         color: $nav-font-color
-    #leadin
-        font-family: Michroma, serif
-        font-style: italic
-        color:  #CCBE29
-        font-size: 0.6em
-        line-height: 400%
-        padding: 0 6% 0 6%
-        overflow: hidden
-        float: left
-        text-align: center
-
 svg
     background: #FFFFFF
     +border-radius(10px)
@@ -214,28 +207,30 @@ svg
 .prompt
     display: none
 
-
 pre
     color: #707070
     font-size: 0.7em
     margin-left: 5%
     margin-right: 5%
     // border: 2px solid #111
+    overflow: auto
 
 .MathJax_Display span
     color: $link-color
 
+
 @media screen and (max-width: 900px), screen and (max-device-width: 900px)
-    #banner
-        font-size: 0.7em
-        margin: 0em auto 0em auto
-        // border-style: solid
+    html
+        font-size: $base-font-size * 0.9
     div#main
-        width: 100%
+        width: 490px
     h1
-        font-size: 2.6em
-    p
-        // font-size: 1.3em
+        font-size: $base-font-size * 1.5
+        margin-top: 10px
+    .button
+        width: auto
+    p.navinfo
+        display: none
     .minstrel
         display: none
     div#content-container
@@ -257,19 +252,17 @@ pre
             width: 100%
 
 @media screen and (max-width: 500px), screen and (max-device-width: 500px)
+    html
+        font-size: $base-font-size * 0.8
     #banner
-        font-size: 0.5em
-        margin: 0px auto
-        width: 100%
-        #leadin
-            width: 60px
+        font-size: $base-font-size * 0.6
     h1
-        font-size: 2.5em
+        font-size: $base-font-size * 1.0
+        border-bottom: 1px solid $font-heading-color
+    h2
+        font-size: $base-font-size * 0.9
     aside
-        margin: 0 10px 20px 10px
-        font-size: 0.8em
-    #content-container
-        width: 100%
-    div#content
+        font-size: $base-font-size * 0.7
+    div#main
         width: 100%
 

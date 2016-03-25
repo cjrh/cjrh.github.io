@@ -8,261 +8,293 @@
 @import "compass/css3/transition"
 @import "sassy-buttons"
 
-@import url(http://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic,900)
-@import url(http://fonts.googleapis.com/css?family=Courgette)
+$body-font: Baskerville, Palatino, "Times New Roman", serif
+$title-font: "Arial Black", Gill Sans, Helvetica, Arial, sans-serif
 
-$body-font: Lato, sans-serif
-$title-font: Courgette, cursive
-
-$body-bc1: #262626
-$body-bc2: #262626
+$body-bc1: #ffffff
+$body-bc2: #ffffff
 
 // Horizontal dimensions
-$main-width: 900px
-$content-width: 70%
-$aside-width: 30%
+$main-width: 80%
+$content-width: 100%
 
-$font-title-color:#FEC30A
-$font-heading-color: #D5D5D5
-$font-color: #D5D5D5
-$nav-font-color: adjust-lightness($font-color, -40)
-$anchor-color: adjust-lightness($body-bc1, 10)
-$link-color: #80DBFF
+$font-title-color: #000000
+$font-heading-color: #000000
+$font-color: #000000
+$nav-font-color: adjust-lightness($font-color, -1)
+$anchor-color: transparent
+$link-color: #5f466a
 
 $button-color1: #1290B6
-// $button-color1: $link-color
+$button-color1: lighten($link-color, 20%)
 $button-color2: adjust-lightness($button-color1, -20)
 $button-textcolor: #FFF
-$base-font-size: 18px
+$base-font-size: 22px
 
 html
-    font-size: $base-font-size
+  font-size: $base-font-size
+  padding: 0
+  height: 100%
 
 body
-    height: 100%
-    +background-image(linear-gradient(to bottom, $body-bc1, $body-bc2))
-    font-family: $body-font
-    overflow-x: hidden
-    overflow-y: scroll
-
-h1, h2, h3, h4, h5, h6
-    font-family: $body-font
-    color: $font-heading-color
-
-h2, h3, h4, h5, h6
-    font-style: bold
-
-h1
-    font-weight: 400
-    font-size: $base-font-size * 2
-    line-height: 1.2em
-
-h2
-    font-weight: 400
-    font-size: $base-font-size * 1.2
-    font-style: italic
-    color: $font-title-color
-    line-height: 1.5em
-
-.text_cell_render
-    color: $font-color
-
-p
-    font-size: 1.0em
-    line-height: 1.5em
-    text-align: left
-    color: $font-color
-    font-weight: 300
-
-p > code
-    font-style: Courier
-    font-size: 0.9em
-    color: $font-color
-
-p.navinfo
-    position: absolute
-    font-size: $base-font-size * 0.6
-    color: lighten($body-bc1, 15%)
-    top: 0px
-    left: 50%
-    +transform(translateX(-50%))
-
-ul
-    list-style-type: circle
-    list-style-position: inside
-
-a
-    color: $link-color
-    text-decoration: none
-    +text-shadow(none)
-    transition: all 450ms
-    &:hover
-        +text-shadow(0px 0px 15px 500px lighten($link-color, 50%))
-        color: lighten($link-color, 0%)
-
-.pad10
-    padding: 0 10px 0 10px
-
-div#main
-    margin: 0 auto 0 auto
-    width: $main-width
-
-aside
-    float: left
-    // display: inline
-    width: $aside-width / 2
-    // padding: 0 10px 0 10px
-    li
-        font-family: $body-font
-        font-size: 1.0em
-        color: $nav-font-color
-        display: block
-        text-align: right
-        a
-            text-decoration: none
-            color: $nav-font-color
-            // single-transition(color, 1)
-            transition: color 0.5s
-        a:hover
-            color: $font-title-color
-
-ul
-    margin: 0
-    padding: 0
-
-footer
-    clear: left
-    display: block
-    width: 100%
-
-#content-container
-    float: left
-    width: $content-width
-
-.anchor-link
-    color: $anchor-color
-
-div#content
-    float: left
-    width: 100%
-
-.left p, .right p
-    font-size: 0.9em
-    width: 10em
-
-.left
-    float: left
-
-.right
-    float: right
-
-.button
-    @include sassy-button("simple", 5px, 0.7em, $button-color1, $button-color2, $button-textcolor, "inset")
-    padding: 4px
-    font-size: 80%
-    margin: 0
-    width: 120px
-    line-height: 2
-    text-align: center
-    display: inline-block
-    &:focus
-        outline: 0 !important
-        // This is so that you can see when the
-        // button is focused, for accessibility.
-        color: lighten(#DC143C, 30%)
-    & > i
-        font-size: $base-font-size * 1.5
-        vertical-align: middle
+  height: 100%
+  +background-image(linear-gradient(to bottom, $body-bc1, $body-bc2))
+  font-family: $body-font
+  overflow-x: hidden
+  overflow-y: scroll
+  margin: 0
 
 #banner
-    width: 100%
-    margin: 0 auto 0 auto
-    padding-top: 1%
-    text-align: center
-    overflow: hidden
-    font-family: $body-font, cursive
-    +background-image(linear-gradient(to bottom, $body-bc1, $body-bc1))
-    color: $font-title-color
-    .ttext
-        font-family: $title-font
-        font-size: 2em
-        +text-shadow(none)
-        transition: all 450ms
-        &:hover
-            +text-shadow(0px 0px 25px 10px yellow)
-            color: lighten($font-title-color, 20%)
+  @include background(image-url("/img/1920black.jpg"))
+  background-repeat: no-repeat
+  background-size: 100% auto
+  height: 350px
+  margin: 0 auto 0 auto
+  padding-top: 1%
+  text-align: center
+  overflow: hidden
+  font-family: $body-font
+  color: $font-title-color
 
-    .minstrel
-        font-size: 1.0em
-        color: $nav-font-color
+.ttext
+  margin-top: 0px
+  margin-bottom: 0px
+  font-family: $title-font
+  font-size: 1em
+  font-variant: small-caps
+  text-align: right
+
+p.minstrel
+  font-size: 1.0em
+  font-style: italic
+  color: $nav-font-color
+  margin: 0
+  text-align: right
+
+
+p
+  &.ttext, &.minstrel
+    transition: color 0.5s, letter-spacing, 5s
+    transition-timing-function: ease-in-out
+    &:hover
+      color: #a83f63
+      letter-spacing: 15px
+      transition: color 0.5s, letter-spacing, 0.1s
+
+div#main
+  margin: 0 auto 0 auto
+  width: $main-width
+  max-width: 768px
+
+aside#mainlogo
+  position: absolute
+  top: 10px
+  right: 10px
+  //text-align: right
+
+
+h1, h2, h3, h4, h5, h6
+  font-family: $title-font
+  color: $font-heading-color
+
+h2, h3, h4, h5, h6
+  font-weight: bold
+
+h1
+  font-weight: 400
+  font-size: $base-font-size * 2
+  line-height: 1.2em
+
+h2
+  font-weight: 400
+  font-size: $base-font-size * 1.2
+  font-style: italic
+  color: $font-title-color
+  line-height: 1.5em
+
+.text_cell_render
+  color: $font-color
+
+p
+  font-size: 1.0em
+  line-height: 1.5em
+  text-align: left
+  color: $font-color
+
+p > code
+  font-style: Courier
+  font-size: 0.9em
+  color: $font-color
+
+p.navinfo
+  position: absolute
+  font-size: $base-font-size * 0.6
+  color: $nav-font-color
+  top: 0px
+  left: 50%
+  +transform(translateX(-50%))
+  opacity: 0.2
+
+ul
+  list-style-type: circle
+  list-style-position: inside
+
+a
+  color: $link-color
+  font-weight: bold
+  text-decoration: none
+  //+text-shadow(0px 0px 0px 1px black)
+  transition: all 450ms
+  &:hover
+    +text-shadow(0px 0px 15px 500px lighten($link-color, 50%))
+    text-decoration: underline
+    color: lighten($link-color, 0%)
+
+.pad10
+  padding: 0 10px 0 10px
+
+
+aside#links
+  position: absolute
+  top: 10px
+  left: 10px
+  line-height: 0.5
+  li
+    font-family: $body-font
+    font-weight: light
+    font-size: 0.8em
+    font-variant: small-caps
+    font-style: italic
+    letter-spacing: 2px
+    color: $nav-font-color
+    display: block
+    a
+      text-decoration: none
+      color: $nav-font-color
+      transition: color 0.5s, letter-spacing, 5s
+      transition-timing-function: ease-in-out
+    a:hover
+      color: #a83f63
+      letter-spacing: 15px
+      transition: color 0.5s, letter-spacing, 0.1s
+
+ul
+  margin: 0
+  padding: 0
+
+footer
+  clear: left
+  display: block
+  width: 100%
+
+#content-container
+  width: $content-width
+  margin-top: 20px
+
+.anchor-link
+  visibility: hidden
+  color: $anchor-color
+
+div#content
+  float: left
+  width: 100%
+
+.left p, .right p
+  font-size: 0.9em
+  width: 10em
+
+.left
+  float: left
+
+.right
+  float: right
+
+.button
+  @include sassy-button("simple", 5px, 0.7em, $button-color1, $button-color2, $button-textcolor, "inset")
+  padding: 4px
+  font-size: 80%
+  margin: 0
+  width: 120px
+  line-height: 2
+  text-align: center
+  display: inline-block
+  &:focus
+    outline: 0 !important
+    // This is so that you can see when the
+    // button is focused, for accessibility.
+    color: lighten(#DC143C, 30%)
+  & > i
+    font-size: $base-font-size * 1.5
+    vertical-align: middle
+
+
 svg
-    background: #FFFFFF
-    +border-radius(10px)
-    font-family: Georgia, serif
-    font-size: 8pt
-    // +scale(200%)
-    width: 100%
-    height: 100%
+  background: #FFFFFF
+  +border-radius(10px)
+  font-family: Georgia, serif
+  font-size: 8pt
+  width: 100%
+  height: 100%
 
 .prompt
-    display: none
+  display: none
 
 pre
-    color: #707070
-    font-size: 0.7em
-    margin-left: 5%
-    margin-right: 5%
-    // border: 2px solid #111
-    overflow: auto
+  font-size: 0.7em
+  margin-left: 5%
+  margin-right: 5%
+  overflow: auto
 
 .MathJax_Display span
-    color: $link-color
-
+  color: $link-color
 
 @media screen and (max-width: 900px), screen and (max-device-width: 900px)
-    html
-        font-size: $base-font-size * 0.9
-    div#main
-        width: 490px
-    h1
-        font-size: $base-font-size * 1.5
-        margin-top: 10px
-    .button
-        width: auto
-    p.navinfo
-        display: none
-    .minstrel
-        display: none
-    div#content-container
-        float: none
-        width: 95%
-        margin: 0px auto 0px auto
-    aside
-        float: none
-        display: block
-        font-size: 1em
-        text-align: justify
-        width: 70%
-        margin: 0px auto 0px auto
-        li
-            display: inline-block
-        ul:after
-            content: ''
-            display: inline-block
-            width: 100%
+  html
+    font-size: $base-font-size * 0.9
+  //div#main
+  //  width: 490px
+  h1
+    font-size: $base-font-size * 1.5
+    margin-top: 10px
+  #banner
+    height: 220px
+  .button
+    width: auto
+  p.navinfo
+    display: none
+  //.minstrel
+  //  display: none
+  div#content-container
+    float: none
+    //width: 95%
+    //margin: 0px auto 0px auto
+  //aside
+  //  float: none
+  //  display: block
+  //  font-size: 1em
+  //  text-align: justify
+  //  width: 70%
+  //  margin: 0px auto 0px auto
+  //  li
+  //    display: inline-block
+  //  ul:after
+  //    content: ''
+  //    display: inline-block
+  //    width: 100%
 
 @media screen and (max-width: 500px), screen and (max-device-width: 500px)
-    html
-        font-size: $base-font-size * 0.8
-    #banner
-        font-size: $base-font-size * 0.6
-    h1
-        font-size: $base-font-size * 1.0
-        border-bottom: 1px solid $font-heading-color
-    h2
-        font-size: $base-font-size * 0.9
-    aside
-        font-size: $base-font-size * 0.7
-    div#main
-        width: 100%
+  html
+    font-size: $base-font-size * 0.8
+  #banner
+    font-size: $base-font-size * 0.6
+    height: 120px
+  h1
+    font-size: $base-font-size * 1.0
+    border-bottom: 1px solid $font-heading-color
+  h2
+    font-size: $base-font-size * 0.9
+  aside
+    font-size: $base-font-size * 0.7
+  div#main
+    width: 95%
 

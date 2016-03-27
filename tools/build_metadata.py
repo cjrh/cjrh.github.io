@@ -19,7 +19,7 @@ def process(notebook_folder, output_folder):
         timestamp = getctime(nbfile)  # Get the notebook creation time
         creation_date = time.ctime(getctime(nbfile))  # as a string
         nbbasefile = basename(nbfile)
-        print 'Processing "{}"...'.format(nbbasefile)
+        print('Processing "{}"...'.format(nbbasefile))
         postname, ext = splitext(nbbasefile)
         metadata[postname] = dict(
                 timestamp=timestamp,
@@ -28,7 +28,7 @@ def process(notebook_folder, output_folder):
         # Convert the notebook file to plain HTML, add to posts/ folder
         tmpl = 'ipython nbconvert --to html --template basic "{}" --stdout > "{}"'
         os.system(tmpl.format(nbfile, join(output_folder, postname+'.html')))
-        print creation_date
+        print(creation_date)
 
     # Move through the list, building up the cross links
     # Posts are sorted by creation timestamp
@@ -48,7 +48,7 @@ def process(notebook_folder, output_folder):
         metadata[postname]['previous_post'] = previous_post
         metadata[postname]['next_post'] = next_post
 
-        print postname
+        print(postname)
         with open(join(output_folder, postname+'.json'), 'w') as f:
             json.dump(metadata[postname], f, indent=4)
     with open(join(output_folder, 'latest.json'), 'w') as f:

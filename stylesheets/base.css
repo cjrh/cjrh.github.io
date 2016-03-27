@@ -38,7 +38,7 @@ body {
 .ttext {
   margin-top: 0px;
   margin-bottom: 0px;
-  font-family: "Arial Black", Gill Sans, Helvetica, Arial, sans-serif;
+  font-family: "Arial Black", Gadget, Helvetica-Black, Helvetica, Arial, sans-serif;
   font-size: 1em;
   font-variant: small-caps;
   text-align: right;
@@ -81,7 +81,7 @@ aside#mainlogo {
 
 /* line 96, ../sass/base.sass */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Arial Black", Gill Sans, Helvetica, Arial, sans-serif;
+  font-family: "Arial Black", Gadget, Helvetica-Black, Helvetica, Arial, sans-serif;
   color: #000000;
 }
 

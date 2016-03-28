@@ -1,0 +1,121 @@
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Python-Packaging-Problems">Python Packaging Problems<a class="anchor-link" href="#Python-Packaging-Problems">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As I write this, I am currently in the process of completing the server infrastructure for my startup, <a href="http://codermoji.com">codermoji</a>, which is proudly created on a Python stack.</p>
+<p>"Proudly", though, is bittersweet.  Again and again I have been burned by the "python packaging problem". I have been using Python for fifteen years. I have heard all the talk, followed the online discussions, seen tools come and go. Even for someone like me, getting Python code working on a new computer is very frustrating.</p>
+<p>I also mentor at <a href="http://coderdojo.com">CoderDojo</a>, a coding club for kids aged nominally 7-17, run on Saturdays. I have a very, very clear idea of what it is like for beginners. And the Python story is really terrible in this environment, for multiple reasons.</p>
+<p>It always comes back to the "Python packaging problem"; however, I think that's a misnomer.  What do we mean by "packaging probem"?  There are hundreds of ways to package python code! (That is also a problem, but let's not get side-tracked). I think we should rather call it the <strong>Python Deployment Problem</strong>.</p>
+<p>I think we need to frame the discussion in a different way. Let's work with <strong>user stories</strong> and see whether we have a solution for each story. Sound good? Let's begin.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-beginner">The beginner<a class="anchor-link" href="#The-beginner">&#182;</a></h2><p>The beginner is someone who either owns or accesses a computer, but doesn't know how to code, nor is familiar with the command line.  There are three main activities that the beginner wants to do:</p>
+<ol>
+<li>Install a dev environment</li>
+<li>Use a dev environment</li>
+<li>Put applications on other computers (e.g. show Mom, Dad, friends their program)</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Installing">Installing<a class="anchor-link" href="#Installing">&#182;</a></h3><h4 id="Windows">Windows<a class="anchor-link" href="#Windows">&#182;</a></h4><p>On Windows, installing stock Python from Python.org is a pretty good experience. It exactly matches the way every other software is installed, in that you download a single installer file and run it, answer a few questions, and the installer exits. It is also important to point out that uninstalling Python also works exactly liek other programs, in that you can use the <em>Programs</em> section in the <em>Control Panel</em> to uninstall.</p>
+<p>Actually, on Windows, the user is spoilt for choice. All of the Python distributions have graphical installers that "just work". There are two Python distributions that will also "just work" later when you try to install packages that require binary dependencies:</p>
+<ul>
+<li><a href="http://continuum.io/downloads">Anaconda Python</a></li>
+<li><a href="http://winpython.github.io/">WinPython</a></li>
+</ul>
+<h4 id="Mac-OSX">Mac OSX<a class="anchor-link" href="#Mac-OSX">&#182;</a></h4><p>On Mac, it's a bit trickier. Firstly, you're <strong>stuck with legacy Python</strong> if you just use what's already installed.  Please, <strong>Please</strong> don't feel good about the fact that OSX "ships with Python". This Python is for the operating system. It's not for users. You need admin rights to install additional packages and upgrading packages might break something in the system. It is better to tell people that Mac OSX does <strong>not</strong> include a Python for user programs, and that they should install a new one, just like you have to do with Windows.</p>
+<p>Which one to install? The obvious one is the download from python.org.  First, let's note that the download is a <strong>.pkg</strong> file and not a <strong>.dmg</strong> bundle. The <a href="https://docs.python.org/3/using/mac.html#getting-and-installing-macpython">docs</a> say that for uninstallation, the stuff that will get installed will all have to be deleted manually, one at a time. This is unlike the normal way OSX bundles get uninstalled, which is to drag the application bundle in "Applications" and drop it into the trash can on the dock.</p>
+<p>That's the first smell.  The second one is the installer warning saying <em>IDLE and other programs using tkinter require specific versions of the Tcl/Tk platform independent windowing toolkit</em>. And then there is a link to somewhere else for "current information". A beginner <strong>doesn't know what this means</strong>.  An expert knows the Python installer will not install a proper version of Tk, and that you will have to manually install ActiveTcl.  That installation also <em>won't</em> be a <code>.dmg</code> application bundle, <strong>will</strong> create a bunch of files all over the place, and will require <a href="http://docs.activestate.com/activetcl/8.5/at.install.html#uninstall">running a script</a> to do the uninstallation. Remember, our beginner will not understand what to do, and or get it wrong. They may not even know where to look to find information about it.</p>
+<p>So what are the other options?  Well, most expert users on Mac <strong>first</strong> check <a href="http://brew.sh/">http://brew.sh/</a> to install system-like things and so are likely to try there first for Python and/or Tk. But beginners won't.</p>
+<p>Personally, I use <a href="http://continuum.io/downloads">Anaconda Python</a> on Mac for several reasons:</p>
+<ul>
+<li>It installs into my home folder,</li>
+<li>Into a single folder that I can easily delete,</li>
+<li>Includes many binary packages that can be installed without requiring other deps</li>
+<li>Automatically includes a tool for virtual environments</li>
+</ul>
+<p>However, it still requires command-line work which makes it difficult for beginners to get started immediately.</p>
+<p>So, honestly, I don't think there is a good solution right now for installing Python for beginners. Just various levels of broken. If I was personally involved, I would install Anaconda Python on the user's machine, but for a general recommendation to someone, somewhere else, probably just the stock installer from python.org. That, and a "Good Luck!" and, "Ask for help online if you get stuck."</p>
+<h4 id="Linux">Linux<a class="anchor-link" href="#Linux">&#182;</a></h4><p>Beginners? There can't be too many.  In my classes I haven't seen a single child with a Linux machine. Nor would I recommend any try it. The user experience is really terrible, particularly with hardware support.</p>
+<p>As with OSX, I consider the built-in Python to be for the operating system, not for user programs, so I would want to encourage the user to install a Python for themselves to use.</p>
+<p>How would you do this?</p>
+<p>The <a href="https://docs.python.org/3/using/unix.html#on-linux">docs</a> for setup on Linux say that if you don't want to use the system python you can "...easily compile the latest version of Python from source."  If you, dear reader, cannot see what is wrong with this within, say, five seconds, no amount of explanation from me is going to help you understand, so I'll just leave it there.</p>
+<p>Besides, <em>ahem</em> installing from source, one other way I know is to install <a href="http://continuum.io/downloads">Anaconda Python</a> which will install to your home folder, everything is located in a single folder, and so on.</p>
+<p>I recommend against a beginner learning Python on Linux.  Failure is all but assured.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Using-Python">Using Python<a class="anchor-link" href="#Using-Python">&#182;</a></h3><p>Before we get into OS-specific issues, let's first take a moment to understand what we mean by "using Python": here, I mean writing Python code, and using the code on our own (dev) machine.  Think of Python as a software application which is being used. There are two primary activities:</p>
+<ol>
+<li>writing code</li>
+<li>running code</li>
+</ol>
+<p>It's great if your editor lets you write code and then run the code with a button, or a keyboard shortcut. If the editor isn't aware that there can be different Python installations in multiple places, it can become much more difficult to work in virtual environments, for example.  Otherwise you have to edit in one window, and keep a terminal open nearby and run your code in that terminal session.</p>
+<p>I use Vim and have done so for almost twenty years now, but: <strong>please</strong> do not recommend that beginners learn Vim, or Emacs. It is irresponsible to do so. Not only does it make the learning process vastly more difficult, but it also only becomes valuable once certain plugins are installed, and it is also somewhat difficult to use with Python virtual environments.</p>
+<p>The first editor is <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>. PyCharm is an excellent, professional-grade IDE for Python that has the best code-completion and debugging support, and a bunch of other things, out of all the Python editors available today. It even has a free version, called PyCharm Community.</p>
+<p>However, support for web-based work is crippled in the free version, which means you either have to pay or use a different editor for web-based work that has plugins available to provide the tooling that the free PyCharm version has locked out. You obviously can't add it back into the free version which is a rather curious situation for a programmable editor. If this isn't a big deal for you, PyCharm offers the most hassle-free way of using Python, i.e. writing Python code, available today. (Hey, if you're a Vim user, you should check out the Vim-emulation mode in PyCharm. It's the best I've seen.)</p>
+<p>On Windows, <a href="https://www.visualstudio.com/">Visual Studio</a> now has very good support for Python, including code-completion (intellisense) interactive debugging.  However, you can only use Visual Studio on Windows, and so some users might be hesitant to get too used to it.  It also is a very large and time-consuming install, but it does also allow you to compile binary Python extensions so you get that too.</p>
+<p><a href="http://pythonhosted.org/spyder/index.html">Spyder</a> is an excellent cross-platform editor that installs into a particular Python installation, and also features code-completion and interactive debugging, and other really nice goodies like an interactive profiler, embedded IPython consoles, interactive help and so on.  Spyder is also included by default in an Anaconda Python installation (and WinPython) so you can get a good editor at the same time as your Python distro.  Like Visual Studio, Spyder makes it easy to "find" which Python you want to use to run code. You may have different versions installed, and you may also want to work in a virtualenv. You can do all this with Spyder as the editor.</p>
+<p>You could do much worse than <a href="http://www.sublimetext.com/">Sublime Text</a>. It is very easy to get started, is cross-platform, small, fast, great plugin ecosystem, and can grow with the beginner as they develop their skills. It doesn't (to my knowledge) have an integrated debugger, but plugins can give you other features. However, like Vim, getting plugins going is a bit fiddly.  Anything, I repeat <em>anything</em> fiddly is an additional obstacle for beginners. Managing your path is a bit trickier, you have to know what you're doing. Which is the same thing as saying that it might not be for beginners.</p>
+<p>There are a whole raft of other editors that everybody always keeps recommending. I think the noise is an overload. For beginners, we really need to keep the choices down to, say, two or three. Note that I failed to do this. And please, <strong>please</strong>, don't recommend IDLE. It's ugly, clunky, and nobody uses it.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Deploying-Python">Deploying Python<a class="anchor-link" href="#Deploying-Python">&#182;</a></h3><p>So our beginner has written an application and wants to give it to some friends to run on their computers; how do they do it?</p>
+<p>Imagine that their friends are even more beginner-like than they are. Imagine that they will be unable to download and install Python. Imagine that they all use Windows, and they have learned how to download an installer, run the installer, and then launch the application from the "Start" menu, or whatever that thingy at the bottom left is called nowadays in Windows 10.</p>
+<p>What would you recommend to our beginner? Perhaps <a href="http://www.py2exe.org/">py2exe</a>? It turns out that while it works for simple cases, you can still end up with <code>ImportError</code> fairly easily depending on what your dependencies are.  Your program works when you run it on your computer, but py2exe doesn't make a standalone bundle that works.  Alas, this is the same with other "freeze" tools like cxFreeze and Pyinstaller. At the time of writing, Pyinstaller only supports legacy Python anyway. For Windows, you can use <a href="http://pynsist.readthedocs.org/en/latest/">pynsist</a> which bundles up a Python (only 3.5+) into an installer. The great thing is that it is a fully bundled installer which will "just work" on your user's machines; the bad thing is that it will only work on Windows Vista onwards.</p>
+<p>Of course, that is all Windows-only anyway. What about deploying your code to Mac or Linux machines?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>

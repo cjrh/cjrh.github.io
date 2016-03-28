@@ -26,16 +26,16 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># compass/install.sh - install Compass under the &quot;./Gem&quot; directory</span>
+<div class="highlight"><pre><span class="ch">#!/bin/bash</span>
+<span class="c1"># compass/install.sh - install Compass under the &quot;./Gem&quot; directory</span>
 
 <span class="k">if</span> ! which gem &gt;/dev/null <span class="p">;</span><span class="k">then</span>
     <span class="nb">echo</span> <span class="s1">&#39;Error: no &quot;gem&quot; command available&#39;</span>
     <span class="nb">echo</span> <span class="s1">&#39;Please install Ruby.&#39;</span>
-    <span class="nb">exit </span>1
+    <span class="nb">exit</span> 1
 <span class="k">fi</span>
 <span class="nv">BASE</span><span class="o">=</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span> dirname <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">)</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> <span class="k">)</span>
-<span class="nb">cd</span> <span class="nv">$BASE</span>  <span class="c"># the directory where this script lives</span>
+<span class="nb">cd</span> <span class="nv">$BA</span>SE  <span class="c1"># the directory where this script lives</span>
 gem install -i Gem compass
 gem install -i Gem compass-susy-plugin
 </pre></div>
@@ -58,13 +58,13 @@ gem install -i Gem compass-susy-plugin
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># compass/compass.sh - properly invoke the &quot;Compass&quot; program</span>
+<div class="highlight"><pre><span class="ch">#!/bin/bash</span>
+<span class="c1"># compass/compass.sh - properly invoke the &quot;Compass&quot; program</span>
 
 <span class="nv">BASE</span><span class="o">=</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">&quot;</span><span class="k">$(</span> dirname <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">)</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> <span class="k">)</span>
-<span class="nb">export </span><span class="nv">GEM_HOME</span><span class="o">=</span><span class="nv">$BASE</span>/Gem
-<span class="nb">export </span><span class="nv">RUBYLIB</span><span class="o">=</span><span class="nv">$BASE</span>/Gem/lib
-<span class="nv">$BASE</span>/Gem/bin/compass <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="nb">export</span> <span class="nv">GEM_HOME</span><span class="o">=</span><span class="nv">$BA</span>SE/Gem
+<span class="nb">export</span> <span class="nv">RUBYLIB</span><span class="o">=</span><span class="nv">$BA</span>SE/Gem/lib
+<span class="nv">$BA</span>SE/Gem/bin/compass <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 </pre></div>
 
 </div>
@@ -79,4 +79,114 @@ gem install -i Gem compass-susy-plugin
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 style="color: red; ">Edit: 14 Aug 2015</h3><h2 id="There-is-a-better-way">There is a better way<a class="anchor-link" href="#There-is-a-better-way">&#182;</a></h2><p>There are tools that make this all much easier.  Once you have a ruby installed and working, the first step is to install <a href="http://bundler.io">bundler</a>:</p>
+<div class="highlight"><pre>$ sudo gem install bundler
+</pre></div>
+<p>After that, you need to add a <code>Gemfile</code> to your Django project.  I put mine alongside my <code>requirements.txt</code>, for all the same reasons.  The contents of the Gemfile look something like this:</p>
+<div class="highlight"><pre><span class="n">source</span> <span class="s1">&#39;https://rubygems.org&#39;</span>
+
+<span class="n">gem</span> <span class="s1">&#39;sass&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;compass&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;breakpoint&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;singularitygs&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;color-schemer&#39;</span>
+</pre></div>
+<p>Note: dependencies can be version-clamped. I haven't done that here, but the information is easily found online.</p>
+<p>Then, to install these gems, you simply (in the same folder as the <code>Gemfile</code>):</p>
+<div class="highlight"><pre>$ bundle install
+</pre></div>
+<p>Thereafter, to run any of the gems on your <em>Sass</em> files, you can execute the bundle version of gem executables like so:</p>
+<div class="highlight"><pre>$ bundle <span class="nb">exec</span> compass watch
+</pre></div>
+<p>In my case, I've installed the wonderful <a href="https://github.com/lepture/python-livereload">livereload</a> (with <code>pip install livereload</code>) and I've modified the Django <code>manage.py</code> file to use livereload for the development server when launched with</p>
+<div class="highlight"><pre>$ python manage.py livereload
+</pre></div>
+<p>So, my <code>manage.py</code> looks like this:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># CHANGED manage.py will use development settings by</span>
+    <span class="c1"># default. Change the DJANGO_SETTINGS_MODULE environment variable</span>
+    <span class="c1"># for using the environment specific settings file.</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;DJANGO_SETTINGS_MODULE&quot;</span><span class="p">,</span> <span class="s2">&quot;myproj.settings.development&quot;</span><span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">django.core.management</span> <span class="kn">import</span> <span class="n">execute_from_command_line</span>
+
+    <span class="k">if</span> <span class="s1">&#39;livereload&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">django.core.wsgi</span> <span class="kn">import</span> <span class="n">get_wsgi_application</span>
+        <span class="kn">from</span> <span class="nn">livereload</span> <span class="kn">import</span> <span class="n">Server</span><span class="p">,</span> <span class="n">shell</span>
+        <span class="n">application</span> <span class="o">=</span> <span class="n">get_wsgi_application</span><span class="p">()</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+
+        <span class="c1"># Add watches - plain files</span>
+        <span class="n">folders</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;myproj/&#39;</span><span class="p">,</span> <span class="s1">&#39;media/&#39;</span><span class="p">,</span> <span class="s1">&#39;profiles/&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;static/&#39;</span><span class="p">,</span> <span class="s1">&#39;templates/&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">:</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+
+        <span class="c1"># Add watch: Compass &amp; Sass</span>
+        <span class="n">compass_info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">compass</span><span class="o">=</span><span class="s1">&#39;bundle exec compass&#39;</span><span class="p">,</span>
+            <span class="n">sass_dir</span><span class="o">=</span><span class="s1">&#39;./compass/sass&#39;</span><span class="p">,</span>
+            <span class="n">css_dir</span><span class="o">=</span><span class="s1">&#39;./static/site/css&#39;</span>
+            <span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s1">&#39;{compass} compile --sass-dir {sass_dir} --css-dir {css_dir}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="o">**</span><span class="n">compass_info</span>
+                <span class="p">)</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="s1">&#39;compass/sass/&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+
+        <span class="c1"># This is to make static files actually work in the development server.</span>
+        <span class="kn">from</span> <span class="nn">django.contrib.staticfiles.urls</span> <span class="kn">import</span> <span class="n">staticfiles_urlpatterns</span>
+        <span class="kn">import</span> <span class="nn">codermoji.urls</span>
+        <span class="n">codermoji</span><span class="o">.</span><span class="n">urls</span><span class="o">.</span><span class="n">urlpatterns</span> <span class="o">+=</span> <span class="n">staticfiles_urlpatterns</span><span class="p">()</span>
+
+        <span class="c1"># Serve with livereload</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">serve</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">execute_from_command_line</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see, in the section for <code>livereload</code>, One of the parts executes compass on my <code>sass</code> files whenever they change, and livereload <em>injects</em> the changes css into my browser window.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>

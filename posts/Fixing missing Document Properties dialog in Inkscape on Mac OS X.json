@@ -1,8 +1,8 @@
 {
     "creation_date": "Sun Jul 26 12:39:57 2015",
-    "timestamp_modified": 1437878397.0,
+    "previous_post": "Setting up Compass, Sass and Django",
     "timestamp": 1437878397.0,
     "modified_date": "Sun Jul 26 12:39:57 2015",
-    "next_post": "Keynode code snippets from vim",
-    "previous_post": "Setting up Compass, Sass and Django"
+    "timestamp_modified": 1437878397.0,
+    "next_post": "Keynode code snippets from vim"
 }

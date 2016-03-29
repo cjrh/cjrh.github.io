@@ -33,12 +33,4 @@
         <loc>http://pythonomicon.com/?post=Compiling%20Python%20extension%20modules%20on%20Windows</loc>
         <changefreq>weekly</changefreq>
     </url>
-    <url>
-        <loc>http://pythonomicon.com/?post=Python%20Packaging%20Problems</loc>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>http://pythonomicon.com/?post=Python%20Deployment</loc>
-        <changefreq>weekly</changefreq>
-    </url>
 </urlset>

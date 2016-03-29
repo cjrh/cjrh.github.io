@@ -1,8 +1,8 @@
 {
-    "previous_post": "A Windows setup for Python development",
     "timestamp": 1436666455.0,
     "creation_date": "Sun Jul 12 12:00:55 2015",
-    "next_post": "Fixing missing Document Properties dialog in Inkscape on Mac OS X",
     "timestamp_modified": 1439514989.0,
-    "modified_date": "Fri Aug 14 11:16:29 2015"
+    "modified_date": "Fri Aug 14 11:16:29 2015",
+    "previous_post": "A Windows setup for Python development",
+    "next_post": "Fixing missing Document Properties dialog in Inkscape on Mac OS X"
 }

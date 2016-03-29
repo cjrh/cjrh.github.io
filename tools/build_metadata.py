@@ -34,7 +34,7 @@ def process(notebook_folder, output_folder):
     in Notebook Folder and will place the output html files into
     the output folder. Metadata json files will also be created and
     will contain items like the creation date of each notebook file."""
-    metadata = OrderedDict()
+    metadata = {}
     # Walk over all the IPython Notebook files
     for nbfile in glob.glob(join(notebook_folder, '*.ipynb')):
         timestamp = getctime(nbfile)  # Get the notebook creation time
@@ -44,12 +44,12 @@ def process(notebook_folder, output_folder):
         nbbasefile = basename(nbfile)
         print('Processing "{}"...'.format(nbbasefile))
         postname, ext = splitext(nbbasefile)
-        metadata[postname] = dict(
-                timestamp=timestamp,
-                creation_date=creation_date,
-                timestamp_modified=timestamp_modified,
-                modified_date=modified_date,
-                )
+        metadata[postname] = OrderedDict([
+            ('timestamp',timestamp),
+            ('creation_date',creation_date),
+            ('timestamp_modified',timestamp_modified),
+            ('modified_date',modified_date),
+        ])
 
         # Check if there has already been metadata written into the output
         # folder for this post

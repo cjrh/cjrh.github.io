@@ -1,7 +1,6 @@
 # coding: utf-8
 import os
 from os.path import join, getctime, getmtime, splitext, basename
-import begin
 import glob
 import time
 import json
@@ -9,6 +8,9 @@ import subprocess
 from string import Template
 from urllib.parse import quote
 from collections import OrderedDict
+
+
+import begin
 
 
 sitemap_template = Template('''<?xml version="1.0" encoding="UTF-8"?>

@@ -8,6 +8,7 @@ import json
 import subprocess
 from string import Template
 from urllib.parse import quote
+from collections import OrderedDict
 
 
 sitemap_template = Template('''<?xml version="1.0" encoding="UTF-8"?>
@@ -33,7 +34,7 @@ def process(notebook_folder, output_folder):
     in Notebook Folder and will place the output html files into
     the output folder. Metadata json files will also be created and
     will contain items like the creation date of each notebook file."""
-    metadata = {}
+    metadata = OrderedDict()
     # Walk over all the IPython Notebook files
     for nbfile in glob.glob(join(notebook_folder, '*.ipynb')):
         timestamp = getctime(nbfile)  # Get the notebook creation time

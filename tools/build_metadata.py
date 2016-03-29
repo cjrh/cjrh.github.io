@@ -1,6 +1,7 @@
 # coding: utf-8
 import os
 from os.path import join, getctime, getmtime, splitext, basename
+from concurrent.futures import ThreadPoolExecutor
 import glob
 import time
 import json
@@ -37,6 +38,7 @@ def process(notebook_folder, output_folder):
     the output folder. Metadata json files will also be created and
     will contain items like the creation date of each notebook file."""
     metadata = {}
+    cmds = []
     # Walk over all the IPython Notebook files
     for nbfile in glob.glob(join(notebook_folder, '*.ipynb')):
         timestamp = getctime(nbfile)  # Get the notebook creation time
@@ -68,17 +70,20 @@ def process(notebook_folder, output_folder):
                 metadata[postname].update(
                     (k, md[k]) for k in ('timestamp', 'creation_date'))
 
-
         # Convert the notebook file to plain HTML, add to posts/ folder
         tmpl = '. activate github_blog && jupyter nbconvert --to html --template basic "{}" --stdout > "{}"'
         cmd = tmpl.format(
             nbfile,
             join(output_folder, postname+'.html'),
         )
-        # os.system(cmd)
-        output = subprocess.check_output(cmd, shell=True)
-        print(output)
+        cmds.append(cmd)
 
+    def run_conversion(cmd):
+        return subprocess.check_call(cmd, shell=True)
+    with ThreadPoolExecutor(max_workers=len(cmds)) as executor:
+        futures = [executor.submit(run_conversion, cmd) for cmd in cmds]
+        result = [f.result() for f in futures]
+        print(result)
 
     # Move through the list, building up the cross links
     # Posts are sorted by creation timestamp

@@ -37,4 +37,8 @@
         <loc>http://pythonomicon.com/?post=So%20you%20want%20to%20make%20a%20screencast</loc>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc>http://pythonomicon.com/?post=Making%20binaries%20with%20Python</loc>
+        <changefreq>weekly</changefreq>
+    </url>
 </urlset>

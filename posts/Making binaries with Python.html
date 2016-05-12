@@ -1,0 +1,51 @@
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Making-executables-with-Python">Making executables with Python<a class="anchor-link" href="#Making-executables-with-Python">&#182;</a></h1><p>Did you know you can? This will be a very quick demo just to tantalize the senses.</p>
+<h3 id="You-need-this">You need this<a class="anchor-link" href="#You-need-this">&#182;</a></h3><ul>
+<li>Python (I'm using Anaconda on 3.5.1 but others may work)</li>
+<li>Cython (I'm using 0.24 but others may work)</li>
+</ul>
+<p>This code was generated and run on Mac OS X <em>El Capitan</em>, but it may work with others.  Specifically, it kinda relies on a tool called <code>python-config</code> being installed as part of Python.  I don't <em>think</em> this gets installed on Windows, but I'd be glad to know I'm wrong.</p>
+<h2 id="The-central-technique">The central technique<a class="anchor-link" href="#The-central-technique">&#182;</a></h2><p>You make a Cython file, like so:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span class="c"># blah.pyx</span>
+
+<span class="k">cpdef</span> <span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">5</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then, you use a special flag of cython itself, called <strong>embed</strong>, in the shell, to generate a C file:</p>
+
+<pre><code>$ cython --embed blah.pyx</code></pre>
+<p>This results in a new file <code>blah.c</code> in the same folder.  At this point, all you have to do is compile the C file, and it will produce a binary that you can run.  The <em>tricky</em> bit is that you need to tell the compiler where all the Python libraries are, because <code>blah.c</code> wants to be linked to Python.</p>
+<p>This is where the <code>python-config</code> tool comes in.  It <em>fills in</em> all the message parts, such as the location of all the header files and the dynamic libraries for linking.  Here, you need to run your compiler, and let's presume it's GCC.  The shell command to produce the library looks like this:</p>
+
+<pre><code>$ gcc `python-config --cflags` blah.c `python-config --ldflags` -o blah</code></pre>
+<p>When the compilation completes, you'll have a brand new executable <code>blah</code> in the same folder, and when you run it, it should print <code>7</code> (if you used the same code as this example).</p>
+
+</div>
+</div>
+</div>

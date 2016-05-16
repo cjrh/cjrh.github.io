@@ -1,6 +1,5 @@
 Sitemap: http://pythonomicon.com/sitemap.xml
 
 User-agent: *
-Disallow: /posts
 Disallow: /tools
 Disallow: /notebooks

@@ -121,6 +121,7 @@
             var postref = "posts/" + name + ".html";
             document.title = name;
             element.innerHTML="";
+            element.hidden = true; // For the animation, which fixes it.
             loadPage(postref, function(data) {
                 element.innerHTML = data;
                 MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
@@ -187,6 +188,8 @@
         };
 
         function animation(name, stagger, complete) {
+            var element = document.getElementById("content");
+            element.hidden = false;
             var elems = filter_prompt(
             content.querySelectorAll('.text_cell_render>*, .input_area>*, .output>*'));
             window.elems = elems;

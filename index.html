@@ -93,59 +93,68 @@
         function loadContent() {
             var post = getFromUrl("post");
             if (post === "") {
-                latest = JSON.parse(loadPage("posts/latest.json"));
-                showPost(latest.post);
+                loadPage("posts/latest.json", function(data) {
+                    var latest = JSON.parse(data);
+                    showPost(latest.post);
+                })
             } else {
                 showPost(post);
-            };
-        };
+            }
+        }
 
-        function loadPage(href)
+        function loadPage(href, callback)
         {
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("GET", href, false);
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var data = xmlhttp.responseText;
+                    callback(data);
+                }
+            };
+            xmlhttp.open("GET", href, true);
             xmlhttp.send();
-            return xmlhttp.responseText;
-        };
+        }
 
         var load_dirn = 'Left';
         function showPost(name) {
             var element = document.getElementById("content");
             var postref = "posts/" + name + ".html";
+            document.title = name;
             element.innerHTML="";
-            element.innerHTML=loadPage(postref);
-            // You have to render the dynamically-loaded content manually.
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
-            var metadata = JSON.parse(loadPage("posts/" + name + ".json"));
-            // console.log("metadata.next_post: " + metadata.next_post);
-            // console.log("metadata.previous_post: " + metadata.previous_post);
+            loadPage(postref, function(data) {
+                element.innerHTML = data;
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
+                loadPage("posts/" + name + ".json", function(data) {
+                    var metadata = JSON.parse(data);
+                    // Wire up the next and prev buttons
+                    var prevevent = null;
+                    if (metadata.previous_post !== null) {
+                        prevevent = function() {
+                            load_dirn = 'Left';
+                            unloadingAnimation('Right', function () {
+                                showPost(metadata.previous_post);
+                            });
+                        }
+                    }
+                    document.getElementById("prev-button").onclick = prevevent;
 
-            // Wire up the next and prev buttons
-            var prevevent = null;
-            if (metadata.previous_post !== null) {
-                prevevent = function() {
-                    load_dirn = 'Left';
-                    unloadingAnimation('Right', function () {
-                        showPost(metadata.previous_post);
-                    });
-                }
-            }
-            document.getElementById("prev-button").onclick = prevevent;
+                    var nextevent = null;
+                    if (metadata.next_post !== null) {
+                        nextevent = function() {
+                            load_dirn = 'Right';
+                            unloadingAnimation('Left', function () {
+                                showPost(metadata.next_post);
+                            });
+                        }
+                    }
 
-            var nextevent = null;
-            if (metadata.next_post !== null) {
-                nextevent = function() {
-                    load_dirn = 'Right';
-                    unloadingAnimation('Left', function () {
-                        showPost(metadata.next_post);
-                    });
-                }
-            };
-            document.getElementById("next-button").onclick = nextevent;
+                    document.getElementById("next-button").onclick = nextevent;
 
-            window.history.pushState("", "", '?post='+name);
-            loadingAnimation();
-            element.parentElement.style.webkitTransform = 'scale(1)';
+                    window.history.pushState("", "", '?post='+name);
+                    loadingAnimation();
+                    element.parentElement.style.webkitTransform = 'scale(1)';
+                });
+            })
         }
 
         function getFromUrl(val) {
@@ -191,7 +200,7 @@
         }
 
         function loadingAnimation() {
-            console.log('transition.slide' + load_dirn + 'BigIn');
+//            console.log('transition.slide' + load_dirn + 'BigIn');
             animation('transition.slide' + load_dirn + 'BigIn', 80);
         }
 

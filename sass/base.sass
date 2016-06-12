@@ -8,7 +8,8 @@
 @import "compass/css3/transition"
 @import "sassy-buttons"
 
-$body-font: Baskerville, Palatino, "Times New Roman", serif
+//$body-font: Baskerville, Palatino, "Times New Roman", serif
+$body-font:"Lucida Bright", Georgia, serif
 $title-font: "Arial Black", Gadget, Helvetica-Black, Helvetica, Arial, sans-serif
 
 $body-bc1: #ffffff
@@ -35,6 +36,7 @@ html
   font-size: $base-font-size
   padding: 0
   height: 100%
+  cursor: url('/img/gam1394.cur'), auto
 
 body
   height: 100%
@@ -43,7 +45,7 @@ body
   overflow-x: hidden
   overflow-y: scroll
   margin: 0
-  cursor: url('http://cur.cursors-4u.net/games/gam-14/gam1394.cur'), auto
+  //cursor: url('/img/gam1394.cur'), auto
 
 
 #banner
@@ -67,8 +69,9 @@ body
   text-align: right
 
 p.minstrel
-  font-size: 1.0em
+  font-size: 0.8em
   font-style: italic
+  font-weight: lighter
   color: $nav-font-color
   margin: 0
   text-align: right
@@ -86,7 +89,7 @@ p
 div#main
   margin: 0 auto 0 auto
   width: $main-width
-  max-width: 768px
+  max-width: 600px
 
 aside#mainlogo
   position: absolute
@@ -117,16 +120,21 @@ h2
 .text_cell_render
   color: $font-color
 
-p
-  font-size: 1.0em
-  line-height: 1.5em
+p, li
+  font-size: 0.9rem
+  line-height: 1.4em
   text-align: left
   color: $font-color
+  margin-top: 1.2em
+  margin-bottom: 1.2em
 
 p > code
-  font-style: Courier
+  font-family: Monospace, Courier
   font-size: 0.9em
   color: $font-color
+  //border: black solid 1px
+  //border-radius: 5px
+  //padding: 3px
 
 p.navinfo
   position: absolute
@@ -138,8 +146,10 @@ p.navinfo
   opacity: 0.2
 
 ul
-  list-style-type: circle
-  list-style-position: inside
+  list-style-type: disc
+  list-style-position: outside
+  margin-left: 30px
+  padding: 0
 
 a
   color: $link-color
@@ -161,28 +171,28 @@ aside#links
   top: 10px
   left: 10px
   line-height: 0.5
+  ul
+    margin: 0
   li
     font-family: $body-font
-    font-weight: light
+    font-weight: 100
     font-size: 0.8em
     font-variant: small-caps
     font-style: italic
-    letter-spacing: 2px
+    //letter-spacing: 2px
     color: $nav-font-color
     display: block
+    margin: 0
     a
+      font-weight: normal
       text-decoration: none
       color: $nav-font-color
       transition: color 0.5s, letter-spacing, 5s
       transition-timing-function: ease-in-out
     a:hover
       color: #a83f63
-      letter-spacing: 15px
+      letter-spacing: 20px
       transition: color 0.5s, letter-spacing, 0.1s
-
-ul
-  margin: 0
-  padding: 0
 
 footer
   clear: left
@@ -301,4 +311,4 @@ pre
     width: 95%
 
 a, .button
-  cursor: url('http://cur.cursors-4u.net/games/gam-14/gam1390.cur'), auto
+  cursor: url('/img/gam1390.cur'), auto

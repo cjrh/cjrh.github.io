@@ -84,6 +84,7 @@
             </button>
             <div id="metadata">
                 <p>This post: <strong><span id="this_post"></span></strong><p>
+                <p>Original Jupyter Notebook:<a id="this_notebook" href=""></a></p>
                 <p>Created: <span id="creation_date"></span><p>
                 <p>Modified: <span id="modified_date"></span><p>
                 <p>Previous: <span id="previous_post"></span><p>
@@ -169,6 +170,10 @@
                 loadPage("posts/" + name + ".json", function(data) {
                     var metadata = JSON.parse(data);
                     $('#this_post').text(name);
+
+                    $('#this_notebook').attr("href", "/notebooks/" + name + ".ipynb");
+                    $('#this_notebook').text(name + ".ipynb");
+
                     $('#creation_date').text(metadata.creation_date);
                     $('#modified_date').text(metadata.modified_date);
                     if (!metadata.previous_post) {

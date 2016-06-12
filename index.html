@@ -13,7 +13,7 @@
     <!-- <meta property="og:image" content=""> -->
     <!-- <meta property="og:description" content=""> -->
     <meta name="google-site-verification" content="1MRTyLZEkK2A3gbgyuVdRTIQE9TtnISGkgTxhqn4uHs" />
-    <title>🐍 🔬 🎹 🎨</title>
+    <title>Pythonomicon</title>
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
@@ -88,8 +88,8 @@
                 <p>Original Jupyter Notebook:<a id="this_notebook" href=""></a></p>
                 <p>Created: <span id="creation_date"></span><p>
                 <p>Modified: <span id="modified_date"></span><p>
-                <p>Previous: <span id="previous_post"></span><p>
-                <p>Next: <span id="next_post"></span><p>
+                <p>Previous: <a id="previous_post" href=""></a><p>
+                <p>Next: <a id="next_post" href=""></a><p>
             </div>
             <div id="content"></div>
 
@@ -142,13 +142,17 @@
             xmlhttp.send();
         }
 
+        function make_postlink(name) {
+            return window.location.protocol + '//' + window.location.host + '/?post=' + name;
+        }
+
         function change_metadata(name, description, ref) {
             $('title').text(name);
 
             $('meta[name=description]').remove();
             $('head').append('<meta name="description" content="' + description + '">');
 
-            var url = window.location.protocol + '//' + window.location.host + '/?post=' + name;
+            var url = make_postlink(name);
             $('link[rel="canonical"]').attr('href', url);
 
             $('meta[property="og:title"]').remove();
@@ -181,14 +185,18 @@
                     $('#creation_date').text(metadata.creation_date);
                     $('#modified_date').text(metadata.modified_date);
                     if (!metadata.previous_post) {
+                        $('#previous_post').attr('href', "");
                         $('#previous_post').text("None (this is the first post)");
                     } else {
+                        $('#previous_post').attr('href', make_postlink(metadata.previous_post));
                         $('#previous_post').text(metadata.previous_post);
                     }
 
                     if (!metadata.next_post) {
+                        $('#next_post').attr('href', "");
                         $('#next_post').text("None (this is the latest post)");
                     } else {
+                        $('#next_post').attr('href', make_postlink(metadata.next_post));
                         $('#next_post').text(metadata.next_post);
                     }
                     // Wire up the next and prev buttons

@@ -6,6 +6,7 @@
           content="Caleb Hattingh's blog about mostly computing and web design, but also about
                    math and chemical engineering, and occasionally about art and music.">
     <meta name="author" content="Caleb Hattingh">
+    <link rel="canonical" href="">
     <meta name="keywords" content="Python,javascript,Sass,CSS,animation,math,IPython,Cython,Guitar,Piano,Drawing">
     <meta name="viewport" content="width=device-width">
     <!-- <meta property="og:title" content=""> -->
@@ -147,12 +148,15 @@
             $('meta[name=description]').remove();
             $('head').append('<meta name="description" content="' + description + '">');
 
+            var url = window.location.protocol + '//' + window.location.host + '/?post=' + name;
+            $('link[rel="canonical"]').attr('href', url);
+
             $('meta[property="og:title"]').remove();
             $('meta[property="og:description"]').remove();
             $('meta[property="og:url"]').remove();
             $("head").append('<meta property="og:title" content="' + name + '">');
             $("head").append('<meta property="og:description" content="' + name + '">');
-            $("head").append('<meta property="og:url" content="' + window.location.protocol + '//' + window.location.host + '/' + ref + '">');
+            $("head").append('<meta property="og:url" content="' + url + '">');
         }
 
         var load_dirn = 'Left';

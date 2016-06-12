@@ -82,6 +82,13 @@
                 Next
                 <i class="fa fa-arrow-circle-right"></i>
             </button>
+            <div id="metadata">
+                <p>This post: <strong><span id="this_post"></span></strong><p>
+                <p>Created: <span id="creation_date"></span><p>
+                <p>Modified: <span id="modified_date"></span><p>
+                <p>Previous: <span id="previous_post"></span><p>
+                <p>Next: <span id="next_post"></span><p>
+            </div>
             <div id="content"></div>
 
             <!-- <div id="disqus_thread"></div> -->
@@ -161,6 +168,20 @@
                 MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
                 loadPage("posts/" + name + ".json", function(data) {
                     var metadata = JSON.parse(data);
+                    $('#this_post').text(name);
+                    $('#creation_date').text(metadata.creation_date);
+                    $('#modified_date').text(metadata.modified_date);
+                    if (!metadata.previous_post) {
+                        $('#previous_post').text("None (this is the first post)");
+                    } else {
+                        $('#previous_post').text(metadata.previous_post);
+                    }
+
+                    if (!metadata.next_post) {
+                        $('#next_post').text("None (this is the latest post)");
+                    } else {
+                        $('#next_post').text(metadata.next_post);
+                    }
                     // Wire up the next and prev buttons
                     var prevevent = null;
                     if (metadata.previous_post !== null) {

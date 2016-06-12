@@ -23,7 +23,7 @@ body {
 
 /* line 51, ../sass/base.sass */
 #banner {
-  background: url(/img/1920black.jpg);
+  background: url(/img/1920black_trim.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
   height: 500px;
@@ -235,22 +235,38 @@ div#content {
 }
 
 /* line 214, ../sass/base.sass */
+div#metadata {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* line 219, ../sass/base.sass */
+#metadata p {
+  margin: 0;
+  padding: 0;
+  color: lightgrey;
+  font-size: small;
+  font-style: italic;
+}
+
+/* line 226, ../sass/base.sass */
 .left p, .right p {
   font-size: 0.9em;
   width: 10em;
 }
 
-/* line 218, ../sass/base.sass */
+/* line 230, ../sass/base.sass */
 .left {
   float: left;
 }
 
-/* line 221, ../sass/base.sass */
+/* line 233, ../sass/base.sass */
 .right {
   float: right;
 }
 
-/* line 224, ../sass/base.sass */
+/* line 236, ../sass/base.sass */
 .button {
   font-size: 0.7em;
   padding: 0.5em 1.5em;
@@ -314,18 +330,18 @@ div#content {
   padding: 0 !important;
   margin: -1px !important;
 }
-/* line 233, ../sass/base.sass */
+/* line 245, ../sass/base.sass */
 .button:focus {
   outline: 0 !important;
   color: #f594a7;
 }
-/* line 238, ../sass/base.sass */
+/* line 250, ../sass/base.sass */
 .button > i {
   font-size: 33px;
   vertical-align: middle;
 }
 
-/* line 243, ../sass/base.sass */
+/* line 255, ../sass/base.sass */
 svg {
   background: #FFFFFF;
   -moz-border-radius: 10px;
@@ -337,12 +353,12 @@ svg {
   height: 100%;
 }
 
-/* line 251, ../sass/base.sass */
+/* line 263, ../sass/base.sass */
 .prompt {
   display: none;
 }
 
-/* line 254, ../sass/base.sass */
+/* line 266, ../sass/base.sass */
 pre {
   font-size: 0.7em;
   margin-left: 5%;
@@ -350,77 +366,77 @@ pre {
   overflow: auto;
 }
 
-/* line 260, ../sass/base.sass */
+/* line 272, ../sass/base.sass */
 .MathJax_Display span {
   color: #5f466a;
 }
 
 @media screen and (max-width: 900px), screen and (max-device-width: 900px) {
-  /* line 264, ../sass/base.sass */
+  /* line 276, ../sass/base.sass */
   html {
     font-size: 19.8px;
   }
 
-  /* line 268, ../sass/base.sass */
+  /* line 280, ../sass/base.sass */
   h1 {
     font-size: 33px;
     margin-top: 10px;
   }
 
-  /* line 271, ../sass/base.sass */
+  /* line 283, ../sass/base.sass */
   #banner {
     height: 220px;
   }
 
-  /* line 273, ../sass/base.sass */
+  /* line 285, ../sass/base.sass */
   .button {
     width: auto;
   }
 
-  /* line 275, ../sass/base.sass */
+  /* line 287, ../sass/base.sass */
   p.navinfo {
     display: none;
   }
 
-  /* line 279, ../sass/base.sass */
+  /* line 291, ../sass/base.sass */
   div#content-container {
     float: none;
   }
 }
 @media screen and (max-width: 500px), screen and (max-device-width: 500px) {
-  /* line 298, ../sass/base.sass */
+  /* line 310, ../sass/base.sass */
   html {
     font-size: 17.6px;
   }
 
-  /* line 300, ../sass/base.sass */
+  /* line 312, ../sass/base.sass */
   #banner {
     font-size: 13.2px;
     height: 120px;
   }
 
-  /* line 303, ../sass/base.sass */
+  /* line 315, ../sass/base.sass */
   h1 {
     font-size: 22px;
     border-bottom: 1px solid #000000;
   }
 
-  /* line 306, ../sass/base.sass */
+  /* line 318, ../sass/base.sass */
   h2 {
     font-size: 19.8px;
   }
 
-  /* line 308, ../sass/base.sass */
+  /* line 320, ../sass/base.sass */
   aside {
     font-size: 15.4px;
   }
 
-  /* line 310, ../sass/base.sass */
+  /* line 322, ../sass/base.sass */
   div#main {
     width: 95%;
   }
 }
-/* line 313, ../sass/base.sass */
+/* line 325, ../sass/base.sass */
 a, .button {
   cursor: url("/img/gam1390.cur"), auto;
 }

@@ -116,6 +116,20 @@
             xmlhttp.send();
         }
 
+        function change_metadata(name, description, ref) {
+            $('title').text(name);
+
+            $('meta[name=description]').remove();
+            $('head').append('<meta name="description" content="' + description + '">');
+
+            $('meta[property="og:title"]').remove();
+            $('meta[property="og:description"]').remove();
+            $('meta[property="og:url"]').remove();
+            $("head").append('<meta property="og:title" content="' + name + '">');
+            $("head").append('<meta property="og:description" content="' + name + '">');
+            $("head").append('<meta property="og:url" content="' + window.location.protocol + '//' + window.location.host + '/' + ref + '">');
+        }
+
         var load_dirn = 'Left';
         function showPost(name) {
             var element = document.getElementById("content");
@@ -125,6 +139,8 @@
             element.hidden = true; // For the animation, which fixes it.
             loadPage(postref, function(data) {
                 element.innerHTML = data;
+                var first_para = $('#content p:eq(0)').text();
+                change_metadata(name, first_para, postref);
                 MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
                 loadPage("posts/" + name + ".json", function(data) {
                     var metadata = JSON.parse(data);

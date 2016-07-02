@@ -1,6 +1,4 @@
 Sitemap: http://pythonomicon.com/sitemap.xml
-
 User-agent: *
-Disallow: /tools
-Disallow: /notebooks
-Allow: /posts/latest.json
+Disallow: /tools/
+Disallow: /notebooks/drafts/

@@ -244,36 +244,10 @@ D: after init
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Whaaaat?  Now the sequence seems to indicate that <code>C</code> immediately follows <code>B</code>, and the root class <code>A</code> comes last!  That is no longer "depth-first".</p>
 <p>It turns out that Python does things a little differently when a class appears <strong>multiple times</strong> in the MRO.  In this situation, all duplicate appearances (of <code>A</code> in this case) will be removed <strong>except for the last</strong>.  Earlier, I had changed the code for the <code>C</code> class to also inherit from <code>A</code>.  This meant that both <code>B</code> <strong>and</strong> <code>C</code> inherit from <code>A</code>, and a naive depth-first construction of the MRO results in two entries for <code>A</code>. Python therefore deletes all appearances except the last.</p>
-<p>The</p>
+<p>This is all documented in tremendous detail in <a href="https://www.python.org/download/releases/2.3/mro/">The Python 2.3 Method Resolution Order</a>.  I probably should have read it a long time ago.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
  
 

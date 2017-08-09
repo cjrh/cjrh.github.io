@@ -7,12 +7,12 @@
 <h1 id="Fixing-missing-Document-Properties-dialog-in-Inkscape-on-Mac-OS-X">Fixing missing Document Properties dialog in Inkscape on Mac OS X<a class="anchor-link" href="#Fixing-missing-Document-Properties-dialog-in-Inkscape-on-Mac-OS-X">&#182;</a></h1><p>It has been bugging me for a while that I could not open the <em>Document Properties</em> dialog on Inkscape on my mac.  The button clicks, but the window would not show.  I noticed that the main Inkscape window would lose focus, but alas no properties dialog.</p>
 <p>I finally decided to do something about it today. It turns out that you have to edit the preferences file and manually give x and y coordinates to this dialog.  I found the answer <a href="https://bugs.launchpad.net/inkscape/+bug/1268308/comments/5">here</a> and <a href="https://bugs.launchpad.net/inkscape/+bug/902071/comments/3">here</a>.</p>
 <p>In <code>~/.config/inkscape/preferences.xml</code>, find</p>
-<div class="highlight"><pre><span class="nt">&lt;group</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;group</span>
     <span class="na">id=</span><span class="s">&quot;documentoptions&quot;</span>
     <span class="na">state=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>
 </pre></div>
 <p>and change it by adding coordinatesL</p>
-<div class="highlight"><pre><span class="nt">&lt;group</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;group</span>
     <span class="na">id=</span><span class="s">&quot;documentoptions&quot;</span>
     <span class="na">x=</span><span class="s">&quot;500&quot;</span>
     <span class="na">y=</span><span class="s">&quot;500&quot;</span>
@@ -28,7 +28,7 @@
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre> 
+<div class=" highlight hl-ipython2"><pre><span></span> 
 </pre></div>
 
 </div>
@@ -36,3 +36,5 @@
 </div>
 
 </div>
+ 
+

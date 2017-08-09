@@ -4,7 +4,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Multiple-inheritance-in-Python:-Even-more-to-learn">Multiple inheritance in Python: Even more to learn<a class="anchor-link" href="#Multiple-inheritance-in-Python:-Even-more-to-learn">&#182;</a></h1><p>I felt so proud of myself when I first learned how to reason about multiple inheritance in Python, and the MRO in particular.  The <em>method resolution order</em> (MRO) is the order in which Python arranges name lookups in a class hierarchy.  For single inheritance, this is simple and obvious, and works like most languages with object-oriented features.</p>
+<h1 id="Multiple-inheritance-in-Python:-always-more-to-learn">Multiple inheritance in Python: always more to learn<a class="anchor-link" href="#Multiple-inheritance-in-Python:-always-more-to-learn">&#182;</a></h1><p>I felt so proud of myself when I first learned how to reason about multiple inheritance in Python, and the MRO in particular.  The <em>method resolution order</em> (MRO) is the order in which Python arranges name lookups in a class hierarchy.  For single inheritance, this is simple and obvious, and works like most languages with object-oriented features.</p>
 <p>However, for multiple inheritance, thing become a little trickier. Here is an example:</p>
 
 </div>
@@ -12,7 +12,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
@@ -57,7 +57,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
@@ -103,15 +103,38 @@ D: after init
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>for <em> in D.<strong>mro</strong>: print(</em>)</p>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">D</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+</pre></div>
 
 </div>
 </div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;__main__.D&#39;&gt;
+&lt;class &#39;__main__.B&#39;&gt;
+&lt;class &#39;__main__.A&#39;&gt;
+&lt;class &#39;__main__.C&#39;&gt;
+&lt;class &#39;object&#39;&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -125,7 +148,7 @@ D: after init
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
@@ -170,7 +193,7 @@ D: after init
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
@@ -206,7 +229,7 @@ D: after init
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">D</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>

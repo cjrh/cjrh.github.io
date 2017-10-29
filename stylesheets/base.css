@@ -232,6 +232,7 @@ footer {
 div#content {
   float: left;
   width: 100%;
+  min-height: 1000px;
 }
 
 /* line 214, ../sass/base.sass */

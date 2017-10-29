@@ -173,8 +173,15 @@
             var element = document.getElementById("content");
             var postref = "posts/" + name + ".html";
             document.title = name;
-            $("#content").css("visibility", "visible");
-            element.innerHTML="";
+            // element.innerHTML="";
+            // The problem we have is that we want to start off with all
+            // the new content in #content having no visibility, so that
+            // velocity can do its thing. We can't achieve the desired
+            // effect by manipulating the visibility of #content itsef.
+            // We'll probably need access to the inner things being
+            // animated. Also, using display: none doesnt work because
+            // by manipulating the DOM, it causes the page to jump to
+            // the top.
             loadPage(postref, function(data) {
                 element.innerHTML = data;
                 var first_para = $('#content p:eq(0)').text();
@@ -274,18 +281,16 @@
                 stagger: stagger,
                 easing: "spring",
                 drag: true,
-                opacity: opacity,
-                visibility: visibility,
                 complete: complete
             });
         }
 
         function loadingAnimation() {
-            animation('transition.slide' + load_dirn + 'BigIn', 80, null, "visible", 1);
+            animation('transition.slide' + load_dirn + 'BigIn', 80);
         }
 
         function unloadingAnimation(dir, complete) {
-            animation('transition.slide' + dir + 'BigOut', 20, complete, "hidden", 0);
+            animation('transition.slide' + dir + 'BigOut', 20, complete);
         }
     </script>
     <script>

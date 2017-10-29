@@ -174,7 +174,6 @@
             var postref = "posts/" + name + ".html";
             document.title = name;
             element.innerHTML="";
-            // element.hidden = true; // For the animation, which fixes it.
             loadPage(postref, function(data) {
                 element.innerHTML = data;
                 var first_para = $('#content p:eq(0)').text();
@@ -264,9 +263,8 @@
             return out;
         };
 
-        function animation(name, stagger, complete) {
+        function animation(name, stagger, complete, visibility) {
             var element = document.getElementById("content");
-            element.hidden = false;
             var elems = filter_prompt(
             content.querySelectorAll('.text_cell_render>*, .input_area>*, .output>*'));
             window.elems = elems;
@@ -275,16 +273,17 @@
                 stagger: stagger,
                 easing: "spring",
                 drag: true,
+                visibility: visibility,
                 complete: complete
             });
         }
 
         function loadingAnimation() {
-            animation('transition.slide' + load_dirn + 'BigIn', 80);
+            animation('transition.slide' + load_dirn + 'BigIn', 80, null, "visible");
         }
 
         function unloadingAnimation(dir, complete) {
-            animation('transition.slide' + dir + 'BigOut', 20, complete);
+            animation('transition.slide' + dir + 'BigOut', 20, complete, "hidden");
         }
     </script>
     <script>

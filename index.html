@@ -174,7 +174,7 @@
             var postref = "posts/" + name + ".html";
             document.title = name;
             element.innerHTML="";
-            element.hidden = true; // For the animation, which fixes it.
+            // element.hidden = true; // For the animation, which fixes it.
             loadPage(postref, function(data) {
                 element.innerHTML = data;
                 var first_para = $('#content p:eq(0)').text();

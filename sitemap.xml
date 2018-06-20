@@ -45,4 +45,8 @@
         <loc>http://pythonomicon.com/?post=Python%20Multiple%20Inhertance%20and%20the%20MRO</loc>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc>http://pythonomicon.com/?post=Python%20without%20virtualenv</loc>
+        <changefreq>weekly</changefreq>
+    </url>
 </urlset>

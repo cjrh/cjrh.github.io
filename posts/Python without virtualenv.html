@@ -1,0 +1,61 @@
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Python-programming-without-virtualenv">Python programming without virtualenv<a class="anchor-link" href="#Python-programming-without-virtualenv">&#182;</a></h1><p>There is a way to work with Python without any kind of virtual environments, but still have different dependency requirements (and versions) for different projects. Here's how: when starting a new project, install dependencies like this:</p>
+<div class="highlight"><pre><span></span>$ <span class="nv">PYTHONUSERBASE</span><span class="o">=</span><span class="nv">$PWD</span>/.pkgs python3 -m pip install --user requests flask
+</pre></div>
+<p>For sake of demonstration, I'm installing the popular third-party <code>requests</code> and <code>flask</code> packages. The above command does the following:</p>
+<ol>
+<li>Overrides the <code>PYTHONUSERBASE</code> environment variable, to point to a new <code>.pkgs</code> directory in the current directory (<code>.pkgs</code> will be created if missing).</li>
+<li>Installs the packages with the <code>--user</code> flag</li>
+</ol>
+<p>Once this is done, you will have to execute your application, and your test runs, with the following commands:</p>
+<ul>
+<li><p>Run the program (assume it's called <code>main.py</code>:</p>
+<div class="highlight"><pre><span></span>$ <span class="nv">PYTHONUSERBASE</span><span class="o">=</span><span class="nv">$PWD</span>/.pkgs python3 main.py
+</pre></div>
+</li>
+<li><p>Run your tests:</p>
+<div class="highlight"><pre><span></span>$ <span class="nv">PYTHONUSERBASE</span><span class="o">=</span><span class="nv">$PWD</span>/.pkgs python3 -m pytest
+</pre></div>
+</li>
+</ul>
+<h3 id="The-small-print">The small print<a class="anchor-link" href="#The-small-print">&#182;</a></h3><p>There are several caveats to this approach:</p>
+<ol>
+<li>By default, you won't override packages installed in the base Python installation. <code>pip</code> will refuse to install such existing packages into your new <code>--user</code> environment. It is possible to handle this, but requires extra flags. For example, suppose you had already installed your <em>distribution-supplied</em> versions of <code>requests</code> and <code>flask</code>, but you wanted to install newer versions in a local <code>.pkgs/</code> directory in the current dir. Do that like this:<div class="highlight"><pre><span></span>$ <span class="nv">PYTHONUSERBASE</span><span class="o">=</span><span class="nv">$PWD</span>/.pkgs python3 -m pip install --ignore-installed --user requests flask
+</pre></div>
+</li>
+<li>You would have to always remember to call python in this way, i.e., with the <code>PYTHONUSERBASE</code> stuff out front. Fortunately this is quite easy to handle: just make the following shell script (or equivalent batch file):<div class="highlight"><pre><span></span><span class="c1"># pylocal.sh</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/.pkgs&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+ <span class="nv">PYTHONUSERBASE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/.pkgs&quot;</span> python3 <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span> 
+<span class="k">fi</span>
+</pre></div>
+After you make that script executable and put it on your path somehwere, (perhaps <code>~/bin</code>, that kind of thing), then you can execute your programs with your new command instead. Our two examples from before:</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>Run the program (assume it's called <code>main.py</code>:</p>
+<div class="highlight"><pre><span></span>$ pylocal main.py
+</pre></div>
+</li>
+<li><p>Run your tests:</p>
+<div class="highlight"><pre><span></span>$ pylocal -m pytest
+</pre></div>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+ 
+

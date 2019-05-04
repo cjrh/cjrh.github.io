@@ -71,7 +71,7 @@ def process(notebook_folder, output_folder):
                     (k, md[k]) for k in ('timestamp', 'creation_date'))
 
         # Convert the notebook file to plain HTML, add to posts/ folder
-        tmpl = '. activate github_blog && jupyter nbconvert --to html --template basic "{}" --stdout > "{}"'
+        tmpl = 'jupyter nbconvert --to html --template basic "{}" --stdout > "{}"'
         cmd = tmpl.format(
             nbfile,
             join(output_folder, postname+'.html'),
@@ -80,6 +80,7 @@ def process(notebook_folder, output_folder):
 
     def run_conversion(cmd):
         return subprocess.check_call(cmd, shell=True)
+
     with ThreadPoolExecutor(max_workers=len(cmds)) as executor:
         futures = [executor.submit(run_conversion, cmd) for cmd in cmds]
         result = [f.result() for f in futures]

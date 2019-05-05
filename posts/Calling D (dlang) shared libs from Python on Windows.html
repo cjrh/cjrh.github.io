@@ -8,8 +8,15 @@ for Python, for several reasons:</p>
 <ul>
 <li>Syntax features of D are excellent</li>
 <li>Very fast compilation speed</li>
-<li>No C runtime problem</li>
 </ul>
+<p>But the primary benefit for this use case is to avoid the C runtime 
+problem (at least, I think it will?). The possibility of building a 
+binary once, and then using that same binary on different versions of 
+Python is very attractive. Currently with Cython, for example, the
+extension module must be built on the target platform for each version
+of Python that is supported.</p>
+<p>The idea is similar (in the basic idea) to how the <em>milksnake</em> project 
+uses CFFI to wrap rust-produced binaries in Python.</p>
 <h2 id="The-Goal">The Goal<a class="anchor-link" href="#The-Goal">&#182;</a></h2><p>Our goal is to run a <em>Python</em> program that uses CFFI to call a function inside a native extension written in D.
 Now the Python file:</p>
 <p>Remember that you must install CFFI:</p>
@@ -70,8 +77,7 @@ on the actual exported functions at the bottom:</p>
 </pre></div>
 <p>You will also need a <code>.def</code> file:</p>
 
-<pre><code>def
-LIBRARY blah
+<pre><code>LIBRARY blah
 
 CODE SHARED EXECUTE
 DATA WRITE

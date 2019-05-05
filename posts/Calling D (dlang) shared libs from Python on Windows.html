@@ -1,0 +1,106 @@
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Calling-D-(dlang)-shared-libs-from-Python">Calling D (dlang) shared libs from Python<a class="anchor-link" href="#Calling-D-(dlang)-shared-libs-from-Python">&#182;</a></h1><p>The D programming language is attractive for making native extensions
+for Python, for several reasons:</p>
+<ul>
+<li>Syntax features of D are excellent</li>
+<li>Very fast compilation speed</li>
+<li>No C runtime problem</li>
+</ul>
+<h2 id="The-Goal">The Goal<a class="anchor-link" href="#The-Goal">&#182;</a></h2><p>Our goal is to run a <em>Python</em> program that uses CFFI to call a function inside a native extension written in D.
+Now the Python file:</p>
+<p>Remember that you must install CFFI:</p>
+<div class="highlight"><pre><span></span>$ pip install cffi
+</pre></div>
+<p>The Python file below will use the ABI mode of loading the dll:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cffi</span> <span class="kn">import</span> <span class="n">FFI</span>
+
+<span class="n">ffi</span> <span class="o">=</span> <span class="n">FFI</span><span class="p">()</span>
+<span class="n">ffi</span><span class="o">.</span><span class="n">cdef</span><span class="p">(</span><span class="s2">&quot;int foo();&quot;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">ffi</span><span class="o">.</span><span class="n">dlopen</span><span class="p">(</span><span class="s2">&quot;blah.dll&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">foo</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Called the dll, and the result was {x}&quot;</span><span class="p">)</span>
+</pre></div>
+<p>Running the file must produce the following:</p>
+
+<pre><code>$ python blah.py
+Called the dll, and the result was 123</code></pre>
+<h2 id="Windows">Windows<a class="anchor-link" href="#Windows">&#182;</a></h2><p>On Windows it's a bit odd because you need some entrypoint code
+inside the shared library. This is just boilerplate though. Focus
+on the actual exported functions at the bottom:</p>
+<div class="highlight"><pre><span></span><span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">windows</span><span class="p">.</span><span class="n">windows</span><span class="p">;</span>
+<span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">windows</span><span class="p">.</span><span class="n">dll</span><span class="p">;</span>
+<span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">stdc</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
+
+<span class="k">__gshared</span> <span class="n">HINSTANCE</span> <span class="n">g_hInst</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="p">(</span><span class="n">Windows</span><span class="p">)</span>
+<span class="n">BOOL</span> <span class="n">DllMain</span><span class="p">(</span><span class="n">HINSTANCE</span> <span class="n">hInstance</span><span class="p">,</span> <span class="n">ULONG</span> <span class="n">ulReason</span><span class="p">,</span> <span class="n">LPVOID</span> <span class="n">pvReserved</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">ulReason</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="n">DLL_PROCESS_ATTACH</span><span class="p">:</span>
+        <span class="n">g_hInst</span> <span class="p">=</span> <span class="n">hInstance</span><span class="p">;</span>
+        <span class="n">dll_process_attach</span><span class="p">(</span> <span class="n">hInstance</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="n">DLL_PROCESS_DETACH</span><span class="p">:</span>
+        <span class="n">dll_process_detach</span><span class="p">(</span> <span class="n">hInstance</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="n">DLL_THREAD_ATTACH</span><span class="p">:</span>
+        <span class="n">dll_thread_attach</span><span class="p">(</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="n">DLL_THREAD_DETACH</span><span class="p">:</span>
+        <span class="n">dll_thread_detach</span><span class="p">(</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+
+        <span class="k">default</span><span class="p">:</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">extern</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="kt">int</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">123</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>You will also need a <code>.def</code> file:</p>
+
+<pre><code>def
+LIBRARY blah
+
+CODE SHARED EXECUTE
+DATA WRITE
+
+EXPORTS
+    foo</code></pre>
+<p>To build the <code>.dll</code>, run this:</p>
+
+<pre><code>$ dmd -m64 -betterC -shared -ofblah.dll blah.d blah.def</code></pre>
+<ul>
+<li>On Windows you must supply <code>-m64</code> to make a 64-bit shared library. This
+is important if you want to load it into a 64-bit Python application.</li>
+<li>We're passing the <code>-betterC</code> flag to indicate we don't need the D 
+standard library.</li>
+<li>Obviously <code>-shared</code> is necessary to make a shared library.</li>
+</ul>
+<p>After building, you can inspect the DLL:</p>
+
+<pre><code>$ ls -lah blah.*
+-rw-r--r-- 1 caleb 197121  697 May  5 12:01 blah.d
+-rw-r--r-- 1 caleb 197121   69 May  5 12:06 blah.def
+-rwxr-xr-x 1 caleb 197121 401K May  5 12:06 blah.dll
+-rw-r--r-- 1 caleb 197121  787 May  5 12:06 blah.exp
+-rw-r--r-- 1 caleb 197121 1.7K May  5 11:59 blah.lib
+-rw-r--r-- 1 caleb 197121 1.8K May  5 12:06 blah.obj</code></pre>
+<p>Running the Python program <code>blah.py</code> now produces the expected output.</p>
+
+</div>
+</div>
+</div>
+ 
+

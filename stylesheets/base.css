@@ -235,14 +235,14 @@ div#content {
   min-height: 1000px;
 }
 
-/* line 214, ../sass/base.sass */
+/* line 215, ../sass/base.sass */
 div#metadata {
   float: left;
   width: 100%;
   margin-top: 10px;
 }
 
-/* line 219, ../sass/base.sass */
+/* line 220, ../sass/base.sass */
 #metadata p {
   margin: 0;
   padding: 0;
@@ -251,23 +251,23 @@ div#metadata {
   font-style: italic;
 }
 
-/* line 226, ../sass/base.sass */
+/* line 227, ../sass/base.sass */
 .left p, .right p {
   font-size: 0.9em;
   width: 10em;
 }
 
-/* line 230, ../sass/base.sass */
+/* line 231, ../sass/base.sass */
 .left {
   float: left;
 }
 
-/* line 233, ../sass/base.sass */
+/* line 234, ../sass/base.sass */
 .right {
   float: right;
 }
 
-/* line 236, ../sass/base.sass */
+/* line 237, ../sass/base.sass */
 .button {
   font-size: 0.7em;
   padding: 0.5em 1.5em;
@@ -297,11 +297,11 @@ div#metadata {
   text-align: center;
   display: inline-block;
 }
-/* line 15, ../../../../../usr/local/lib/ruby/gems/2.3.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 15, G:/Programs/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:hover {
   text-decoration: none;
 }
-/* line 36, ../../../../../usr/local/lib/ruby/gems/2.3.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 36, G:/Programs/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:hover {
   background-color: #513c5b;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzg4NjQ5OCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzUxM2M1YiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
@@ -310,13 +310,13 @@ div#metadata {
   background: -webkit-linear-gradient(#886498, #513c5b);
   background: linear-gradient(#886498, #513c5b);
 }
-/* line 39, ../../../../../usr/local/lib/ruby/gems/2.3.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 39, G:/Programs/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:active {
   -moz-box-shadow: #493651 0 1px 2px inset;
   -webkit-box-shadow: #493651 0 1px 2px inset;
   box-shadow: #493651 0 1px 2px inset;
 }
-/* line 6, ../../../../../usr/local/lib/ruby/gems/2.3.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 6, G:/Programs/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button.disabled, .button[disabled] {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6;
@@ -326,23 +326,23 @@ div#metadata {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 74, ../../../../../usr/local/lib/ruby/gems/2.3.0/gems/sassy-buttons-0.2.6/stylesheets/_sassy-buttons.sass */
+/* line 74, G:/Programs/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sassy-buttons-0.2.6/stylesheets/_sassy-buttons.sass */
 .button::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
-/* line 245, ../sass/base.sass */
+/* line 246, ../sass/base.sass */
 .button:focus {
   outline: 0 !important;
   color: #f594a7;
 }
-/* line 250, ../sass/base.sass */
+/* line 251, ../sass/base.sass */
 .button > i {
   font-size: 33px;
   vertical-align: middle;
 }
 
-/* line 255, ../sass/base.sass */
+/* line 256, ../sass/base.sass */
 svg {
   background: #FFFFFF;
   -moz-border-radius: 10px;
@@ -354,12 +354,12 @@ svg {
   height: 100%;
 }
 
-/* line 263, ../sass/base.sass */
+/* line 264, ../sass/base.sass */
 .prompt {
   display: none;
 }
 
-/* line 266, ../sass/base.sass */
+/* line 267, ../sass/base.sass */
 pre {
   font-size: 0.7em;
   margin-left: 5%;
@@ -367,77 +367,77 @@ pre {
   overflow: auto;
 }
 
-/* line 272, ../sass/base.sass */
+/* line 273, ../sass/base.sass */
 .MathJax_Display span {
   color: #5f466a;
 }
 
 @media screen and (max-width: 900px), screen and (max-device-width: 900px) {
-  /* line 276, ../sass/base.sass */
+  /* line 277, ../sass/base.sass */
   html {
     font-size: 19.8px;
   }
 
-  /* line 280, ../sass/base.sass */
+  /* line 281, ../sass/base.sass */
   h1 {
     font-size: 33px;
     margin-top: 10px;
   }
 
-  /* line 283, ../sass/base.sass */
+  /* line 284, ../sass/base.sass */
   #banner {
     height: 220px;
   }
 
-  /* line 285, ../sass/base.sass */
+  /* line 286, ../sass/base.sass */
   .button {
     width: auto;
   }
 
-  /* line 287, ../sass/base.sass */
+  /* line 288, ../sass/base.sass */
   p.navinfo {
     display: none;
   }
 
-  /* line 291, ../sass/base.sass */
+  /* line 292, ../sass/base.sass */
   div#content-container {
     float: none;
   }
 }
 @media screen and (max-width: 500px), screen and (max-device-width: 500px) {
-  /* line 310, ../sass/base.sass */
+  /* line 311, ../sass/base.sass */
   html {
     font-size: 17.6px;
   }
 
-  /* line 312, ../sass/base.sass */
+  /* line 313, ../sass/base.sass */
   #banner {
     font-size: 13.2px;
     height: 120px;
   }
 
-  /* line 315, ../sass/base.sass */
+  /* line 316, ../sass/base.sass */
   h1 {
     font-size: 22px;
     border-bottom: 1px solid #000000;
   }
 
-  /* line 318, ../sass/base.sass */
+  /* line 319, ../sass/base.sass */
   h2 {
     font-size: 19.8px;
   }
 
-  /* line 320, ../sass/base.sass */
+  /* line 321, ../sass/base.sass */
   aside {
     font-size: 15.4px;
   }
 
-  /* line 322, ../sass/base.sass */
+  /* line 323, ../sass/base.sass */
   div#main {
     width: 95%;
   }
 }
-/* line 325, ../sass/base.sass */
+/* line 326, ../sass/base.sass */
 a, .button {
   cursor: url("/img/gam1390.cur"), auto;
 }

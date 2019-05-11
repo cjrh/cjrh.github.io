@@ -9,21 +9,26 @@ for Python, for several reasons:</p>
 <li>Syntax features of D are excellent</li>
 <li>Very fast compilation speed</li>
 </ul>
-<p>But the primary benefit for this use case is to avoid the C runtime 
-problem (at least, I think it will?). The possibility of building a 
-binary once, and then using that same binary on different versions of 
-Python is very attractive. Currently with Cython, for example, the
-extension module must be built on the target platform for each version
-of Python that is supported.</p>
-<p>The idea is similar (in the basic idea) to how the <em>milksnake</em> project 
+<p>But the primary benefit for this use case is build native extensions
+in a modern systems programming language (i.e., not C), and to use
+that same binary across multiple versions of Python. Building a 
+binary once is very attractive! Currently with Cython, for example, the
+extension module must be built on the target platform for <em>each version
+of Python</em> that is supported. Here, we're trying to make it so that
+it would be possible to build the native extension without even 
+requiring Python to be installed on the build machine. (Of course, 
+Python would still be required to run tests and verify binary).</p>
+<p>The idea is similar (in the basic idea) to how the 
+<a href="https://github.com/getsentry/milksnake">milksnake</a> project 
 uses CFFI to wrap rust-produced binaries in Python.</p>
-<h2 id="The-Goal">The Goal<a class="anchor-link" href="#The-Goal">&#182;</a></h2><p>Our goal is to run a <em>Python</em> program that uses CFFI to call a function inside a native extension written in D.
-Now the Python file:</p>
+<h2 id="The-Goal">The Goal<a class="anchor-link" href="#The-Goal">&#182;</a></h2><p>Our goal is to run a <em>Python</em> program that uses CFFI to call a 
+function inside a native extension written in D.</p>
 <p>Remember that you must install CFFI:</p>
 <div class="highlight"><pre><span></span>$ pip install cffi
 </pre></div>
 <p>The Python file below will use the ABI mode of loading the dll:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cffi</span> <span class="kn">import</span> <span class="n">FFI</span>
+<div class="highlight"><pre><span></span><span class="c1"># blah.py</span>
+<span class="kn">from</span> <span class="nn">cffi</span> <span class="kn">import</span> <span class="n">FFI</span>
 
 <span class="n">ffi</span> <span class="o">=</span> <span class="n">FFI</span><span class="p">()</span>
 <span class="n">ffi</span><span class="o">.</span><span class="n">cdef</span><span class="p">(</span><span class="s2">&quot;int foo();&quot;</span><span class="p">)</span>
@@ -35,10 +40,12 @@ Now the Python file:</p>
 
 <pre><code>$ python blah.py
 Called the dll, and the result was 123</code></pre>
+<p>This uses the less-work <em>ABI mode</em> of CFFI.</p>
 <h2 id="Windows">Windows<a class="anchor-link" href="#Windows">&#182;</a></h2><p>On Windows it's a bit odd because you need some entrypoint code
 inside the shared library. This is just boilerplate though. Focus
 on the actual exported functions at the bottom:</p>
-<div class="highlight"><pre><span></span><span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">windows</span><span class="p">.</span><span class="n">windows</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="c1">// blah.d</span>
+<span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">windows</span><span class="p">.</span><span class="n">windows</span><span class="p">;</span>
 <span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">windows</span><span class="p">.</span><span class="n">dll</span><span class="p">;</span>
 <span class="k">import</span> <span class="n">core</span><span class="p">.</span><span class="n">stdc</span><span class="p">.</span><span class="n">stdio</span><span class="p">;</span>
 
@@ -75,7 +82,7 @@ on the actual exported functions at the bottom:</p>
     <span class="k">return</span> <span class="mi">123</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-<p>You will also need a <code>.def</code> file:</p>
+<p>You will also need a <code>blah.def</code> file:</p>
 
 <pre><code>LIBRARY blah
 
@@ -104,6 +111,71 @@ standard library.</li>
 -rw-r--r-- 1 caleb 197121 1.7K May  5 11:59 blah.lib
 -rw-r--r-- 1 caleb 197121 1.8K May  5 12:06 blah.obj</code></pre>
 <p>Running the Python program <code>blah.py</code> now produces the expected output.</p>
+<h3 id="Runtime-requirements">Runtime requirements<a class="anchor-link" href="#Runtime-requirements">&#182;</a></h3><p>On Windows, if you build your DLL with Visual studio installed, the C runtime
+(<code>msvcrt100.dll</code>, first introduced with Visual Studio 2010) will be
+statically linked and so the only runtime dependency, besides whatever
+you explicitly require in your D code, is <code>kernel32.dll</code> which every
+version of Windows back to XP will have available:</p>
+
+<pre><code>Setting environment for using Microsoft Visual Studio 2008 x64 tools.
+
+G:\Documents\repos\dasbcpy&gt;dumpbin /dependents blah.dll
+Microsoft (R) COFF/PE Dumper Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+Dump of file blah.dll
+
+File Type: DLL
+
+  Image has the following dependencies:
+
+    KERNEL32.dll
+
+  Summary
+
+        1000 ._deh
+        F000 .data
+        1000 .dp
+        1000 .minfo
+        4000 .pdata
+        F000 .rdata
+        2000 .reloc
+       44000 .text
+        1000 .tp</code></pre>
+<h2 id="Linux">Linux<a class="anchor-link" href="#Linux">&#182;</a></h2><p>On linux, some things are easier and some things are harder. The code for the
+shared library itself is quite a bit simpler:</p>
+
+<pre><code>// blah.d
+import core.stdc.stdio;
+
+extern (C) int foo() {
+    return 123;
+}</code></pre>
+<p>No special entrypoint declarations are necessary. First, building the shared 
+library:</p>
+
+<pre><code>$ dmd -fPIC -betterC -shared -ofblah.so blah.d</code></pre>
+<p>Note that we've added the <code>-fPIC</code> option, and changed the name of the 
+shared library to <code>blah.so</code>.  After changing <code>blah.dll</code> to <code>blah.so</code>
+in the <code>blah.py</code> Python file, we can once again confirm that it works:</p>
+
+<pre><code>$ python blah.py
+Called the dll, and the result was 123</code></pre>
+<p>Unfortunately, the linker links against whatever version of the C 
+runtime is currently installed:</p>
+
+<pre><code>$ ldd blah.so
+        linux-vdso.so.1 (0x00007ffc5f333000)
+        libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f836e25e000)
+        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007f836df5a000)
+        librt.so.1 =&gt; /lib/x86_64-linux-gnu/librt.so.1 (0x00007f836dd52000)
+        libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f836db4e000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f836d7af000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f836e67d000)</code></pre>
+<p>This means that the <code>blah.so</code> will <em>not work</em> on older versions of Linux
+where the the C runtime is an older version. One way to get around this
+is to compile the shared library on an older version of linux, a task
+which docker makes relatively easy; but it's still a pain.</p>
 
 </div>
 </div>

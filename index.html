@@ -31,19 +31,6 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config(
-            {tex2jax: {
-                inlineMath: [['$','$'], ['\\(','\\)']],
-                displayMath: [['\\[','\\]'], ['$$','$$']]
-                }
-            }
-        );
-    </script>
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?...">
-    </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/syntax.css">
     <link rel="stylesheet" href="stylesheets/base.css">
 </head>
@@ -104,6 +91,21 @@
     </div>
     <footer><p></p></footer>
     <!-- Load scripts last. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config(
+            {tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                displayMath: [['\\[','\\]'], ['$$','$$']]
+                }
+            }
+        );
+    </script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
     <script src="/js/jquery-3.0.0.min.js"></script>
     <script src="/js/velocity.min.js"></script>
     <script src="/js/velocity.ui.min.js"></script>

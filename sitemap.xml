@@ -53,4 +53,8 @@
         <loc>http://pythonomicon.com/?post=Calling%20D%20%28dlang%29%20shared%20libs%20from%20Python%20on%20Windows</loc>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc>http://pythonomicon.com/?post=Consecutive%20Groups</loc>
+        <changefreq>weekly</changefreq>
+    </url>
 </urlset>

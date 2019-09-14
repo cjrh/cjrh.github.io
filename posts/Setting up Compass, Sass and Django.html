@@ -1,15 +1,12 @@
-
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Setting-up-Compass,-Sass-and-Django">Setting up Compass, Sass and Django<a class="anchor-link" href="#Setting-up-Compass,-Sass-and-Django">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Brandon Rhodes gives a <a href="http://rhodesmill.org/brandon/2011/adding-compass/">great tutorial</a> on how to add Compass to a <a href="https://www.djangoproject.com/">Django</a> project. In that tutorial, the first step is to create a <code>compass</code> folder, and inside that folder, run an <code>install.sh</code> script to create the gems required for Compass.  I had trouble with the line inside this script that looks like this:</p>
 <div class="highlight"><pre><span></span><span class="nv">BASE</span><span class="o">=</span><span class="k">$(</span>dirname <span class="k">$(</span>readlink -f <span class="k">$(</span>which <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)))</span>
@@ -20,8 +17,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1"># compass/install.sh - install Compass under the &quot;./Gem&quot; directory</span>
@@ -41,8 +37,7 @@ gem install -i Gem compass-susy-plugin
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The same occurs in the second script, <code>compass.sh</code>:</p>
 
@@ -50,8 +45,7 @@ gem install -i Gem compass-susy-plugin
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1"># compass/compass.sh - properly invoke the &quot;Compass&quot; program</span>
@@ -66,8 +60,7 @@ gem install -i Gem compass-susy-plugin
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The remainder of the tutorial remains the same.</p>
 
@@ -75,8 +68,7 @@ gem install -i Gem compass-susy-plugin
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 style="color: red; ">Edit: 14 Aug 2015</h3><h2 id="There-is-a-better-way">There is a better way<a class="anchor-link" href="#There-is-a-better-way">&#182;</a></h2><p>There are tools that make this all much easier.  Once you have a ruby installed and working, the first step is to install <a href="http://bundler.io">bundler</a>:</p>
 <div class="highlight"><pre><span></span>$ sudo gem install bundler
@@ -106,8 +98,7 @@ gem install -i Gem compass-susy-plugin
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -160,13 +151,25 @@ gem install -i Gem compass-susy-plugin
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As you can see, in the section for <code>livereload</code>, One of the parts executes compass on my <code>sass</code> files whenever they change, and livereload <em>injects</em> the changes css into my browser window.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
  
 

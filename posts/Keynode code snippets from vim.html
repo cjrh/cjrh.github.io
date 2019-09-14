@@ -1,7 +1,5 @@
-
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Mac-OS-X-Keynote-code-snippets-from-vim">Mac OS X Keynote code snippets from vim<a class="anchor-link" href="#Mac-OS-X-Keynote-code-snippets-from-vim">&#182;</a></h1><p>In preparation for <a href="http://2015.pycon-au.org/">PyCon Australia</a> coming up next weekend, I'm getting my tools together to make slides for my <a href="http://2015.pycon-au.org/schedule/30051/view_talk?day=sunday">Cython talk</a>.</p>
 <p>I had been intending to use the <a href="http://ipython.org/notebook.html">IPython Notebook</a> to create the content, and then convert to slides using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a>; the conversion process is supported by the Notebook itself, using the <code>nbconvert</code> command-line tool.</p>
@@ -19,8 +17,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Step-1:-Basics">Step 1: Basics<a class="anchor-link" href="#Step-1:-Basics">&#182;</a></h2><p>Add two new key mapping to vim:</p>
 <div class="highlight"><pre><span></span><span class="n">nmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="o">%</span><span class="p">:</span><span class="n">w</span> <span class="err">!</span><span class="n">pygmentize</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">rtf</span> \<span class="o">|</span> <span class="n">pbcopy</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
@@ -34,16 +31,14 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Step-2:-Customization">Step 2: Customization<a class="anchor-link" href="#Step-2:-Customization">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I prefer a bigger font size, and the <a href="https://en.wikipedia.org/wiki/Liberation_fonts">Liberation Mono</a> font. These and further customizations can be applied directly in the commands. Also, for presentations I prefer the plain black and white theme <code>bw</code>. My vim key maps in my <code>.vimrc</code> look like the following:</p>
 <div class="highlight"><pre><span></span><span class="n">nmap</span> <span class="o">&lt;</span><span class="n">leader</span><span class="o">&gt;</span><span class="n">pc</span> <span class="o">&lt;</span><span class="n">esc</span><span class="o">&gt;</span><span class="p">:</span><span class="o">%</span><span class="p">:</span><span class="n">w</span>
@@ -68,8 +63,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Step-3:-Test">Step 3: Test<a class="anchor-link" href="#Step-3:-Test">&#182;</a></h2><p>That's it.  After you restart vim, you should be able to mark a block of code, then type <code>\pc</code>, and then be able to paste from the clipboard into a new text box inside Keynote.</p>
 

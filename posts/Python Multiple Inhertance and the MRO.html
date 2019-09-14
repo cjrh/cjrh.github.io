@@ -1,7 +1,5 @@
-
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Multiple-inheritance-in-Python:-always-more-to-learn">Multiple inheritance in Python: always more to learn<a class="anchor-link" href="#Multiple-inheritance-in-Python:-always-more-to-learn">&#182;</a></h1><p>I felt so proud of myself when I first learned how to reason about multiple inheritance in Python, and the MRO in particular.  The <em>method resolution order</em> (MRO) is the order in which Python arranges name lookups in a class hierarchy.  For single inheritance, this is simple and obvious, and works like most languages with object-oriented features.</p>
 <p>However, for multiple inheritance, thing become a little trickier. Here is an example:</p>
@@ -39,14 +37,13 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;D: after init&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here we have four classes, <code>A</code> through <code>D</code>. The important stuff begins at <code>D</code>.  Do you see how <code>D</code> inherits from both <code>B</code> <em>and</em> <code>C</code>?  If you have not already learned how Python deals with this, then you're in for a treat:</p>
 
@@ -61,7 +58,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -71,7 +68,7 @@
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -92,8 +89,7 @@ D: after init
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Making an instance of <code>D</code>, we see the cascade of <code>print()</code> calls.  Here, it is obvious that Python has arranged the sequence of <code>super()</code> calls such that lookup proceeds <strong>depth-first</strong>.  In other words, the lookup being triggered by <code>super()</code> will proceed through the entire superclass list of <code>B</code>, before working through the same for <code>C</code>.</p>
 <p><em>Side-note</em>: If <code>A</code> did <strong>not</strong> also make a call to <code>super()</code> in its initializer, the chain would have been broken and <code>C.__init__()</code> would <strong>not</strong> have been called.  This means that for classes to cooperate in a multiple-inheritance arrangement, even base classes <em>must</em> call <code>super()</code>.</p>
@@ -110,7 +106,7 @@ D: after init
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">D</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -120,7 +116,7 @@ D: after init
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -138,8 +134,7 @@ D: after init
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This makes the order obvious.  And this is what I learned a few years ago.  However, a <a href="https://youtu.be/l8u8VENJhpM">recent talk</a> by Mike Leonard, <em>The Wizardry of Metaprogramming</em>, had an example of multiple inheritance in which it seemed like the MRO was constructed in a <strong>breadth-first</strong> sequence, the exact opposite of how I thought it worked! Here is a slightly reworked example:</p>
 
@@ -176,14 +171,13 @@ D: after init
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;D: after init&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is <em>almost</em> the same as the previous code, but I've made one tiny change. Can you spot it?  I will reveal in a moment, but first, let's create an instance of <code>D</code> and print out the MRO:</p>
 
@@ -198,7 +192,7 @@ D: after init
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -208,7 +202,7 @@ D: after init
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -236,7 +230,7 @@ D: after init
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">D</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -246,7 +240,7 @@ D: after init
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -264,8 +258,7 @@ D: after init
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Whaaaat?  Now the sequence seems to indicate that <code>C</code> immediately follows <code>B</code>, and the root class <code>A</code> comes last!  That is no longer "depth-first".</p>
 <p>It turns out that Python does things a little differently when a class appears <strong>multiple times</strong> in the MRO.  In this situation, all duplicate appearances (of <code>A</code> in this case) will be removed <strong>except for the last</strong>.  Earlier, I had changed the code for the <code>C</code> class to also inherit from <code>A</code>.  This meant that both <code>B</code> <strong>and</strong> <code>C</code> inherit from <code>A</code>, and a naive depth-first construction of the MRO results in two entries for <code>A</code>. Python therefore deletes all appearances except the last.</p>

@@ -1,8 +1,8 @@
 {
     "timestamp": 1460324459.0,
     "creation_date": "Mon Apr 11 07:40:59 2016",
-    "timestamp_modified": 1460324460.0,
-    "modified_date": "Mon Apr 11 07:41:00 2016",
+    "timestamp_modified": 1460324459.0,
+    "modified_date": "Mon Apr 11 07:40:59 2016",
     "previous_post": "Compiling Python extension modules on Windows",
     "next_post": "Making binaries with Python"
 }

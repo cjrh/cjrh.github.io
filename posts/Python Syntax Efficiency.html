@@ -32,7 +32,9 @@
 <p>to install the extras of your choice.</p>
 <p>For convenience, I also wanted to add an "all" section to the extras that would install all of them. It should be pretty easy to construct that <code>"all"</code> entry, right?</p>
 <p>My first approach, which also worked the first time I ran it, was to use a comprehension:</p>
-<div class="highlight"><pre><span></span><span class="n">extras_require</span><span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">extras_require</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">v</span><span class="p">})</span>
+<div class="highlight"><pre><span></span><span class="n">extras_require</span><span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="p">{</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">extras_require</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">v</span><span class="p">}</span>
+<span class="p">)</span>
 </pre></div>
 <p>Note how we're using a set comprehension to reject duplicates. This code is simple, obvious, very easy to read.</p>
 <p>Over time, whenever I saw this "all" line, I began wondering whether there was a better way. This wasn't any kind of formal project; just a scratch at the back of mind that I became curious about.</p>
@@ -43,13 +45,17 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
-<span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">nd</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">nd</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="ow">or</span> <span class="n">nd</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="nb">set</span><span class="p">()))</span>
+<span class="n">reduce</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">nd</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">nd</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="ow">or</span> <span class="n">nd</span><span class="p">,</span> 
+    <span class="n">d</span><span class="p">,</span> 
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="nb">set</span><span class="p">())</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -73,7 +79,7 @@
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -102,7 +108,9 @@
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">er</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<span class="n">er</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="ow">or</span> <span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">set</span><span class="p">()))</span>
+<span class="n">er</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="ow">or</span> <span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
+<span class="p">)</span>
 <span class="n">er</span>
 </pre></div>
 
@@ -145,7 +153,9 @@
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">er</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<span class="n">er</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">d</span><span class="p">,</span> <span class="nb">set</span><span class="p">()))</span>
+<span class="n">er</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">d</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
+<span class="p">)</span>
 <span class="n">er</span>
 </pre></div>
 
@@ -188,7 +198,9 @@
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">er</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<span class="n">er</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">lst</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="nb">set</span><span class="p">()))</span>
+<span class="n">er</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">lst</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="nb">set</span><span class="p">())</span>
+<span class="p">)</span>
 <span class="n">er</span>
 </pre></div>
 

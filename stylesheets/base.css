@@ -441,3 +441,7 @@ pre {
 a, .button {
   cursor: url("/img/gam1390.cur"), auto;
 }
+
+.output-wrapper {
+    border: 1px solid black;
+}

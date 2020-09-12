@@ -1,8 +1,9 @@
 {
     "timestamp": 1502249415.0,
     "creation_date": "Wed Aug  9 13:30:15 2017",
-    "timestamp_modified": 1502250853.0,
-    "modified_date": "Wed Aug  9 13:54:13 2017",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "6298c08ccce310c47ae061cb96faa2c4",
     "previous_post": "Making binaries with Python",
     "next_post": "Python without virtualenv"
 }

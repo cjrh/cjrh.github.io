@@ -1,8 +1,9 @@
 {
     "timestamp": 1436666455.0,
     "creation_date": "Sun Jul 12 12:00:55 2015",
-    "timestamp_modified": 1439514989.0,
-    "modified_date": "Fri Aug 14 11:16:29 2015",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "68f0f36d52fe3dc85070d696e2714d28",
     "previous_post": "A Windows setup for Python development",
     "next_post": "Fixing missing Document Properties dialog in Inkscape on Mac OS X"
 }

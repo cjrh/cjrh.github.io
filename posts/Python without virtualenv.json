@@ -1,8 +1,9 @@
 {
     "timestamp": 1529535693.0760822,
     "creation_date": "Thu Jun 21 09:01:33 2018",
-    "timestamp_modified": 1529535693.0,
-    "modified_date": "Thu Jun 21 09:01:33 2018",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "101eccb6522aad6c7eaa4fcfcd1a7e21",
     "previous_post": "Python Multiple Inhertance and the MRO",
     "next_post": "Calling D (dlang) shared libs from Python on Windows"
 }

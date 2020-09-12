@@ -1,8 +1,9 @@
 {
     "timestamp": 1421654836.0,
     "creation_date": "Mon Jan 19 18:07:16 2015",
-    "timestamp_modified": 1459130984.0,
-    "modified_date": "Mon Mar 28 12:09:44 2016",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "dae38f31343ed130c5b7bfb037d9fe72",
     "previous_post": "First post",
     "next_post": "Setting up Compass, Sass and Django"
 }

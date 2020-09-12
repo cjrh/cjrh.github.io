@@ -1,8 +1,9 @@
 {
     "timestamp": 1437952712.0,
     "creation_date": "Mon Jul 27 09:18:32 2015",
-    "timestamp_modified": 1502250242.0,
-    "modified_date": "Wed Aug  9 13:44:02 2017",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "1e26ed03b230ece8f6341791cb1f1f4e",
     "previous_post": "Fixing missing Document Properties dialog in Inkscape on Mac OS X",
     "next_post": "Compiling Python extension modules on Windows"
 }

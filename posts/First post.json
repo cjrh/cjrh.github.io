@@ -1,8 +1,9 @@
 {
     "timestamp": 1421471616.0,
     "creation_date": "Sat Jan 17 15:13:36 2015",
-    "timestamp_modified": 1459131001.0,
-    "modified_date": "Mon Mar 28 12:10:01 2016",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "961350304114ab8b864abad92fc2005f",
     "previous_post": "The combination of  OS X zsh vim anaconda",
     "next_post": "A Windows setup for Python development"
 }

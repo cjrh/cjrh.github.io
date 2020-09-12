@@ -1,8 +1,9 @@
 {
     "timestamp": 1557022190.2355118,
     "creation_date": "Sun May  5 12:09:50 2019",
-    "timestamp_modified": 1557549781.488179,
-    "modified_date": "Sat May 11 14:43:01 2019",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "e91ad0104f948f6dd7403816ca7d1aff",
     "previous_post": "Python without virtualenv",
     "next_post": "Consecutive Groups"
 }

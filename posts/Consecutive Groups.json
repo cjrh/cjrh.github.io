@@ -1,8 +1,9 @@
 {
     "timestamp": 1568428035.8464622,
     "creation_date": "Sat Sep 14 12:27:15 2019",
-    "timestamp_modified": 1568435015.1790154,
-    "modified_date": "Sat Sep 14 14:23:35 2019",
+    "timestamp_modified": 1598185743.5265276,
+    "modified_date": "Sun Aug 23 22:29:03 2020",
+    "hash": "73b5fd0aa25b9ffff924e4c54a1e0d51",
     "previous_post": "Calling D (dlang) shared libs from Python on Windows",
     "next_post": "Python Syntax Efficiency"
 }

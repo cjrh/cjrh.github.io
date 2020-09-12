@@ -14,6 +14,7 @@
     <!-- <meta property="og:description" content=""> -->
     <meta name="google-site-verification" content="1MRTyLZEkK2A3gbgyuVdRTIQE9TtnISGkgTxhqn4uHs"/>
     <title>Pythonomicon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Adamina&family=Fira+Code&family=Roboto&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
@@ -36,10 +37,6 @@
 </head>
 <body>
 <div id="app">
-    <div id="banner">
-        <p class='navinfo'>You can navigate by keyboard: use <kbd>tab</kbd> to move focus and
-            <kbd>enter</kbd> to hit buttons and links.</p>
-    </div>
     <aside id="mainlogo">
         <p class="ttext">pythonomicon</p>
         <p class="minstrel">Caleb Hattingh</p>
@@ -57,6 +54,7 @@
     </aside>
     <div id="main">
         <div id="content-container">
+            <div id="content" v-html="post"></div>
             <button
                     id="prev-button"
                     class="left button"
@@ -74,20 +72,18 @@
                 <i class="fa fa-arrow-circle-right"></i>
             </button>
             <div id="metadata">
-                <p>This post: <strong>{{post_metadata.this_post}}</strong>
-                <p>
-                <p>Original Jupyter Notebook:<a id="this_notebook" href=""></a></p>
+                <!-- <p>This post: <strong>{{post_metadata.this_post}}</strong> -->
+                <!-- <p> -->
+                <p>Original Jupyter Notebook:<a tabindex="0" id="this_notebook" href=""></a></p>
                 <p>Created: <span id="creation_date"></span>
-                <p>
                 <p>Modified: <span id="modified_date"></span>
-                <p>
-                <p>Previous: <a id="previous_post" href=""></a>
-                <p>
-                <p>Next: <a id="next_post" href=""></a>
-                <p>
+                <!-- <p> -->
+                <!-- <p>Previous: <a tabindex="0" id="previous_post" href=""></a> -->
+                <!-- <p> -->
+                <!-- <p>Next: <a tabindex="0" id="next_post" href=""></a> -->
+                <!-- <p> -->
             </div>
-            <div id="content" v-html="post">
-            </div>
+            <div style="margin-bottom: 100px;"></div>
 
             <!-- <div id="disqus_thread"></div> -->
             <!-- <script type="text/javascript"> -->

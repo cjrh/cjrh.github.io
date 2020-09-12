@@ -9,7 +9,7 @@ backcall==0.1.0           # via ipython
 begins==0.9               # via -r requirements.in
 bleach==3.1.4             # via nbconvert
 cffi==1.14.2              # via argon2-cffi
-cython==0.29.13           # via -r requirements.in
+cython==0.29.21           # via -r requirements.in
 decorator==4.1.2          # via ipython, traitlets
 defusedxml==0.6.0         # via nbconvert
 entrypoints==0.2.3        # via nbconvert

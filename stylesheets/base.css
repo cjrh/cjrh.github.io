@@ -5,6 +5,7 @@
     --code-font-family: 'Fira Code', monospace;
     /* --body-font-family: "Roboto", sans-serif; */
     /* --head-font-family: "Adamina", serif; */
+    --cursor-button: url("/img/gam1390.cur"), auto;
 }
 
 html {
@@ -191,19 +192,21 @@ footer {
 div#content {
   float: left;
   width: 100%;
-  min-height: 1000px;
+  /* min-height: 1000px; */
+  margin-bottom: 10px;
 }
 
 div#metadata {
   float: left;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
+  padding-bottom: 100px;
 }
 
 #metadata p {
   margin: 0;
   padding: 0;
-  color: lightgrey;
+  color: #999;
   font-size: 0.6rem;
   font-style: italic;
 }
@@ -222,6 +225,7 @@ div#metadata {
 }
 
 .button {
+    /* margin-top: 10px; */
 }
 /* line 15, G:/Programs/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 .button:hover {
@@ -262,23 +266,21 @@ div#metadata {
   outline: 0 !important;
   font-weight: bold;
 }
-/* line 251, ../sass/base.sass */
 .button > i {
   /* font-size: 33px; */
   vertical-align: middle;
 }
 
-/* line 256, ../sass/base.sass */
-svg {
-  background: #FFFFFF;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  font-family: Georgia, serif;
-  font-size: 8pt;
-  width: 100%;
-  height: 100%;
-}
+/* svg { */
+/*   background: #FFFFFF; */
+/*   -moz-border-radius: 10px; */
+/*   -webkit-border-radius: 10px; */
+/*   border-radius: 10px; */
+/*   font-family: Georgia, serif; */
+/*   font-size: 8pt; */
+/*   width: 100%; */
+/*   height: 100%; */
+/* } */
 
 .prompt {
   display: none;
@@ -291,6 +293,27 @@ pre {
   margin-left: 5%;
   margin-right: 5%;
   overflow: auto;
+}
+
+div.highlight {
+    font-size: 0.8rem;
+    border: 1px solid #cfcfcf;
+    border-radius: 4px;
+    background: #f7f7f7;
+    line-height: 1.21429em
+}
+
+div.output_wrapper {
+    font-size: 0.8rem;
+    border: 1px solid #cfcfcf;
+    border-radius: 4px;
+    background: lightyellow;
+    line-height: 1.21429em;
+    margin-top: 20px;
+}
+
+div.cell {
+    margin-top: 20px;
 }
 
 pre > code {
@@ -369,10 +392,43 @@ a, .button {
     border: 1px solid black;
 }
 
-div.input_area {
+/* div.input_area { */
+/*     font-size: 0.8rem; */
+/*     border: 1px solid #cfcfcf; */
+/*     border-radius: 4px; */
+/*     background: #f7f7f7; */
+/*     line-height: 1.21429em */
+/* } */
+
+/* Vue select styling */
+.style-chooser .vs__search::placeholder {
+    opacity: 0.4;
+}
+
+.style-chooser .vs__search::placeholder,
+.style-chooser .vs__dropdown-toggle,
+.style-chooser .vs__dropdown-menu {
+    /* background: #dfe5fb; */
+    /* border: none; */
+    /* color: #394066; */
+    /* text-transform: lowercase; */
+    font-variant: small-caps;
+    font-size: 12px;
+    /* font-style: italic; */
+}
+
+.style-chooser .vs__clear,
+.style-chooser .vs__open-indicator {
+    cursor: var(--cursor-button);
+}
+
+.style-chooser ul, .style-chooser li {
+    font-size: 12px;
+    cursor: var(--cursor-button) !important;
+}
+
+.annotation {
     font-size: 0.8rem;
-    border: 1px solid #cfcfcf;
-    border-radius: 4px;
-    background: #f7f7f7;
-    line-height: 1.21429em
+    color: #999;
+    margin-bottom: 0;
 }

@@ -32,6 +32,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
     <link rel="stylesheet" href="stylesheets/syntax.css">
     <link rel="stylesheet" href="stylesheets/base.css">
 </head>
@@ -44,6 +45,12 @@
     <aside id="links">
         <ul>
             <!-- <li>Archive</li> -->
+            <li><a href="https://www.amazon.com/Using-Asyncio-Python-Understanding-Asynchronous-ebook-dp-B084D653HW/dp/B084D653HW/ref=mt_kindle?_encoding=UTF8&me=&qid=" target="_blank">
+                <i class="fa fa-amazon"></i> Using Asyncio in Python</a></li>
+            <li><a href="https://learning.oreilly.com/videos/learning-cython/9781771375610" target="_blank">
+                <i class="fa fa-tv"></i> Learning Cython</a></li>
+            <li><a href="https://www.oreilly.com/content/20-python-libraries-you-arent-using-but-should/" target="_blank">
+                <i class="fa fa-book"></i> 20 Python libraries</a></li>
             <li><a href="https://github.com/cjrh" target="_blank">
                 <i class="fa fa-github"></i> Github</a></li>
             <li><a href="https://codepen.io/cjrh/" target="_blank">
@@ -52,8 +59,18 @@
             <li class="break"></li>
         </ul>
     </aside>
+    <aside>
+    </aside>
     <div id="main">
         <div id="content-container">
+            <v-select
+                class="style-chooser"
+                :options="posts"
+                :value="selectedPost"
+                @input="setSelectedPost"
+                placeholder="Find a post"
+            ></v-select>
+            <!-- <p class="annotation">Created {{ post_metadata.creation_date }}</span> -->
             <div id="content" v-html="post"></div>
             <button
                     id="prev-button"
@@ -102,7 +119,8 @@
     </div>
 </div>
 <!-- Load scripts last. -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/v4-shims.min.css" integrity="sha512-njWvXjJPMYfvYHb2DAnEL0MS5KEmoIeZVdpK7tpxiApoL3ZoUzHSvkoSFrbASdTuIHnEVG+Ko+ES/DXKygBH4g==" crossorigin="anonymous" />
 <script type="text/x-mathjax-config">
       MathJax.Hub.Config(
             {tex2jax: {
@@ -117,9 +135,14 @@
 </script>
 
 <script src="/js/jquery-3.0.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<script src="https://unpkg.com/vue@latest"></script>
+<!-- <script src="https://unpkg.com/browse/vue@2.6.12/dist/vue.min.js"></script> -->
+
+<!-- use the latest vue-select release -->
+<script src="https://unpkg.com/vue-select@latest"></script>
 <script>
   var content = document.getElementById('content');
+  Vue.component('v-select', VueSelect.VueSelect);
   // window.onload = loadContent;
 
   var app = new Vue({
@@ -135,11 +158,42 @@
         previous_post: null,
         next_post: null,
       },
+      posts: [],
+      selectedPost: null,
     },
     mounted: function () {
       this.loadContent()
+      fetch('/sitemap.xml')
+            .then(response => response.text())
+            .then(data => this.processSiteMap(data))
     },
     methods: {
+      processSiteMap: function (data) {
+          console.log(data)
+          let p = new DOMParser()
+          let doc = p.parseFromString(data, "text/xml")
+          console.log(doc)
+          let posts = []
+          let elements = [...doc.getElementsByTagName("loc")].reverse()
+          for (e of elements) {
+              console.log(e.childNodes[0].nodeValue)
+              let url = e.childNodes[0].nodeValue
+              post = this.extractParamFromURL(url, "post")
+              console.log("post", post)
+              posts.push({
+                  label: post,
+                  url: url
+              })
+          }
+          this.posts = posts
+      },
+      setSelectedPost: function (value) {
+          if (!value) {
+              this.selectedPost = null
+              return
+          }
+          this.showPost(value.url)
+      },
       nextPage: function () {
         if (this.post_metadata.next_post !== null) {
           this.post = ''
@@ -200,11 +254,18 @@
       },
       showPost: function (name) {
         var element = document.getElementById("content");
-        var postref = "posts/" + name + ".html";
+        if (name.startsWith('http')) {
+          name = this.extractParamFromURL(name, "post")
+        }
+        let postref = "posts/" + name + ".html"
         document.title = name;
         this.post_metadata.this_post = name
         this.loadPage(postref, (data) => {
           this.post = data
+          this.selectedPost = {
+              label: name,
+              url: postref,
+          }
           // element.innerHTML = data
           var first_para = $('#content p:eq(0)').text()
           this.change_metadata(name, first_para, postref)
@@ -257,19 +318,29 @@
           })
         })
       },
-      getFromUrl: function (val) {
-        var result = "",
-          tmp = [];
-        location.search
+      extractParamFromURL: function (url, param) {
+        let result = ""
+        let tmp = []
+        console.log("url", url, "param", param)
+        console.log("url.split(?, 1)", url.split('?', 1))
+        url
         //.replace ( "?", "" )
         // this is better, there might be a question mark inside
-          .substr(1)
+          .split('?')
+          .slice(1)
+          .join('?')
+          // .substr(1)
           .split("&")
           .forEach(function (item) {
+            console.log("item", item)
             tmp = item.split("=");
-            if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+            if (tmp[0] === param) result = decodeURIComponent(tmp[1]);
           });
         return result;
+      },
+      getFromUrl: function (val) {
+        console.log("location.search", location.search)
+        return this.extractParamFromURL(location.search, val)
       }
     }
   })

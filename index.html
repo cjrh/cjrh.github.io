@@ -169,17 +169,13 @@
     },
     methods: {
       processSiteMap: function (data) {
-          console.log(data)
           let p = new DOMParser()
           let doc = p.parseFromString(data, "text/xml")
-          console.log(doc)
           let posts = []
           let elements = [...doc.getElementsByTagName("loc")].reverse()
           for (e of elements) {
-              console.log(e.childNodes[0].nodeValue)
               let url = e.childNodes[0].nodeValue
               post = this.extractParamFromURL(url, "post")
-              console.log("post", post)
               posts.push({
                   label: post,
                   url: url
@@ -321,8 +317,6 @@
       extractParamFromURL: function (url, param) {
         let result = ""
         let tmp = []
-        console.log("url", url, "param", param)
-        console.log("url.split(?, 1)", url.split('?', 1))
         url
         //.replace ( "?", "" )
         // this is better, there might be a question mark inside
@@ -332,14 +326,12 @@
           // .substr(1)
           .split("&")
           .forEach(function (item) {
-            console.log("item", item)
             tmp = item.split("=");
             if (tmp[0] === param) result = decodeURIComponent(tmp[1]);
           });
         return result;
       },
       getFromUrl: function (val) {
-        console.log("location.search", location.search)
         return this.extractParamFromURL(location.search, val)
       }
     }

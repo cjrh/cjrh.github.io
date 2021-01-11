@@ -29,7 +29,7 @@ markupsafe==1.1.1         # via jinja2
 mistune==0.8.4            # via nbconvert
 nbconvert==5.6.0          # via jupyter, notebook
 nbformat==4.4.0           # via ipywidgets, nbconvert, notebook
-notebook==6.1.4           # via jupyter, widgetsnbextension
+notebook==6.1.5           # via jupyter, widgetsnbextension
 numba==0.51.2             # via -r requirements.in
 numpy==1.19.2             # via -r requirements.in, numba, scipy
 pandocfilters==1.4.2      # via nbconvert

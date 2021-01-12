@@ -31,7 +31,7 @@ nbconvert==5.6.0          # via jupyter, notebook
 nbformat==4.4.0           # via ipywidgets, nbconvert, notebook
 notebook==6.1.5           # via jupyter, widgetsnbextension
 numba==0.51.2             # via -r requirements.in
-numpy==1.19.2             # via -r requirements.in, numba, scipy
+numpy==1.19.5             # via -r requirements.in, numba, scipy
 pandocfilters==1.4.2      # via nbconvert
 parso==0.5.1              # via jedi
 pexpect==4.8.0            # via ipython

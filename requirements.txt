@@ -69,7 +69,7 @@ jupyter-core==4.6.3
     #   qtconsole
 jupyter==1.0.0
     # via -r requirements.in
-llvmlite==0.34.0
+llvmlite==0.36.0
     # via numba
 markupsafe==1.1.1
     # via jinja2
@@ -88,7 +88,7 @@ notebook==6.1.5
     # via
     #   jupyter
     #   widgetsnbextension
-numba==0.51.2
+numba==0.53.1
     # via -r requirements.in
 numpy==1.19.2
     # via

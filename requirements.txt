@@ -117,7 +117,7 @@ ptyprocess==0.5.2
     #   terminado
 pycparser==2.20
     # via cffi
-pygments==2.2.0
+pygments==2.7.4
     # via
     #   ipython
     #   jupyter-console

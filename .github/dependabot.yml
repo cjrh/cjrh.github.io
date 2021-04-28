@@ -1,0 +1,24 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "19:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: scipy
+    versions:
+    - 1.6.1
+    - 1.6.2
+  - dependency-name: numba
+    versions:
+    - 0.53.0
+  - dependency-name: cython
+    versions:
+    - 0.29.22
+  - dependency-name: numpy
+    versions:
+    - 1.19.5
+    - 1.20.0
+    - 1.20.1

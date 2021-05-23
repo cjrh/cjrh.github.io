@@ -90,7 +90,7 @@ notebook==6.1.5
     #   widgetsnbextension
 numba==0.51.2
     # via -r requirements.in
-numpy==1.19.2
+numpy==1.20.3
     # via
     #   -r requirements.in
     #   numba

@@ -14,7 +14,7 @@ bleach==3.3.0
     # via nbconvert
 cffi==1.14.2
     # via argon2-cffi
-cython==0.29.21
+cython==0.29.23
     # via -r requirements.in
 decorator==4.1.2
     # via

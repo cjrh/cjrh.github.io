@@ -1,7 +1,8 @@
 :root {
-    /* --head-font-family: "Roboto", sans-serif; */
+    --head-font-family: "Roboto", sans-serif;
+    /*--body-font-family: "Roboto", sans-serif;*/
     --body-font-family: 'Adamina', serif;
-    --head-font-family: 'Adamina', serif;
+    /*--head-font-family: 'Adamina', serif;*/
     --code-font-family: 'Fira Code', monospace;
     /* --body-font-family: "Roboto", sans-serif; */
     /* --head-font-family: "Adamina", serif; */
@@ -9,7 +10,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 18px;
   padding: 0;
   height: 100%;
   cursor: url("/img/gam1394.cur"), auto;
@@ -18,9 +19,11 @@ html {
 body {
   height: 100%;
   font-family: var(--body-font-family);
-  overflow-x: hidden;
-  overflow-y: scroll;
   margin: 0;
+}
+
+#app {
+  display: flex;
 }
 
 #banner {
@@ -36,9 +39,9 @@ body {
   margin-top: 0px;
   margin-bottom: 0px;
   font-family: var(--body-font-family);
+  font-weight: bold;
   font-size: 1em;
   font-variant: small-caps;
-  text-align: right;
 }
 
 p.minstrel {
@@ -47,51 +50,31 @@ p.minstrel {
   font-weight: lighter;
   color: black;
   margin: 0;
-  text-align: right;
 }
 
-p.ttext, p.minstrel {
-  transition: color 0.5s, letter-spacing, 5s;
-  transition-timing-function: ease-in-out;
-}
 p.ttext:hover, p.minstrel:hover {
   color: #a83f63;
-  letter-spacing: 15px;
-  transition: color 0.5s, letter-spacing, 0.1s;
 }
 
 div#main {
   margin: 0 auto 0 auto;
   width: 80%;
-  max-width: 600px;
-}
-
-aside#mainlogo {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  max-width: 800px;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--head-font-family);
-  color: #000000;
-}
-
-h2, h3, h4, h5, h6 {
-  font-weight: bold;
+  font-weight: bolder;
+  color: black;
 }
 
 h1 {
-  font-weight: 400;
   font-size: 44px;
   line-height: 1.2em;
 }
 
 h2 {
-  font-weight: 400;
   font-size: 26.4px;
-  font-style: italic;
-  color: #000000;
   line-height: 1.5em;
 }
 
@@ -100,7 +83,7 @@ h2 {
 }
 
 p, li {
-  font-size: 0.9rem;
+  font-size: 1.0rem;
   line-height: 1.4em;
   text-align: justify;
   color: #000000;
@@ -110,7 +93,7 @@ p, li {
 
 p > code {
   font-family: var(--code-font-family);
-  /* font-size: 0.9em; */
+   font-size: 1.0em;
   color: #000000;
 }
 
@@ -134,19 +117,16 @@ ul {
   padding: 0;
 }
 
-a {
-  transition: all 450ms;
-}
-
 .pad10 {
   padding: 0 10px 0 10px;
 }
 
 aside#links {
-  position: absolute;
+  font-family: var(--head-font-family);
   top: 10px;
   left: 10px;
   line-height: 0.5;
+  margin-top: 30px;
 }
 aside#links ul {
   margin: 0;
@@ -155,7 +135,6 @@ aside#links li {
   font-weight: 100;
   font-size: 0.8em;
   font-variant: small-caps;
-  font-style: italic;
   color: black;
   display: block;
   margin: 0;
@@ -164,13 +143,9 @@ aside#links li a {
   font-weight: normal;
   text-decoration: none;
   color: black;
-  transition: color 0.5s, letter-spacing, 5s;
-  transition-timing-function: ease-in-out;
 }
 aside#links li a:hover {
   color: #a83f63;
-  letter-spacing: 20px;
-  transition: color 0.5s, letter-spacing, 0.1s;
 }
 
 footer {
@@ -190,14 +165,13 @@ footer {
 }
 
 div#content {
-  float: left;
   width: 100%;
   /* min-height: 1000px; */
   margin-bottom: 10px;
+    overflow-y: scroll;
 }
 
 div#metadata {
-  float: left;
   width: 100%;
   margin-top: 20px;
   padding-bottom: 100px;
@@ -214,14 +188,6 @@ div#metadata {
 .left p, .right p {
   font-size: 0.9em;
   width: 10em;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
 }
 
 .button {
@@ -289,10 +255,11 @@ div#metadata {
 pre {
   /* font-size: 0.7em; */
   font-family: var(--code-font-family) !important;
-  font-size: 12px;
+  font-size: 0.9rem;
   margin-left: 5%;
   margin-right: 5%;
   overflow: auto;
+  padding: 5px;
 }
 
 div.highlight {
@@ -331,6 +298,13 @@ pre > code {
     font-size: 19.8px;
   }
 
+  div#main {
+    /*margin: 0 auto 0 auto;*/
+    /*width: 80%;*/
+    max-width: 500px;
+    /*max-width: 80%;*/
+  }
+
   /* line 281, ../sass/base.sass */
   h1 {
     font-size: 33px;
@@ -357,13 +331,17 @@ pre > code {
     float: none;
   }
 }
-@media screen and (max-width: 500px), screen and (max-device-width: 500px) {
+@media screen and (max-width: 600px), screen and (max-device-width: 600px) {
   html {
     font-size: 17.6px;
   }
 
+  #app {
+    flex-direction: column;
+  }
+
   #banner {
-    font-size: 13.2px;
+    font-size: 2em;
     height: 120px;
   }
 
@@ -377,11 +355,16 @@ pre > code {
   }
 
   aside {
-    font-size: 15.4px;
+    font-size: 1.2em;
   }
 
   div#main {
+    max-width: unset;
     width: 95%;
+  }
+
+  .ttext {
+    font-size: 2rem;
   }
 }
 a, .button {
@@ -412,8 +395,9 @@ a, .button {
     /* border: none; */
     /* color: #394066; */
     /* text-transform: lowercase; */
-    font-variant: small-caps;
-    font-size: 12px;
+    /*font-variant: small-caps;*/
+    font-family: var(--head-font-family);
+    font-size: 0.8rem;
     /* font-style: italic; */
 }
 
@@ -423,7 +407,7 @@ a, .button {
 }
 
 .style-chooser ul, .style-chooser li {
-    font-size: 12px;
+    font-size: 0.8rem;
     cursor: var(--cursor-button) !important;
 }
 

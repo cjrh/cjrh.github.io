@@ -1,0 +1,187 @@
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Backpack-for-Learning-Rust">Backpack for Learning Rust<a class="anchor-link" href="#Backpack-for-Learning-Rust">&#182;</a></h1><p>There are many tips and tricks I've been collecting along the way
+on my Rust journey. These are bits of knowledge that aren't 
+written down in books or any single place. They're an accumulation
+of things I've seen in forums, and StackOverflow posts, and
+thing buried deep in the official docs.</p>
+<p>I'm intending this page to be a "living" post. I'll keep adding
+to it as I discover stuff.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Easily-add-dependencies-to-Cargo.toml-with-cargo-add">Easily add dependencies to <code>Cargo.toml</code> with cargo-add<a class="anchor-link" href="#Easily-add-dependencies-to-Cargo.toml-with-cargo-add">&#182;</a></h2><p>Install it with <code>$ cargo install cargo-add</code>. This gives you a new cargo subcommand to call in any of your projects when you want to add a new dependency. It automatically adds that dependency to your <code>Cargo.toml</code> for you. The great thing is that you don't need to know the version string: it figures that out too.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span>$ cargo add fstrings
+    Updating <span class="s1">&#39;https://github.com/rust-lang/crates.io-index&#39;</span> index
+      Adding fstrings v0.2.3 to dependencies
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Offline-documentation">Offline documentation<a class="anchor-link" href="#Offline-documentation">&#182;</a></h2><p>You can view offline documentation for both your dev project as well as all the Rust project documentation. Offline documentation can be very useful when commuting or travelling, or sitting on the beach.</p>
+<p>As long as you have the <code>rustup</code> docs installed, you can immediately open a browser window to view the local documentation here:</p>
+<div class="highlight"><pre><span></span>$ rustup doc
+</pre></div>
+<p>As for documentation for your project, it can be generated like this, as long as all the dependency crates have already all be downloaded:</p>
+<div class="highlight"><pre><span></span>$ cargo doc --open
+</pre></div>
+<p>The <code>--open</code> parameter will open a browser window for you. Note that this documentation includes not only your own project, but also the docs of all your dependency crates.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Simple-error-handling">Simple error handling<a class="anchor-link" href="#Simple-error-handling">&#182;</a></h2><p>While you're learning Rust, most of your programs are probably going to be command-line programs, i.e., applications. I strongly suggest you use a crate called <code>anyhow</code> to help you deal with error handling. Rust is quite pedantic about types and it can be a frustrating experience trying to figure out exactly how to deal with error types.</p>
+<p>If you never want to deal with error types, you could just call <code>.unwrap()</code> on every <code>Result</code> type; however, this is a bad habit to get into, even when you're just learning. For one thing, it means that later you will have to go back and fix up all the <code>.unwrap()</code> calls if you get to the point where you want to clean up your program. But the more unfortunate thing is that you never get to learn how to deal with errors correctly.</p>
+<p>This is the dilemma:</p>
+<ul>
+<li>You want to avoid calling <code>.unwrap()</code></li>
+<li>You also want to avoid writing <code>match</code> statements every single time some function returns a <code>Result</code> type.</li>
+</ul>
+<p>What to do? This scenario is described in The Book, where the <code>?</code> operator is introduced. Within a function that returns <code>Result</code>, if you call another function that returns <code>Result</code> you can use <code>?</code> to automatically either get the <code>Ok()</code> value, or propagate the <code>Err</code> up to the caller. That's wordy, but this is all I mean:</p>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">my_func</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">some_other_func</span><span class="p">()</span><span class="o">?</span><span class="p">;</span><span class="w">   </span>
+<span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>In the example above, <code>some_other_func</code> returns a <code>Result</code>. If that <code>Result</code> is an <code>Ok</code> enum, the value will be assigned to <code>x</code>; but if the <code>Result</code> is an <code>Err</code> enum, that will be returned from <code>my_func</code> (and <code>x</code> will never have been assigned.</p>
+<p>This <code>?</code> is great, but there's a big problem: the ellipses I used for the error type returned by <code>my_func</code> above is quite complicated to deal with if it doesn't match the <code>Err</code> type that <code>some_other_func()</code> can return. If the two error types are incompatible, the Rust compiler will complain.</p>
+<p>If you use <code>anyhow</code>, you won't have to worry about error types. The code will look like this:</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">anyhow</span>::<span class="nb">Result</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">my_func</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">some_other_func</span><span class="p">()</span><span class="o">?</span><span class="p">;</span><span class="w">    </span>
+<span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>If you <em>don't</em> use <code>anyhow</code>, and the two error types are incompatible, you will have to "box" the error type:</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">err</span>::<span class="n">Error</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">my_func</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">some_other_func</span><span class="p">()</span><span class="o">?</span><span class="p">;</span><span class="w">      </span>
+<span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>My suggestion: just use <code>anyhow</code>.</p>
+<p>Later in your journey when you start making crates for other people to use, it can be useful to use the <code>thiserror</code> crate rather than the <code>anyhow</code> crate. <code>thiserror</code> provides conveniences for creating specific named error types that consumers of your crate can use. Both <code>anyhow</code> and <code>thiserror</code> are made by the same person, David Tolnay.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Default-build-configuration">Default build configuration<a class="anchor-link" href="#Default-build-configuration">&#182;</a></h2><p>If you're building on Linux, you can create this file to alter
+the default settings for compiling programs:</p>
+<div class="highlight"><pre><span></span><span class="c1"># ~/.cargo/config.toml</span>
+<span class="k">[target.x86_64-unknown-linux-gnu]</span>
+<span class="n">rustflags</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;-C&quot;</span><span class="p">,</span> <span class="s">&quot;link-arg=-fuse-ld=lld&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">[profile.release]</span>
+<span class="n">lto</span> <span class="o">=</span> <span class="s">&quot;fat&quot;</span>
+<span class="n">codegen-units</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">[profile.dev.package.&quot;*&quot;]</span>
+<span class="n">opt-level</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+<p>The <code>rustflags</code> setting tells cargo to use the much faster <code>lld</code> linker. The default linker is <code>ld</code>. By default, <code>lld</code> will not be installed; you must install it with <code>sudo apt install lld</code>, or whatever your package manager requires.</p>
+<p>The <code>profile.release</code> section enables full "link time optimization" (LTO) which gives the linker more opportunity for applying performance optimizations. Likewise the <code>codegen-units</code> also allows the possibility of additional optimizations. Both of these will be at the expense of compile time so these settings should only be used when building a final release.</p>
+<p>The final setting, <code>profile.dev.package."*"</code>, tells cargo to build your <em>dependencies</em> in release mode, even when you're building your dev package in debug mode. The main benefit of this is that your debug build can still run quite fast, depending on what it's doing. This can sometimes dramatically help performance in interactive applications like games, generative art and similar applications.</p>
+<p>Note that if necessary you can override these and any other settings by creating a file <code>./.cargo/config.toml</code> inside any of your cargo projects.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Setting-up-logging">Setting up logging<a class="anchor-link" href="#Setting-up-logging">&#182;</a></h2><p>The <code>log</code> create provides these macros for producing log messages from your program according to different logging levels. For example:</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">log</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">trace</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;This will only print at debug level&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">debug</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;This will only print at debug level&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">info</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;This is info lvl, here&#39;s a param: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">warn</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Warning&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">error</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Error level&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>That's pretty much all the <code>log</code> crate provides, and it's up to other crates to provide ways to configure the logging level, or where to send logs.</p>
+<p>The simplest option I've found so far is the <code>stderrlog</code> package. It provides easy configuration options to set up logging, and it plays nicely with <code>structlog</code> and <code>paw</code>, which I discuss in the next section.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Command-line-parameters-with-paw">Command-line parameters with paw<a class="anchor-link" href="#Command-line-parameters-with-paw">&#182;</a></h2><p>There is a library called <a href="">paw</a> that makes it very, very easy to add robust support to your CLI applications for command-line parameters. It also integrates with another library <code>structopt</code> which allows command-line parameters to be defined declaratively.  Also, in the example below I show also how to set up the <code>stderrlog</code> crate from options provided on the command line.</p>
+<p>This is how you quickly get set up (4 steps):</p>
+<ol>
+<li><code>$ cargo add paw</code></li>
+<li><code>$ cargo add structlog</code></li>
+<li><p>Now edit your <code>Cargo.toml</code> by hand: change the <code>structlog</code> entry to this (but use the same version as what you got from the previous command):</p>
+<div class="highlight"><pre><span></span><span class="k">[dependencies]</span>
+<span class="n">structopt</span> <span class="o">=</span> <span class="p">{</span> <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;&lt;x.y.z&gt;&quot;</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;paw&quot;</span><span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</li>
+<li><p>Edit your <code>main.rs</code> file to look something like this:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">log</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#[derive(structopt::StructOpt)]</span><span class="w"></span>
+<span class="cp">#[structopt()]</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Args</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// Silence all output</span>
+<span class="w">    </span><span class="cp">#[structopt(short = </span><span class="s">&quot;q&quot;</span><span class="cp">, long = </span><span class="s">&quot;quiet&quot;</span><span class="cp">)]</span><span class="w"></span>
+<span class="w">    </span><span class="n">quiet</span>: <span class="kt">bool</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// Verbose mode (-v, -vv, -vvv, etc)</span>
+<span class="w">    </span><span class="cp">#[structopt(short = </span><span class="s">&quot;v&quot;</span><span class="cp">, long = </span><span class="s">&quot;verbose&quot;</span><span class="cp">, parse(from_occurrences))]</span><span class="w"></span>
+<span class="w">    </span><span class="n">verbose</span>: <span class="kt">usize</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// Timestamp (sec, ms, ns, none)</span>
+<span class="w">    </span><span class="cp">#[structopt(short = </span><span class="s">&quot;t&quot;</span><span class="cp">, long = </span><span class="s">&quot;timestamp&quot;</span><span class="cp">)]</span><span class="w"></span>
+<span class="w">    </span><span class="n">ts</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">stderrlog</span>::<span class="n">Timestamp</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// All your other stuff goes here, e.g.</span>
+<span class="w">    </span><span class="cp">#[structopt(parse(from_os_str), short = </span><span class="s">&quot;o&quot;</span><span class="cp">, long = </span><span class="s">&quot;output-dir&quot;</span><span class="cp">)]</span><span class="w"></span>
+<span class="w">    </span><span class="n">output_dir</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">std</span>::<span class="n">path</span>::<span class="n">PathBuf</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cp">#[paw::main]</span><span class="w"></span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span>: <span class="nc">Args</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">stderrlog</span>::<span class="n">new</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">module</span><span class="p">(</span><span class="fm">module_path!</span><span class="p">())</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">quiet</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">quiet</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">verbosity</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">verbose</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">ts</span><span class="p">.</span><span class="n">unwrap_or</span><span class="p">(</span><span class="n">stderrlog</span>::<span class="n">Timestamp</span>::<span class="n">Off</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">init</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// All the rest of your code goes here. For example:</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;This was the output_dir: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">args</span><span class="p">.</span><span class="n">output_dir</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Your program can now be called, for example, like this:</p>
+<div class="highlight"><pre><span></span>$ myprog -vv --timestamp<span class="o">=</span>ms
+</pre></div>
+<p>and you will have millisecond timestamps on your log messages, which will be logged at "warning" level. If you wanted to log at "info" level, you would specify <code>-vvv</code>, and so on.</p>
+
+</div>
+</div>
+</div>
+ 
+

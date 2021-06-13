@@ -61,4 +61,8 @@
         <loc>http://pythonomicon.com/?post=Python%20Syntax%20Efficiency</loc>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc>http://pythonomicon.com/?post=Backpack%20for%20learning%20Rust</loc>
+        <changefreq>weekly</changefreq>
+    </url>
 </urlset>

@@ -15,12 +15,74 @@ to it as I discover stuff.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Easily-add-dependencies-to-Cargo.toml-with-cargo-add">Easily add dependencies to <code>Cargo.toml</code> with cargo-add<a class="anchor-link" href="#Easily-add-dependencies-to-Cargo.toml-with-cargo-add">&#182;</a></h2><p>Install it with <code>$ cargo install cargo-add</code>. This gives you a new cargo subcommand to call in any of your projects when you want to add a new dependency. It automatically adds that dependency to your <code>Cargo.toml</code> for you. The great thing is that you don't need to know the version string: it figures that out too.</p>
+<h2 id="You-will-have-to-read-a-Rust-book,-even-if-you've-been-programming-for-a-long-time">You <em>will</em> have to read a Rust book, even if you've been programming for a long time<a class="anchor-link" href="#You-will-have-to-read-a-Rust-book,-even-if-you've-been-programming-for-a-long-time">&#182;</a></h2><p>For those of you with programming experience, especially if you
+already know several other programming language, you might have
+become used to picking up a new programming language simply
+by skimming the tutorial and then jumping over to the standard
+library reference and banging out some code.</p>
+<p>Rust is not like that.</p>
+<p>You <em>will</em> have to read a book, and you <em>will</em> struggle with
+some concepts until they become clear to you, regardless of how 
+much experience you have. "Read the book" is something
+you expect to have to do when you learn a programming language that looks 
+very different from the more common "C-like" programming
+languages such as Lisp, Scheme, Haskell, Forth, and so on.
+At first glance, Rust syntax seems to have a familiar 
+"C-like" syntax and so you might think it will fit neatly 
+into your mental box of this-is-how-c-like-languages-work.
+But this is an illusion, or at best only a partial truth. Rust
+brings together the intersection of 3 aspects that are not
+"C-like", but presents them in a syntactical form that 
+looks "C-like". This is a trap.</p>
+<p>These are the three specific aspects you need to learn 
+about with intention and attention:</p>
+<ul>
+<li>The borrow checker</li>
+<li>Expression-based syntax</li>
+<li>Trait-based polymorphism</li>
+</ul>
+<p>Of the three, I personally find the borrow checker straighforward
+and it presents no trouble. It is annoying as hell (in a good way)
+but it seems approachable to me. I know that some other people struggle 
+with it, so do give it some respect when diving in. I find
+<code>cargo clippy</code> to be very useful in describing why code 
+makes the borrow checker complain.</p>
+<p>The expression-based nature of Rust runs deep; deeper than you 
+might think if you only see the syntax through the "C-like" 
+lens. Many of the standard enums and types make heavy use of it,
+like <code>Result</code> and <code>Option</code>. There is a clear before-and-after
+point during your Rust journey when you will start to embrace
+the fluent interface that results from the expression based
+syntax, and your journey is much easier after you pick that 
+up.</p>
+<p>I found Traits the most difficult aspect to assimilate---what I 
+mean by that is "be able to write working code".
+With traits, there is substantial information you have to actually learn, 
+at least
+if you want to write actual code. You will need to already be aware of
+many of the most common traits (e.g. the ones in the standard 
+library), especially for strings and iterators, and you'll need to note which 
+traits are implemented in 3rd party libraries you might use.</p>
+<p>Early on, I found out that
+only some traits are automatically "imported" and available to use.
+For others, you need to explicitly import the <em>trait</em> in order 
+to employ the <em>methods</em> required by that trait, on variables of
+types that <em>implement</em> that trait.  If you read that sentence and
+don't understand what it means: you will have to read a Rust book.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reduce-friction-managing-dependencies-to-Cargo.toml-with-cargo-edit">Reduce friction managing dependencies to <code>Cargo.toml</code> with cargo-edit<a class="anchor-link" href="#Reduce-friction-managing-dependencies-to-Cargo.toml-with-cargo-edit">&#182;</a></h2><p>Install it with <code>$ cargo install cargo-edit</code>. This gives you new cargo subcommands to call in any of your projects when you want to add a new dependency. It automatically adds that dependency to your <code>Cargo.toml</code> for you. The great thing is that you don't need to know the latest version string: it figures that out too.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span>$ cargo add fstrings
     Updating <span class="s1">&#39;https://github.com/rust-lang/crates.io-index&#39;</span> index
       Adding fstrings v0.2.3 to dependencies
 </pre></div>
+<p>It also supposts upgrading or removing deps. See more at <a href="https://github.com/killercup/cargo-edit">the repo</a>.</p>
 
 </div>
 </div>
@@ -29,7 +91,7 @@ to it as I discover stuff.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Offline-documentation">Offline documentation<a class="anchor-link" href="#Offline-documentation">&#182;</a></h2><p>You can view offline documentation for both your dev project as well as all the Rust project documentation. Offline documentation can be very useful when commuting or travelling, or sitting on the beach.</p>
-<p>As long as you have the <code>rustup</code> docs installed, you can immediately open a browser window to view the local documentation here:</p>
+<p>As long as you have the <code>rustup</code> docs component installed, you can immediately open a browser window to view the local Rust documentation there:</p>
 <div class="highlight"><pre><span></span>$ rustup doc
 </pre></div>
 <p>As for documentation for your project, it can be generated like this, as long as all the dependency crates have already all be downloaded:</p>
@@ -43,7 +105,7 @@ to it as I discover stuff.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Simple-error-handling">Simple error handling<a class="anchor-link" href="#Simple-error-handling">&#182;</a></h2><p>While you're learning Rust, most of your programs are probably going to be command-line programs, i.e., applications. I strongly suggest you use a crate called <code>anyhow</code> to help you deal with error handling. Rust is quite pedantic about types and it can be a frustrating experience trying to figure out exactly how to deal with error types.</p>
+<h2 id="Simple(r)-error-handling">Simple(r) error handling<a class="anchor-link" href="#Simple(r)-error-handling">&#182;</a></h2><p>While you're learning Rust, most of your programs are probably going to be command-line programs, i.e., applications. I strongly suggest you use a crate called <code>anyhow</code> to help you deal with error handling. Rust is quite pedantic about types and it can be a frustrating experience trying to figure out exactly how to deal with error types.</p>
 <p>If you never want to deal with error types, you could just call <code>.unwrap()</code> on every <code>Result</code> type; however, this is a bad habit to get into, even when you're just learning. For one thing, it means that later you will have to go back and fix up all the <code>.unwrap()</code> calls if you get to the point where you want to clean up your program. But the more unfortunate thing is that you never get to learn how to deal with errors correctly.</p>
 <p>This is the dilemma:</p>
 <ul>
@@ -56,7 +118,7 @@ to it as I discover stuff.</p>
 <span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
-<p>In the example above, <code>some_other_func</code> returns a <code>Result</code>. If that <code>Result</code> is an <code>Ok</code> enum, the value will be assigned to <code>x</code>; but if the <code>Result</code> is an <code>Err</code> enum, that will be returned from <code>my_func</code> (and <code>x</code> will never have been assigned.</p>
+<p>In the example above, <code>some_other_func</code> returns a <code>Result</code>. If that <code>Result</code> is an <code>Ok</code> enum (containing the return value), the inner value will be assigned to <code>x</code>; but if the <code>Result</code> is an <code>Err</code> enum, that will be returned from <code>my_func</code> (and <code>x</code> will never have been assigned.</p>
 <p>This <code>?</code> is great, but there's a big problem: the ellipses I used for the error type returned by <code>my_func</code> above is quite complicated to deal with if it doesn't match the <code>Err</code> type that <code>some_other_func()</code> can return. If the two error types are incompatible, the Rust compiler will complain.</p>
 <p>If you use <code>anyhow</code>, you won't have to worry about error types. The code will look like this:</p>
 <div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">anyhow</span>::<span class="nb">Result</span><span class="p">;</span><span class="w"></span>
@@ -101,7 +163,7 @@ the default settings for compiling programs:</p>
 <p>The <code>rustflags</code> setting tells cargo to use the much faster <code>lld</code> linker. The default linker is <code>ld</code>. By default, <code>lld</code> will not be installed; you must install it with <code>sudo apt install lld</code>, or whatever your package manager requires.</p>
 <p>The <code>profile.release</code> section enables full "link time optimization" (LTO) which gives the linker more opportunity for applying performance optimizations. Likewise the <code>codegen-units</code> also allows the possibility of additional optimizations. Both of these will be at the expense of compile time so these settings should only be used when building a final release.</p>
 <p>The final setting, <code>profile.dev.package."*"</code>, tells cargo to build your <em>dependencies</em> in release mode, even when you're building your dev package in debug mode. The main benefit of this is that your debug build can still run quite fast, depending on what it's doing. This can sometimes dramatically help performance in interactive applications like games, generative art and similar applications.</p>
-<p>Note that if necessary you can override these and any other settings by creating a file <code>./.cargo/config.toml</code> inside any of your cargo projects.</p>
+<p>Note that if necessary you can override these and any other settings by creating a file <code>./.cargo/config.toml</code> inside any of your cargo projects. There are times when you want some or all of your dependencies to also build in debug mode, perhaps for debugging them or even just being able to step through the code in debugger.</p>
 
 </div>
 </div>

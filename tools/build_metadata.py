@@ -20,7 +20,7 @@ sitemap_template = Template(
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
-      <loc>http://pythonomicon.com/</loc>
+      <loc>https://tekmoji.com/</loc>
       <changefreq>weekly</changefreq>
    </url>
 $items
@@ -30,7 +30,7 @@ $items
 
 sitemap_entry_template = Template(
     """    <url>
-        <loc>http://pythonomicon.com/?post=$postname</loc>
+        <loc>https://tekmoji.com/?post=$postname</loc>
         <changefreq>weekly</changefreq>
     </url>"""
 )

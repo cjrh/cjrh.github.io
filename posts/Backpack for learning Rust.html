@@ -15,18 +15,27 @@ to it as I discover stuff.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Backpack-for-Learning-Rust" data-toc-modified-id="Backpack-for-Learning-Rust-1">Backpack for Learning Rust</a></span><ul class="toc-item"><li><span><a href="#You-will-have-to-read-a-Rust-book,-even-if-you've-been-programming-for-a-long-time" data-toc-modified-id="You-will-have-to-read-a-Rust-book,-even-if-you've-been-programming-for-a-long-time-1.1">You <em>will</em> have to read a Rust book, even if you've been programming for a long time</a></span></li><li><span><a href="#Reduce-friction-managing-dependencies-to-Cargo.toml-with-cargo-edit" data-toc-modified-id="Reduce-friction-managing-dependencies-to-Cargo.toml-with-cargo-edit-1.2">Reduce friction managing dependencies to <code>Cargo.toml</code> with cargo-edit</a></span></li><li><span><a href="#Offline-documentation" data-toc-modified-id="Offline-documentation-1.3">Offline documentation</a></span></li><li><span><a href="#Simple(r)-error-handling" data-toc-modified-id="Simple(r)-error-handling-1.4">Simple(r) error handling</a></span></li><li><span><a href="#Default-build-configuration" data-toc-modified-id="Default-build-configuration-1.5">Default build configuration</a></span></li><li><span><a href="#Use-cargo-fmt-instead-of-rustfmt" data-toc-modified-id="Use-cargo-fmt-instead-of-rustfmt-1.6">Use <code>cargo fmt</code> instead of <code>rustfmt</code></a></span></li><li><span><a href="#Setting-up-logging" data-toc-modified-id="Setting-up-logging-1.7">Setting up logging</a></span></li><li><span><a href="#Command-line-parameters-with-paw" data-toc-modified-id="Command-line-parameters-with-paw-1.8">Command-line parameters with paw</a></span></li></ul></li></ul></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="You-will-have-to-read-a-Rust-book,-even-if-you've-been-programming-for-a-long-time">You <em>will</em> have to read a Rust book, even if you've been programming for a long time<a class="anchor-link" href="#You-will-have-to-read-a-Rust-book,-even-if-you've-been-programming-for-a-long-time">&#182;</a></h2><p>For those of you with programming experience, especially if you
-already know several other programming language, you might have
+already know several other programming languages, you might have
 become used to picking up a new programming language simply
 by skimming the tutorial and then jumping over to the standard
 library reference and banging out some code.</p>
 <p>Rust is not like that.</p>
 <p>You <em>will</em> have to read a book, and you <em>will</em> struggle with
 some concepts until they become clear to you, regardless of how 
-much experience you have. "Read the book" is something
+much experience you have. "Read the book" might be something
 you expect to have to do when you learn a programming language that looks 
 very different from the more common "C-like" programming
-languages such as Lisp, Scheme, Haskell, Forth, and so on.
+languages. Some examples of these "unfamiliar" languages might be
+Scheme, Haskell, Forth, and so on.
 At first glance, Rust syntax seems to have a familiar 
 "C-like" syntax and so you might think it will fit neatly 
 into your mental box of this-is-how-c-like-languages-work.
@@ -171,7 +180,35 @@ the default settings for compiling programs:</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setting-up-logging">Setting up logging<a class="anchor-link" href="#Setting-up-logging">&#182;</a></h2><p>The <code>log</code> create provides these macros for producing log messages from your program according to different logging levels. For example:</p>
+<h2 id="Use-cargo-fmt-instead-of-rustfmt">Use <code>cargo fmt</code> instead of <code>rustfmt</code><a class="anchor-link" href="#Use-cargo-fmt-instead-of-rustfmt">&#182;</a></h2><p>At the time of writing, if you execute code formatting with
+<code>rustfmt</code>, it's going to use the "2015 Edition" edition 
+by default. Since most projects are using the 2018 since,
+well, 2018, this doesn't work and so you are forced to 
+create a <code>rustfmt.toml</code> file like this:</p>
+
+<pre><code># rustfmt.toml
+edition = "2018"
+max_width = 100</code></pre>
+<p>This is a pain to set up if you make many new projects, which
+is quite common while learning.  You can of course place a
+global one in <code>.config/rustfmt/rustfmt.toml</code>, but for 
+edition tracking specifically, it is much more convenient
+to just use the edition value that is already written in
+your <code>Cargo.toml</code>.  The way to format your code that
+will use whatever that is, goes like this:</p>
+
+<pre><code>$ cargo fmt</code></pre>
+<p>(Side note: much of the editor integrations I've seen seem
+to want to call <code>rustfmt</code> directly. This is unfortunate.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Setting-up-logging">Setting up logging<a class="anchor-link" href="#Setting-up-logging">&#182;</a></h2><p>As nice as <code>println!</code> is, and believe me I'm a fan, it is pure technical debt that you will later have to pay back by removing it.  A much, much nicer option is to use the logging system which allows you to change the verbosity of the debugging messages.  You can include all of your debugging "print" statements, even in releases, and let users turn on those messages to help troubleshoot what went wrong.</p>
+<p>The <code>log</code> create provides these macros for producing log messages from your program according to different logging levels. For example:</p>
 <div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">log</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
 
 <span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>

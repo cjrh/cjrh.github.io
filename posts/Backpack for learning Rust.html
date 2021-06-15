@@ -147,6 +147,21 @@ don't understand what it means: you will have to read a Rust book.</p>
 </pre></div>
 <p>My suggestion: just use <code>anyhow</code>.</p>
 <p>Later in your journey when you start making crates for other people to use, it can be useful to use the <code>thiserror</code> crate rather than the <code>anyhow</code> crate. <code>thiserror</code> provides conveniences for creating specific named error types that consumers of your crate can use. Both <code>anyhow</code> and <code>thiserror</code> are made by the same person, David Tolnay.</p>
+<p>One more tip: you can create anyhow-compatible errors from strings using a macro provided by anyhow:</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">anyhow</span>::<span class="p">{</span><span class="nb">Result</span><span class="p">,</span><span class="w"> </span><span class="n">anyhow</span><span class="p">}</span><span class="w"></span>
+<span class="c1">//                   ^^^^^^ This is a macro</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// `anyhow!` creates an `anyhow::Error`</span>
+<span class="w">    </span><span class="nb">Err</span><span class="p">(</span><span class="n">anyhow</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Something went wrong&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>produces:</p>
+<div class="highlight"><pre><span></span>Compiling playground v0.0.1 <span class="o">(</span>/playground<span class="o">)</span>
+    Finished dev <span class="o">[</span>unoptimized + debuginfo<span class="o">]</span> target<span class="o">(</span>s<span class="o">)</span> <span class="k">in</span> <span class="m">1</span>.09s
+     Running <span class="sb">`</span>target/debug/playground<span class="sb">`</span>
+Error: Something went wrong!
+</pre></div>
 
 </div>
 </div>

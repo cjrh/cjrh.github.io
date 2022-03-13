@@ -26,10 +26,17 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "FiraCode";
+    src: url("/font/Fira_Code/FiraCode-VariableFont_wght.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --head-font-family: "Oswald", sans-serif;
     --body-font-family: 'LibreBaskerville', sans-serif;
-    --code-font-family: 'Fira Code', monospace;
+    --code-font-family: 'FiraCode', monospace;
     --cursor-button: url("/img/gam1390.cur"), auto;
 }
 

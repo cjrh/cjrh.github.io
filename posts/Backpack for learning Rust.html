@@ -3,9 +3,9 @@
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Backpack-for-Learning-Rust">Backpack for Learning Rust<a class="anchor-link" href="#Backpack-for-Learning-Rust">&#182;</a></h1><p>There are many tips and tricks I've been collecting along the way
 on my Rust journey. These are bits of knowledge that aren't 
-written down in books or any single place. They're an accumulation
+written down or easily found in books or any single place. They're an accumulation
 of things I've seen in forums, and StackOverflow posts, and
-thing buried deep in the official docs.</p>
+things buried deep in the official docs.</p>
 <p>I'm intending this page to be a "living" post. I'll keep adding
 to it as I discover stuff.</p>
 
@@ -64,7 +64,7 @@ point during your Rust journey when you will start to embrace
 the fluent interface that results from the expression based
 syntax, and your journey is much easier after you pick that 
 up.</p>
-<p>I found Traits the most difficult aspect to assimilate---what I 
+<p>I found Traits the most difficult aspect to assimilate—what I 
 mean by that is "be able to write working code".
 With traits, there is substantial information you have to actually learn, 
 at least
@@ -78,6 +78,86 @@ For others, you need to explicitly import the <em>trait</em> in order
 to employ the <em>methods</em> required by that trait, on variables of
 types that <em>implement</em> that trait.  If you read that sentence and
 don't understand what it means: you will have to read a Rust book.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Don't-fear-the-clones">Don't fear the clones<a class="anchor-link" href="#Don't-fear-the-clones">&#182;</a></h1><p>TBD: do use <code>.clone()</code> to solve problems with lifetimes and references</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Dealing-with-two-kinds-of-strings:-&amp;str-and-String">Dealing with two kinds of strings: <code>&amp;str</code> and <code>String</code><a class="anchor-link" href="#Dealing-with-two-kinds-of-strings:-&amp;str-and-String">&#182;</a></h1><p>This tripped me up quite a bit in the beginning. Saying "2 kinds of strings" really doesn't explain anything. Here's the deal: <code>&amp;str</code> isn't really a string, it's a reference to a "string slice". I'm not going to get into what is a slice, but the important part of that statement is the word <em>reference</em>. As soon as you have a reference, you will have to deal with <em>lifetimes</em> and that's where things can get complicated.</p>
+<p>Using <code>&amp;str</code> is fine within, say, a single function or an otherwise well-understood scope. But it's very hard to pass identifiers of <code>&amp;str</code> around between functions or into closures and that kind of thing. Because of the reference!</p>
+<p>While you're learning, and likely even beyond that, I suggest that when you find trouble, create a new <code>String</code> instance <em>from</em> the <code>&amp;str</code>, using either the <code>.to_string()</code> method, or <code>.to_owned()</code>. This is pretty much just cloning string data. This allocates a bit of new memory that has no strings attached to anything else, so it's good for:</p>
+<ul>
+<li>returning from functions</li>
+<li>storing in a <code>Vec</code> or <code>HashMap</code>, and other containers</li>
+<li>passing to a closure or thread</li>
+</ul>
+<p>There is at least one situation where it is better to specify <code>&amp;str</code> than <code>String</code>: a function definition. You can passing <code>String</code> values to a function expecting an <code>&amp;str</code> value, because there is built-in support in the <code>String</code> type to automatically produce a <code>&amp;str</code> that works. That string slice refers back to the underlying memory within the <code>String</code> so this is a very efficient and flexible option. Such functions can therefore receive both <code>&amp;str</code> and <code>String</code> types.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Don't-fear-the-turbofish-::&lt;&gt;">Don't fear the turbofish <code>::&lt;&gt;</code><a class="anchor-link" href="#Don't-fear-the-turbofish-::&lt;&gt;">&#182;</a></h1><p>When I first started with Rust I was afraid of the turbofish. It seemed so alien, arcane and complex.  It is not so. The turbofish is like a pet someone brought along to the party. You just need a little time to get to know each other.</p>
+<p>The turbofish gives you a different way of providing a type annotation.  The most common situation that is going to come up while you're learning is the use of the <code>.collect()</code> method on iterators. When you process data using an iterator chain, and eventually you want to make a <code>Vec</code> of the results, you'll need <code>.collect()</code>. The thing is, <code>collect</code> wants you to tell it what kind of container you want. It doesn't just assume you want a <code>Vec</code>.</p>
+<p>Let's have a look:</p>
+<div class="highlight"><pre><span></span><span class="c1">// Imagine &quot;data&quot; is a Vec of String</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">to_uppercase</span><span class="p">())</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="n">collect</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+<p>This will fail because the compiler wants to you to tell it what kind of container you wish <code>collect()</code> to produce.  Easy:</p>
+<div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">results</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"></span>
+<span class="w">                               </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">to_uppercase</span><span class="p">())</span><span class="w"></span>
+<span class="w">                               </span><span class="p">.</span><span class="n">collect</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+<p>This works.</p>
+<p>For this example, the compiler will be able to figure out the item of the <code>Vec</code> so you don't need to provide that; it only really needed the container type, so this will work:</p>
+<div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">results</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"></span>
+<span class="w">                          </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">to_uppercase</span><span class="p">())</span><span class="w"></span>
+<span class="w">                          </span><span class="p">.</span><span class="n">collect</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+<p>Whither the turbofish? Well, the following is <em>completely equivalent</em>:</p>
+<div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"></span>
+<span class="w">                  </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">to_uppercase</span><span class="p">())</span><span class="w"></span>
+<span class="w">                  </span><span class="p">.</span><span class="n">collect</span>::<span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+<p>Do you see I snuck that <code>::&lt;Vec&lt;_&gt;&gt;</code> in there? It's the same type signature as what we had before, it just moved inside the fish. It's like the fish swallowed it!</p>
+<p>After you convince yourself that the turbofish is just doing the same thing as the original type signature, you're going to wonder, "What is the point of two ways to give a type?"  Well, it turns out that because Rust is an <em>expression-based</em> language, you will frequently find yourself in situations where it is convenient to provide parameters "inline". It's hard to explain, but maybe an example might work.  Here, presented without context, is a real example from some hobby code I worked on:</p>
+<div class="highlight"><pre><span></span><span class="c1">// `templates` is a HashMap&lt;String, String&gt;</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">template_fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">templates</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cf</span><span class="p">.</span><span class="n">template</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">ok_or_else</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="n">anyhow</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">          </span><span class="s">&quot;The specified template {} was not found in the \</span>
+<span class="s">          list of available templates: {:?}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">templates</span><span class="p">.</span><span class="n">keys</span><span class="p">().</span><span class="n">collect</span>::<span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"></span>
+<span class="w">      </span><span class="p">))</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>I'm not going to explain everything, but I just want to point out the call to <code>.collect()</code> in the code above. Because of the turbofish, I am able to provide a type to the <code>.collect()</code> call. If I could not use the turbofish, I'd have to have done this:</p>
+<div class="highlight"><pre><span></span><span class="c1">// `templates` is a HashMap&lt;String, String&gt;</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">template_fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">templates</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cf</span><span class="p">.</span><span class="n">template</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">ok_or_else</span><span class="p">(</span><span class="o">||</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="kd">let</span><span class="w"> </span><span class="n">keys</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">templates</span><span class="p">.</span><span class="n">keys</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+<span class="w">          </span><span class="n">anyhow</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">              </span><span class="s">&quot;The specified template {} was not found in the \</span>
+<span class="s">              list of available templates: {:?}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">keys</span><span class="w"></span>
+<span class="w">      </span><span class="p">}))</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>It's very similar, but less fluid because I needed to generate the keys away from where they're provided to the <code>anyhow!</code> macro call.</p>
+<p>Ok, maybe my example isn't great. It's just what I happened to have had lying around while I wrote this. The point is: don't be scared of the turbofish, it's harmless.</p>
 
 </div>
 </div>

@@ -1,9 +1,9 @@
 {
     "timestamp": 1623543719.234591,
     "creation_date": "Sun Jun 13 10:21:59 2021",
-    "timestamp_modified": 1623762157.6438618,
-    "modified_date": "Tue Jun 15 23:02:37 2021",
-    "hash": "07f763d0e6e59a9f25d68f961f3c8615",
+    "timestamp_modified": 1624456938.2920647,
+    "modified_date": "Thu Jun 24 00:02:18 2021",
+    "hash": "e129b50455a81bf418857ac36268791a",
     "previous_post": "Python Syntax Efficiency",
-    "next_post": null
+    "next_post": "Another pointless comparison of Rust and C++ binary size"
 }

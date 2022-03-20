@@ -1,0 +1,782 @@
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Another-pointless-comparison-of-binary-size-between-Rust-and-C++">Another pointless comparison of binary size between Rust and C++<a class="anchor-link" href="#Another-pointless-comparison-of-binary-size-between-Rust-and-C++">&#182;</a></h1><p>I recently saw a Youtube video of someone going through a laundry list of complaints about Rust. The merits of the discussion notwithstanding, one of the points raised was about the difference in binary size produced from different compilers.</p>
+<p>There are <a href="https://github.com/johnthagen/min-sized-rust">many</a>, <a href="https://os.phil-opp.com/freestanding-rust-binary/">many</a>, <a href="https://lifthrasiir.github.io/rustlog/why-is-a-rust-executable-large.html">many</a>, <a href="https://kripken.github.io/blog/binaryen/2018/04/18/rust-emscripten.html">many</a>, <a href="https://stackoverflow.com/questions/29008127/why-are-rust-executables-so-huge">many</a>, <a href="https://github.com/rust-embedded/wg/issues/5">many</a> discussions about Rust binary sizes online and I'm not going to rehash any of that. I was just curious about reproducing the data in the Youtube video, and in particular I am generally interested in producing static binaries for simplified deployment reasons.  I realise the static-vs-dynamic debate is a whole other flamewar online and I don't really care 😃</p>
+<p><em>This post was made in a Jupyter Notebook using the awesome <a href="https://github.com/google/evcxr">evcxr</a> Rust interpreter. All the cells were executed live in the notebook.</em></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Utility-functions">Utility functions<a class="anchor-link" href="#Utility-functions">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="sd">/// Tool to easily run shell commands.</span>
+<span class="k">fn</span> <span class="nf">sh</span><span class="p">(</span><span class="n">dir</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">cmd</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">args</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="o">&amp;&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">])</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">std</span>::<span class="n">error</span>::<span class="n">Error</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span>::<span class="n">process</span>::<span class="n">Command</span>::<span class="n">new</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">current_dir</span><span class="p">(</span><span class="n">dir</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">output</span><span class="p">()</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;stdout:</span><span class="se">\n</span><span class="s">{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from_utf8</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="n">stdout</span><span class="p">)</span><span class="o">?</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;stderr:</span><span class="se">\n</span><span class="s">{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from_utf8</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="n">stderr</span><span class="p">)</span><span class="o">?</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="C++-binary-size">C++ binary size<a class="anchor-link" href="#C++-binary-size">&#182;</a></h1><p>The example given in the video was like this:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">remove_dir_all</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize/&quot;</span><span class="p">).</span><span class="n">ok</span><span class="p">();</span><span class="w"></span>
+<span class="n">std</span>::<span class="n">fs</span>::<span class="n">create_dir_all</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize/&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span>::<span class="n">fs</span>::<span class="n">write</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize/main.cc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;int main() {}&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 12K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:46 .
+drwxrwxr-x 3 caleb caleb 4.0K Mar 20 14:46 ..
+-rw-rw-r-- 1 caleb caleb   13 Mar 20 14:46 main.cc
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Compiling the empty file, according to the aforementioned video:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;g++&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-o&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;main.cc&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-Ofast&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-std=c++20&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-s&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-flto&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-static-libgcc&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-static-libstdc++&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 28K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:46 .
+drwxrwxr-x 3 caleb caleb 4.0K Mar 20 14:46 ..
+-rwxrwxr-x 1 caleb caleb  14K Mar 20 14:46 main
+-rw-rw-r-- 1 caleb caleb   13 Mar 20 14:46 main.cc
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the Youtube video, the very low binary size of <code>main</code> was as given above, around <strong>14 kB</strong>. However, this is not the whole truth. C++ also has a runtime library and the above binary will dynamically link to that runtime. You can see this with <code>ldd</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ldd&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;main&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+	linux-vdso.so.1 (0x00007ffe4d3fa000)
+	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fb549b1c000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fb549d61000)
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By default, Rust will include its standard library into the compiled binary. We can add one small extra option to the compiler options for this empty C++ example to produce a fully static binary:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;g++&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-o&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;main.cc&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-Ofast&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-std=c++20&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-s&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-flto&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-static-libgcc&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-static-libstdc++&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-static&quot;</span><span class="w">  </span><span class="c1">// &lt;--- THIS IS THE EXTRA OPTION</span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 808K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:46 .
+drwxrwxr-x 3 caleb caleb 4.0K Mar 20 14:46 ..
+-rwxrwxr-x 1 caleb caleb 793K Mar 20 14:46 main
+-rw-rw-r-- 1 caleb caleb   13 Mar 20 14:46 main.cc
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the size is much bigger, around <strong>793 kB</strong>. <code>ldd</code> tells us the binary no longer links dynamically to anything:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/cppsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ldd&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;main&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stderr:
+	not a dynamic executable
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Rust-binary-size">Rust binary size<a class="anchor-link" href="#Rust-binary-size">&#182;</a></h2><p>In the Youtube video, an empty rust file was compiled in the following way:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">remove_dir_all</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize/&quot;</span><span class="p">).</span><span class="n">ok</span><span class="p">();</span><span class="w"></span>
+<span class="n">std</span>::<span class="n">fs</span>::<span class="n">create_dir_all</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize/&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span>::<span class="n">fs</span>::<span class="n">write</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize/a.rs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fn main() {}&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 12K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:47 .
+drwxrwxr-x 4 caleb caleb 4.0K Mar 20 14:47 ..
+-rw-rw-r-- 1 caleb caleb   12 Mar 20 14:47 a.rs
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For some reason the video author didn't want to use Cargo 🤷. Anyway let's go with it:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;rustc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-O&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strip=symbols&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;a.rs&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 300K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:47 .
+drwxrwxr-x 4 caleb caleb 4.0K Mar 20 14:47 ..
+-rwxrwxr-x 1 caleb caleb 287K Mar 20 14:47 a
+-rw-rw-r-- 1 caleb caleb   12 Mar 20 14:47 a.rs
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Indeed, we find almost the exact same number as the author in the video, around <strong>290 kB</strong>. The author concludes that Rust-induced bloat is 290/14 =&gt; 20X bigger.</p>
+<p>However, there are a couple things missing from the Rust compiler flags. Let's add those in:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;rustc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-O&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strip=symbols&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lto=on&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;codegen-units=1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;a.rs&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 272K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:47 .
+drwxrwxr-x 4 caleb caleb 4.0K Mar 20 14:47 ..
+-rwxrwxr-x 1 caleb caleb 259K Mar 20 14:47 a
+-rw-rw-r-- 1 caleb caleb   12 Mar 20 14:47 a.rs
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unsurprisingly, adding LTO gives a 1 - 259/287 =&gt; 10% reduction in binary size.</p>
+<p>There are a few more extra options beyond what was used in the C++ example, but these don't make a significant difference to a completely-empty program.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;rustc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-O&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strip=symbols&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lto=on&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;codegen-units=1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c1">// Extra</span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;opt-level=s&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Optimize for size</span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panic=abort&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Disable stack-unwinding</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="s">&quot;a.rs&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 256K
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:47 .
+drwxrwxr-x 4 caleb caleb 4.0K Mar 20 14:47 ..
+-rwxrwxr-x 1 caleb caleb 243K Mar 20 14:47 a
+-rw-rw-r-- 1 caleb caleb   12 Mar 20 14:47 a.rs
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we're at (compared to the original Youtube example) 1 - 243/287 =&gt; 15.3% smaller.</p>
+<p>Anyway, these extra flags and settings are making marginal improvements. The biggest impact is of course what is being linked into the binary and what is not. Currently we have a Rust binary with the stdlib statically linked at <strong>243 kB</strong>, and the C++ empty-project binary at <strong>793 kB</strong>. It doesn't seem to me that C++ is doing all that well here!</p>
+<p>Or is it?</p>
+<p>We haven't yet checked whether the Rust binary is linking dynamically to anything yet.  Apples-to-apples, remember? So let's look into that:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ldd&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+	linux-vdso.so.1 (0x00007ffc4e1e0000)
+	libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f070cb8d000)
+	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f070c965000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f070cbfd000)
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Woah, the Rust binary is dynamically linked to libc! Why does it need to do that?  Here's a great concise explanation <a href="https://news.ycombinator.com/item?id=9436004">from 2015</a>:</p>
+<blockquote><p>erickt on April 24, 2015:</p>
+<p>No it's not a stupid question. libc (or CRT on windows) really is the library that exposes all the user space system libraries. It contains the functions to do IO, sockets, threads, and etc. So we use it to expose that functionality to rust users.</p>
+<p>Now there are some languages, namely Go, that skip libc and just implement directly against the syscall interface. Go has the advantage of being able to draw from Google's vast experience interacting deep within the system, so it was comparatively cheap for them to do this.</p>
+<p>For rust, it never really felt like it was worth the effort for the benefit we'd get out of it. It was more important to get the language done.</p>
+</blockquote>
+<p>So Rust is still using the C runtime to interact with the OS through userspace libraries provided in the C runtime. So it doesn't need the C or C++ standard libraries, only the runtime for OS interaction.</p>
+<p>Ok so for a fair comparison we should compare the sizes after statically linking against the CRT.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;rustc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-O&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strip=symbols&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lto=on&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;codegen-units=1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;opt-level=s&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Optimize for size</span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panic=abort&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Disable stack-unwinding</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c1">// New</span>
+<span class="w">        </span><span class="s">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;target-feature=+crt-static&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span>
+<span class="w">        </span><span class="s">&quot;a.rs&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ldd&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stderr:
+	not a dynamic executable
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And the size?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-Rust"><pre><span></span><span class="n">sh</span><span class="p">(</span><span class="s">&quot;~/tmp/rustsize&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;-lah&quot;</span><span class="p">])</span><span class="o">?</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>stdout:
+total 1.2M
+drwxrwxr-x 2 caleb caleb 4.0K Mar 20 14:48 .
+drwxrwxr-x 4 caleb caleb 4.0K Mar 20 14:47 ..
+-rwxrwxr-x 1 caleb caleb 1.2M Mar 20 14:48 a
+-rw-rw-r-- 1 caleb caleb   12 Mar 20 14:47 a.rs
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now it's a whopping 1.2 MB. So if we do all the work to produce a fully static executable from an empty <code>main()</code> for both Rust and C++, we indeed find that C++ produces the smaller binary. It's 1 - 793/1200 =&gt; <strong>34%</strong> smaller than the Rust binary, which is clearly a much smaller difference than the ~ 20X comparison I gave at the start.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>What do you think this is, a research paper? My parting words are that none of this really matters. Binary size is certainly a concern in certain environments, but the real impact of whether you use Rust, C or C++ is not going to matter. The people working in the embedded space are already all over these issues. If you're interested in the embedded domain, do go check out the <a href="http://blog.rust-embedded.org/">Embedded Rust Working Group</a>.</p>
+
+</div>
+</div>
+</div>
+ 
+

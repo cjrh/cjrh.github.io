@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="stylesheets/syntax.css">
     <link rel="stylesheet" href="stylesheets/base.css">
 </head>
-<body>
+<body class="gradback">
 <div id="app">
     <div style="display: flex; flex-direction: column; margin: 10px">
     <aside id="mainlogo">
@@ -57,6 +57,8 @@
                 <i class="fab fa-codepen"></i> Codepen</a></li>
             <li><a href="https://mastodon.social/@cjrh" target="_blank">
                 <i class="fab fa-mastodon"></i> Mastodon</a></li>
+            <li><a href="https://www.linkedin.com/in/cjrh" target="_blank">
+                <i class="fab fa-linkedin"></i> Linkedin</a></li>
             <!-- <li>Resume</li> -->
             <li class="break"></li>
         </ul>
@@ -94,9 +96,9 @@
             <div id="metadata">
                 <!-- <p>This post: <strong>{{post_metadata.this_post}}</strong> -->
                 <!-- <p> -->
-                <p>Original Jupyter Notebook:<a tabindex="0" id="this_notebook" href=""></a></p>
-                <p>Created: <span id="creation_date"></span>
-                <p>Modified: <span id="modified_date"></span>
+                <p>Original Jupyter Notebook: <a tabindex="0" :href="notebook_href">{{ notebook_text }}</a></p>
+                <p>Created: <span>{{ post_metadata.creation_date }}</span>
+                <p>Modified: <span>{{ post_metadata.modified_date }}</span>
                 <!-- <p> -->
                 <!-- <p>Previous: <a tabindex="0" id="previous_post" href=""></a> -->
                 <!-- <p> -->
@@ -144,12 +146,19 @@
 <!-- use the latest vue-select release -->
 <script src="https://unpkg.com/vue-select@3"></script>
 <script>
-  var content = document.getElementById('content');
+  const content = document.getElementById('content');
   Vue.component('v-select', VueSelect.VueSelect);
-  // window.onload = loadContent;
 
-  var app = new Vue({
+  const app = new Vue({
     el: '#app',
+    computed: {
+        notebook_href() {
+            return "/notebooks/" + this.post_metadata.this_post + ".ipynb"
+        },
+        notebook_text() {
+            return this.post_metadata.this_post + ".ipynb"
+        }
+    },
     data: {
       post: '',
       post_metadata: {
@@ -178,7 +187,7 @@
           let elements = [...doc.getElementsByTagName("loc")].reverse()
           for (e of elements) {
               let url = e.childNodes[0].nodeValue
-              post = this.extractParamFromURL(url, "post")
+              const post = this.extractParamFromURL(url, "post")
               posts.push({
                   label: post,
                   url: url
@@ -206,10 +215,10 @@
         }
       },
       loadContent: function () {
-        var post = this.getFromUrl("post")
+        const post = this.getFromUrl("post")
         if (post === "") {
           this.loadPage("posts/latest.json", (data) => {
-            var latest = JSON.parse(data)
+            const latest = JSON.parse(data)
             this.showPost(latest.post)
           })
         } else {
@@ -217,10 +226,10 @@
         }
       },
       loadPage: function (href, callback) {
-        var xmlhttp = new XMLHttpRequest()
+        const xmlhttp = new XMLHttpRequest()
         xmlhttp.onreadystatechange = function () {
           if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            var data = xmlhttp.responseText
+            const data = xmlhttp.responseText
             callback(data)
           }
         };
@@ -252,7 +261,7 @@
         $('meta[property="og:url"]').attr("content", url);
       },
       showPost: function (name) {
-        var element = document.getElementById("content");
+        const element = document.getElementById("content");
         if (name.startsWith('http')) {
           name = this.extractParamFromURL(name, "post")
         }
@@ -265,20 +274,15 @@
               label: name,
               url: postref,
           }
-          // element.innerHTML = data
-          var first_para = $('#content p:eq(0)').text()
+
+          const first_para = $('#content p:eq(0)').text()
           this.change_metadata(name, first_para, postref)
           MathJax.Hub.Queue(["Typeset", MathJax.Hub, element])
           this.loadPage("posts/" + name + ".json", (data) => {
-            var metadata = JSON.parse(data)
+            const metadata = JSON.parse(data)
             this.post_metadata = Object.assign({}, Object.assign(this.post_metadata, metadata))
             this.post_metadata.this_post = name
 
-            $('#this_notebook').attr("href", "/notebooks/" + name + ".ipynb")
-            $('#this_notebook').text(name + ".ipynb")
-
-            $('#creation_date').text(metadata.creation_date)
-            $('#modified_date').text(metadata.modified_date)
             if (!metadata.previous_post) {
               $('#previous_post').attr('href', "")
               $('#previous_post').text("None (this is the first post)")

@@ -38,6 +38,18 @@
     --body-font-family: 'LibreBaskerville', sans-serif;
     --code-font-family: 'FiraCode', monospace;
     --cursor-button: url("/img/gam1390.cur"), auto;
+
+    /*--col1: hsla(20, 80%, 90%, 0.5);*/
+    /*--col2: hsla(120, 80%, 10%, 0.3);*/
+
+    /*--col3: hsla(220, 80%, 70%, 0.9);*/
+    /*--col4: hsla(40, 90%, 40%, 0.9);*/
+
+    --col1: hsla(20, 80%, 90%, 0.5);
+    --col2: hsla(202, 100%, 56%, 0.3);
+
+    --col3: hsla(220, 80%, 90%, 0.9);
+    --col4: hsla(40, 90%, 60%, 0.9);
 }
 
 html {
@@ -71,7 +83,7 @@ body {
   margin-bottom: 0px;
   font-family: var(--body-font-family);
   font-weight: bold;
-  font-size: 2em;
+  font-size: 3rem;
   font-variant: small-caps;
 }
 
@@ -164,7 +176,7 @@ aside#links ul {
 }
 aside#links li {
   font-weight: 100;
-  font-size: 0.8em;
+  font-size: 1rem;
   font-variant: small-caps;
   color: black;
   display: block;
@@ -199,7 +211,7 @@ div#content {
   width: 100%;
   /* min-height: 1000px; */
   margin-bottom: 10px;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 }
 
 div#metadata {
@@ -211,7 +223,7 @@ div#metadata {
 #metadata p {
   margin: 0;
   padding: 0;
-  color: #999;
+  color: black;
   font-size: 0.6rem;
   font-style: italic;
 }
@@ -295,9 +307,9 @@ pre {
 
 div.highlight {
     font-size: 0.8rem;
-    border: 1px solid #cfcfcf;
-    border-radius: 4px;
-    background: #f7f7f7;
+    /*border: 1px solid #cfcfcf;*/
+    /*border-radius: 4px;*/
+    /*background: #f7f7f7;*/
     line-height: 1.21429em
 }
 
@@ -446,4 +458,11 @@ a, .button {
     font-size: 0.8rem;
     color: #999;
     margin-bottom: 0;
+}
+
+.gradback {
+    background-image:
+            linear-gradient(to right, var(--col1), var(--col2)),
+            linear-gradient(to bottom left, var(--col3), var(--col4));
+    background-attachment: fixed;
 }

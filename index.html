@@ -40,7 +40,7 @@
     <div style="display: flex; flex-direction: column; margin: 10px">
     <aside id="mainlogo">
         <p class="ttext">tekmoji</p>
-        <p class="minstrel">Caleb Hattingh</p>
+        <p class="minstrel" @click="showmail"><i class="fab fa-envelope"></i> Caleb Hattingh</p>
     </aside>
     <aside id="links">
         <ul>
@@ -340,6 +340,9 @@
       },
       getFromUrl: function (val) {
         return this.extractParamFromURL(location.search, val)
+      },
+      showmail () {
+          alert("caleb@tekmoji.com")
       }
     }
   })

@@ -16,7 +16,7 @@ import begin
 
 
 sitemap_template = Template(
-    """<?xml version="1.0" encoding="UTF-8"?>
+    r"""<?xml version="1.0" encoding="UTF-8"?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
@@ -29,10 +29,37 @@ $items
 )
 
 sitemap_entry_template = Template(
-    """    <url>
+    r"""    <url>
         <loc>https://tekmoji.com/?post=$postname</loc>
         <changefreq>weekly</changefreq>
     </url>"""
+)
+
+
+rss_template = Template(
+r"""<rss version="2.0">
+<channel>
+    <title>Tekmoji</title>
+    <link>https://tekmoji.com/</link>
+    <description>Caleb Hattingh's Blog</description>
+    <image>
+      <url>https://tekmoji.com/favicon/favicon-96x96.png</url>
+      <link>https://tekmoji.com/</link>
+    </image>
+$items
+</channel>
+</rss>
+"""
+)
+
+
+rss_item_template = Template(
+r"""    <item>
+        <title>$postname</title>
+        <link>https://tekmoji.com/?post=$postname_quote</link>
+        <description>$postname</description>
+    </item>
+"""
 )
 
 
@@ -119,10 +146,11 @@ def process(notebook_folder, output_folder, force_recreate=False):
             futures = [executor.submit(run_conversion, cmd) for cmd in cmds]
             result = [f.result() for f in futures]
 
-    # Move through the list, building up the cross links
+    # Move through the list, building up the cross-links
     # Posts are sorted by creation timestamp
     sorted_posts = list(sorted(metadata, key=lambda x: metadata[x]["timestamp"]))
     data_sitemap = []
+    data_rss = []
     for i, postname in enumerate(sorted_posts):
         # For the first post, set its "previous post" link to None.
         if i == 0:
@@ -148,10 +176,19 @@ def process(notebook_folder, output_folder, force_recreate=False):
             json.dump(metadata[postname], f, indent=4)
 
         data_sitemap.append(sitemap_entry_template.substitute(postname=quote(postname)))
+        data_rss.append(
+            rss_item_template.substitute(
+                postname=postname,
+                postname_quote=quote(postname)
+            )
+        )
 
     # Rebuild the sitemap to include all the posts
     with open("sitemap.xml", "w") as f:
         f.write(sitemap_template.substitute(items="\n".join(data_sitemap)))
+
+    with open("rss.xml", "w+") as f:
+        f.write(rss_template.substitute(items="\n".join(data_rss)))
 
     # Store the most recent post. This is used when the page is first loaded.
     # TODO: there must be a way to make it so that index.html automatically

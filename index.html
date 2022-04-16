@@ -80,6 +80,18 @@
                 placeholder="Find a post"
             ></v-select>
             <!-- <p class="annotation">Created {{ post_metadata.creation_date }}</span> -->
+            <div id="metadata">
+                <!-- <p>This post: <strong>{{post_metadata.this_post}}</strong> -->
+                <!-- <p> -->
+                <p>Original Jupyter Notebook: <a tabindex="0" :href="notebook_href">{{ notebook_text }}</a></p>
+                <p>Created: <span>{{ post_metadata.creation_date }}</span>
+                <p>Modified: <span>{{ post_metadata.modified_date }}</span>
+                    <!-- <p> -->
+                    <!-- <p>Previous: <a tabindex="0" id="previous_post" href=""></a> -->
+                    <!-- <p> -->
+                    <!-- <p>Next: <a tabindex="0" id="next_post" href=""></a> -->
+                    <!-- <p> -->
+            </div>
             <div id="content" v-html="post"></div>
             <button
                     id="prev-button"
@@ -97,18 +109,6 @@
                 Next
                 <i class="fa fa-arrow-circle-right"></i>
             </button>
-            <div id="metadata">
-                <!-- <p>This post: <strong>{{post_metadata.this_post}}</strong> -->
-                <!-- <p> -->
-                <p>Original Jupyter Notebook: <a tabindex="0" :href="notebook_href">{{ notebook_text }}</a></p>
-                <p>Created: <span>{{ post_metadata.creation_date }}</span>
-                <p>Modified: <span>{{ post_metadata.modified_date }}</span>
-                <!-- <p> -->
-                <!-- <p>Previous: <a tabindex="0" id="previous_post" href=""></a> -->
-                <!-- <p> -->
-                <!-- <p>Next: <a tabindex="0" id="next_post" href=""></a> -->
-                <!-- <p> -->
-            </div>
             <div style="margin-bottom: 100px;"></div>
 
             <!-- <div id="disqus_thread"></div> -->

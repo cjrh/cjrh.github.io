@@ -1,41 +1,20 @@
 @font-face {
-    font-family: "LibreBaskerville";
-    src: url("/font/Libre_Baskerville/LibreBaskerville-Regular.ttf");
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "LibreBaskerville";
-    src: url("/font/Libre_Baskerville/LibreBaskerville-Bold.ttf");
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "LibreBaskerville";
-    src: url("/font/Libre_Baskerville/LibreBaskerville-Italic.ttf");
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: "Oswald";
-    src: url("/font/Oswald/Oswald-VariableFont_wght.ttf");
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: "FiraCode";
     src: url("/font/Fira_Code/FiraCode-VariableFont_wght.ttf");
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+    font-family: "InterBig";
+    src: url("/font/Inter/Inter-VariableFont_slnt,wght.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
 :root {
-    --head-font-family: "Oswald", sans-serif;
-    --body-font-family: 'LibreBaskerville', sans-serif;
+    --head-font-family: "InterBig", sans-serif;
+    --body-font-family: 'Inter', sans-serif;
     --code-font-family: 'FiraCode', monospace;
     --cursor-button: url("/img/gam1390.cur"), auto;
 
@@ -67,6 +46,8 @@ body {
 
 #app {
   display: flex;
+  background-color: white;
+  color: black;
 }
 
 .semifixed {
@@ -79,12 +60,11 @@ body {
   padding-top: 1%;
   text-align: center;
   overflow: hidden;
-  color: #000000;
 }
 
 .ttext {
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
   font-family: var(--body-font-family);
   font-weight: bold;
   font-size: 2.5rem;
@@ -95,7 +75,6 @@ p.minstrel {
   font-size: 0.8em;
   font-style: italic;
   font-weight: lighter;
-  color: black;
   margin: 0;
 }
 
@@ -112,7 +91,6 @@ div#main {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--head-font-family);
   font-weight: bolder;
-  color: black;
 }
 
 h1 {
@@ -121,34 +99,30 @@ h1 {
 }
 
 h2 {
-  font-size: 26.4px;
+  font-size: 26px;
   line-height: 1.5em;
 }
 
 .text_cell_render {
-  color: #000000;
 }
 
 p, li {
   font-size: 1.0rem;
   line-height: 1.4em;
   text-align: justify;
-  color: #000000;
   margin-top: 1.2em;
   margin-bottom: 1.2em;
 }
 
 p > code {
   font-family: var(--code-font-family);
-   font-size: 1.0em;
-  color: #000000;
+  font-size: 1.0em;
 }
 
 p.navinfo {
   position: absolute;
-  font-size: 13.2px;
-  color: black;
-  top: 0px;
+  font-size: 13px;
+  top: 0;
   left: 50%;
   -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
@@ -169,7 +143,7 @@ ul {
 }
 
 aside#links {
-  font-family: var(--head-font-family);
+  font-family: var(--body-font-family);
   top: 10px;
   left: 10px;
   line-height: 0.5;
@@ -179,18 +153,17 @@ aside#links ul {
   margin: 0;
 }
 aside#links li {
-  font-weight: 100;
+  font-weight: bold;
   font-size: 1rem;
   font-variant: small-caps;
-  color: black;
   display: block;
   margin: 0;
 }
 aside#links li a {
   font-weight: normal;
   text-decoration: none;
-  color: black;
 }
+
 aside#links li a:hover {
   color: #a83f63;
 }
@@ -227,7 +200,6 @@ div#metadata {
 #metadata p {
   margin: 0;
   padding: 0;
-  color: black;
   font-size: 0.6rem;
   font-style: italic;
 }
@@ -342,7 +314,7 @@ pre > code {
 @media screen and (max-width: 1200px), screen and (max-device-width: 1200px) {
   /* line 277, ../sass/base.sass */
   html {
-    font-size: 19.8px;
+    font-size: 20px;
   }
 
   #app {
@@ -388,7 +360,7 @@ pre > code {
 }
 @media screen and (max-width: 600px), screen and (max-device-width: 600px) {
   html {
-    font-size: 17.6px;
+    font-size: 18px;
   }
 
   #app {
@@ -410,7 +382,7 @@ pre > code {
   }
 
   h2 {
-    font-size: 19.8px;
+    font-size: 20px;
   }
 
   aside {
@@ -428,6 +400,14 @@ pre > code {
 }
 a, .button {
   cursor: url("/img/gam1390.cur"), auto;
+}
+
+a:link {
+    color: black
+}
+
+a:visited {
+    color: black
 }
 
 .output-wrapper {

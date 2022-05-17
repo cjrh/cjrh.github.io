@@ -22,7 +22,7 @@ bleach==4.1.0
     # via nbconvert
 cffi==1.15.0
     # via argon2-cffi-bindings
-cython==0.29.28
+cython==0.29.30
     # via -r requirements.in
 debugpy==1.6.0
     # via ipykernel
@@ -36,8 +36,6 @@ entrypoints==0.4
     #   nbconvert
 executing==0.8.3
     # via stack-data
-importlib-resources==5.6.0
-    # via jsonschema
 ipykernel==6.9.2
     # via
     #   ipywidgets
@@ -218,8 +216,6 @@ webencodings==0.5.1
     # via bleach
 widgetsnbextension==3.6.0
     # via ipywidgets
-zipp==3.7.0
-    # via importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

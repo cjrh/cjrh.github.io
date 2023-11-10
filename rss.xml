@@ -103,5 +103,11 @@
         <description>Another pointless comparison of Rust and C++ binary size</description>
     </item>
 
+    <item>
+        <title>Understanding-monads</title>
+        <link>https://tekmoji.com/?post=Understanding-monads</link>
+        <description>Understanding-monads</description>
+    </item>
+
 </channel>
 </rss>

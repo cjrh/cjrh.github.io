@@ -69,4 +69,8 @@
         <loc>https://tekmoji.com/?post=Another%20pointless%20comparison%20of%20Rust%20and%20C%2B%2B%20binary%20size</loc>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc>https://tekmoji.com/?post=Understanding-monads</loc>
+        <changefreq>weekly</changefreq>
+    </url>
 </urlset>

@@ -1,0 +1,560 @@
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ec61bf4b-dc63-4d71-bc08-5a1f215165f4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Understanding-Monads-using-Python">Understanding Monads using Python<a class="anchor-link" href="#Understanding-Monads-using-Python">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f4180ea9-e73d-4953-a9b7-fadcd4f45bea"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Many tutorials I've seen have tended to focus on a top-down approach of explanation. I'd like to try a bottom-up approach, using just the normal plain old Python you already know.</p>
+<p>We're going to make a <code>Result</code> monad, to encapsulate both success and failure states, and we're going to compare this to using plain old exceptions.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=aef9805f-5612-43f3-8fb0-018053758add"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="It's-all-about-the-bind">It's all about the bind<a class="anchor-link" href="#It's-all-about-the-bind">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bdef0442-a784-4d0b-956b-3e5fc83e7eb2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Imagine you did a sequence of operations like this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=7a7e6b6c-0090-44e3-8bca-41cdda861f20">
+<div class="input">
+<div class="prompt input_prompt">In [22]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">"    This is my wonderful long string   "</span>
+<span class="n">output</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
+    <span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=29c22000-c569-4055-bfd7-1cc05d0f18ca"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Look carefully at how the data, which is originally the string <code>s</code>, propagates through the chain of calls and the data gets modified along the way. Now imagine that every successive chained operation was wrapped in a method call called <code>bind()</code>. Without going into too much detail, let's just write out what the previous operation might look like. This code won't run, I just want you to visualize how the chain of operations is still being respected, albeit with extra parts:</p>
+<div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">"    This is my wonderful long string   "</span>
+<span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+<p>The <code>bind()</code> is just a way to apply a function to the object. For the above to have any chance of working, it is necessary that every usage of <code>bind()</code> returns another thing itself also has a <code>bind()</code> method, right? That is a bit annoying; however, on the plus side if we have a standard way of applying a succession of function calls to some data, that gives us the opportunity to make some decisions about what to do when a particular function needs to be applied.</p>
+<p>Crucially, one of those choices is about what to do if a particular function being applied causes an error. This is the key idea. So to summarize:</p>
+<ul>
+<li>We need to wrap our data in some kind of object wrapper that has a <code>bind()</code> method</li>
+<li>The <code>bind()</code> method will execute a function, passing the current value (or "state") to that function</li>
+<li>It is important that the <code>bind()</code> method returns an object that also has a <code>bind()</code> method, allowing more chaining.</li>
+</ul>
+<p>With all that out of the way, let's make a set of classes that will handle "success" and "failure".</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=42785bc6-a4c8-4ab3-927a-755feadd507c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="New-classes-to-wrap-our-data,-and-implement-bind">New classes to wrap our data, and implement <code>bind</code><a class="anchor-link" href="#New-classes-to-wrap-our-data,-and-implement-bind">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f61b1051-4739-4d40-bcdc-da5313fc2204"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'll write out the code first, and then we'll talk about it.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=db8e8713-59cf-4d9c-9e01-f896520ce1a5">
+<div class="input">
+<div class="prompt input_prompt">In [25]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Result</span><span class="p">:</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Ok</span><span class="p">(</span><span class="n">Result</span><span class="p">):</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Ok</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Err</span><span class="p">(</span><span class="n">Result</span><span class="p">):</span>
+    <span class="n">value</span><span class="p">:</span> <span class="ne">Exception</span>
+    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ffd5a6c1-44e1-4063-a2e3-fdfb701df1ba"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We don't actually need the base class <code>Result</code>, but it will help with type annotations.</p>
+<p>The import bit to explain is that we have two classes that will <strong>wrap</strong> our actual data. These two classes are <code>Ok</code> and <code>Err</code>. Pay attention to the following:</p>
+<ul>
+<li>They both have a <code>bind()</code> method</li>
+<li>For each, their <code>bind()</code> method returns an object that itself has a <code>bind()</code> method.</li>
+</ul>
+<p>Let's talk about the last point for a minute.  The <code>Err</code> class is easy. It's internal <code>value</code> is always an exception type, and it's <code>bind()</code> method always just returns itself. This might seem pointless, but the true point is to satisfy the two requirements above.</p>
+<p>The other class, <code>Ok</code>, is more interesting. Inside its <code>bind()</code> method, it will apply the given function <code>f</code> to its internal data, and if this call succeeds it will wrap that new result in a new instance of <code>Ok</code>, and return that. However, if the evaluation of <code>f(self.value)</code> fails, then it will wrap the resulting <code>Exception</code> type in a new instance of <code>Err</code> and return that instead.</p>
+<p>The <code>Ok.bind()</code> method can only return <code>Ok</code> or <code>Err</code>. There are no other possible options. Since both <code>Ok</code> and <code>Err</code> satisfy our two requirements, we should be able to use our new classes.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b7199328-179f-4861-ab1e-fabe6e8a9f24"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Using-the-Ok-and-Err-classes">Using the <code>Ok</code> and <code>Err</code> classes<a class="anchor-link" href="#Using-the-Ok-and-Err-classes">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5412ece9-d079-4625-9f64-9388bd4c7b14"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try to implement the idealised example from earlier, this time with real code using our two examples.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=3c4a6678-da62-4ed1-9fb1-3cd0d94125ec">
+<div class="input">
+<div class="prompt input_prompt">In [16]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">"    This is my wonderful long string   "</span>
+<span class="n">output</span><span class="p">:</span> <span class="n">Result</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Ok(value=6)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=baa9341c-7b38-4327-b19c-a14487d735ef"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How interesting: instead of getting a <code>6</code>, as before, we get the value wrapped in an <code>Ok</code> object wrapper. That makes sense, because remember that every application of <code>bind()</code> will keep returning a new wrapper.</p>
+<p>Note the type annotation, <code>Result</code>, in the code snippet above. That's why we have a base class for <code>Ok</code> and <code>Err</code>, because it allows us to describe that an identifier's type, like <code>output</code> above, could be one of those two subclasses.</p>
+<p>To get the data out, you can simply access the <code>value</code> attribute:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=ccdda10d-9ffe-4888-8975-4f182e2dfa76">
+<div class="input">
+<div class="prompt input_prompt">In [17]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=dfebe049-e2ba-46d9-83b2-a95457b5df72"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So far this seems like a laborious way to do a very simple chaining operation. At least, in the original plain Python code it was quite simple. There were earlier implications that this strategy using <code>bind()</code> might be useful for error handling. With that in mind let's modify our example to introduce an error.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=08c99740-caea-44db-ab3e-0b73472cd915"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Compare-error-handling:-exceptions-vs-bind">Compare error handling: exceptions vs bind<a class="anchor-link" href="#Compare-error-handling:-exceptions-vs-bind">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=fa056f5d-3f2d-4a4a-8118-e87c96dfb94a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here I've changed the value <code>s</code> from a string to a float. None of the string manipulations are going to work, and we're going to get an error:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=eeb0621b-5b16-410a-90b3-72b8e1c7b987">
+<div class="input">
+<div class="prompt input_prompt">In [18]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="mf">123.4</span>
+<span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
+    <span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[18], line 3</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> s <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">123.4</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> output <span style="color: rgb(98,98,98)">=</span> (
+<span class="ansi-green-fg">----&gt; 3</span>     <span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">strip</span>()
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     <span style="color: rgb(98,98,98)">.</span>replace(<span style="color: rgb(175,0,0)">"</span><span style="color: rgb(175,0,0)">w</span><span style="color: rgb(175,0,0)">"</span>, <span style="color: rgb(175,0,0)">"</span><span style="color: rgb(175,0,0)">W</span><span style="color: rgb(175,0,0)">"</span>)
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     <span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">"</span><span style="color: rgb(175,0,0)"> </span><span style="color: rgb(175,0,0)">"</span>)
+<span class="ansi-green-intense-fg ansi-bold">      6</span>     <span style="color: rgb(98,98,98)">.</span><span style="color: rgb(0,0,255)">__len__</span>()
+<span class="ansi-green-intense-fg ansi-bold">      7</span> )
+<span class="ansi-green-intense-fg ansi-bold">      8</span> <span style="color: rgb(0,135,0)">print</span>(output)
+
+<span class="ansi-red-fg">AttributeError</span>: 'float' object has no attribute 'strip'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=271c1a8d-6e75-491b-ac8c-4164fb096b88"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By changing the data type of the data, <code>s</code>, our code now blows up. In normal Python, the way to deal with this is with exception handling. Let's add some.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=985b8494-390e-4288-9bda-c1a47f9c3d7d">
+<div class="input">
+<div class="prompt input_prompt">In [19]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="mf">123.4</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
+    <span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+  <span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"There was an error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>There was an error: 'float' object has no attribute 'strip'
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=98e57a3c-addd-4003-b528-d2566f1c3abd"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's much less explosive!</p>
+<p>Let's try to process the same bad data with our new code that uses <code>bind()</code> and the <code>Ok</code> and <code>Err</code> types. No exception handler will be added.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=f32a68ba-9606-4671-a5a8-62fc20fa33fe">
+<div class="input">
+<div class="prompt input_prompt">In [20]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="mf">123.4</span>
+<span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Err(value=TypeError("descriptor 'strip' for 'str' objects doesn't apply to a 'float' object"))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=6a25a353-8cb8-4b8b-9a9e-49f4ae7a6f9f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is super interesting. We didn't get an exception raised, but what we observe is the the <em>output value itself</em> is an instance of the <code>Err</code> class. Furthermore, the internal value of this object contains our exception. I personally find it quite interesting that the error message is better in this case than what we got with the more natural error handling approach with the non-bind code.</p>
+<p>In the above example, the error was introduced right at the start. It might help to understand even more deeply by seeing what happens if we move the error to somewhere deeper in the call chain.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=17268bb0-f6dd-47c3-9ea7-f81a296ba750">
+<div class="input">
+<div class="prompt input_prompt">In [21]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">"    This is my wonderful long string   "</span>
+<span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">))</span>
+    <span class="c1"># This is new, I'm replacing the data in the stream with `None`</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span> 
+    <span class="c1"># This application will fail because you can't call `split` on `None`</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Err(value=AttributeError("'NoneType' object has no attribute 'split'"))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=1d60f49b-e302-455f-9250-d41c5619ee17"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And there go you. The failure along the chain of applications got caught and propagated through.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=1516e16a-c352-4b10-a2d1-fd076cc12176"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Just as we saw with the success case, it was necessary to extract the value of the result, <code>6</code>. Likewise, it will be necessary here to extract the exception. If you wanted to handle both the success and the error case, you might use the <code>match</code> statement:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=dea96154-6243-4c60-ae85-f44e6c15f8d3">
+<div class="input">
+<div class="prompt input_prompt">In [33]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">some_processing</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="o">|</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Result</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lst</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=eebf9397-93a7-4e6a-bba7-07c6eecd2d20"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First we'll try valid data:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e9800851-e889-423d-9524-f641cfec3f2e">
+<div class="input">
+<div class="prompt input_prompt">In [30]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">"    This is my wonderful long string   "</span>
+<span class="k">match</span> <span class="n">some_processing</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">case</span> <span class="n">Ok</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Success. The result was </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">Err</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Failure. The exception was </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Success. The result was 6
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a2852b10-910d-4a5d-98f4-a4ce190aaaa9"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>...and now invalid data:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=c7260f02-c658-42d9-8611-f642f96663af">
+<div class="input">
+<div class="prompt input_prompt">In [32]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">match</span> <span class="n">some_processing</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">case</span> <span class="n">Ok</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Success. The result was </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">Err</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Failure. The exception was </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Failure. The exception was descriptor 'strip' for 'str' objects doesn't apply to a 'NoneType' object
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=be01a3e6-ab7f-4370-8e7f-a75492d23c20"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We made good use of the <code>match</code> statement's pattern matching features in extract the values from each of the <code>Ok</code> and <code>Err</code> variants.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c62d8be3-624d-4e52-a0e2-c04d4a0d608f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b80edcab-4239-4e8c-84fb-28fc29ee0487"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Perhaps a good way to compare the two approaches above for error handling is to describe them like this:</p>
+<ul>
+<li>Exceptions jump directly out of the path of execution and race up the stack to the nearest exception handler where you can handle them appropriately.</li>
+<li>Monadic error handling, e.g. using the <code>Ok</code> and <code>Err</code> classes above, instead allows the chain of execution to <em>bypass</em> code once an error condition has been found. Crucially, the error condition and the success condition are now both different types of data which means that their handling and detection can be managed with type-checking rather than an error handler.</li>
+</ul>
+<p>Which is better? The classic question. My personal view is that programming languages that do a good job of modelling types, or said in another way have a rich type system, are likely to be better off with monadic styles. On the other hand, programming languages that focus less on the type system, for example dynamically-typed systems like Python and JavaScript, are likely to find little benefit using monadic error handling compared to exception handling.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b3471e29-ea55-4572-b697-243fb285003e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One compelling advantage of the monadic approach for a language like Python, is that it allows the error types to be described by the type system. For example, I could conceive of the following kind of function signature based on using the earlier types described in this post:</p>
+<div class="highlight"><pre><span></span><span class="c1"># This code won't work, it's for explanation only</span>
+<span class="k">def</span> <span class="nf">some_processing</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="o">|</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Result</span><span class="p">[</span><span class="n">Ok</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Err</span><span class="p">[</span><span class="ne">Exception</span><span class="p">]]:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=63269a69-f8b1-4faa-8da2-fca33433b043">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=cbb269f0-c393-4f0d-ac2d-0ff2396aacb0">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>

@@ -253,7 +253,7 @@ rpds-py==0.12.0
     # via
     #   jsonschema
     #   referencing
-scipy==1.11.3
+scipy==1.12.0
     # via -r requirements.in
 send2trash==1.8.2
     # via jupyter-server

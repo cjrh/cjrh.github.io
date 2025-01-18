@@ -1,8 +1,9 @@
 {
     "timestamp": 1737218780.8882515,
     "creation_date": "Sat Jan 18 17:46:20 2025",
-    "timestamp_modified": 1737218728.501338,
-    "modified_date": "Sat Jan 18 17:45:28 2025",
+    "timestamp_modified": 1737233660.8546255,
+    "modified_date": "Sat Jan 18 21:54:20 2025",
+    "hash": "54b51f7b8271e4c627d67fdd0510a850",
     "previous_post": "Understanding-monads",
     "next_post": null
 }

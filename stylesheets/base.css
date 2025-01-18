@@ -103,7 +103,12 @@ h2 {
   line-height: 1.5em;
 }
 
-.text_cell_render {
+.inner_cell img {
+  position: absolute; /* Position the image absolutely within its containing block */
+  left: 50%; /* Move the image to the center of the parent */
+  transform: translateX(-50%); /* Shift the image back by half its width to center it */
+  max-width: none; /* Allow the image to exceed its natural width */
+  width: auto; /* Ensure the image maintains its aspect ratio */
 }
 
 p, li {

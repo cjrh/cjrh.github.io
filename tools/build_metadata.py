@@ -37,7 +37,7 @@ sitemap_entry_template = Template(
 
 
 rss_template = Template(
-r"""<rss version="2.0">
+    r"""<rss version="2.0">
 <channel>
     <title>Tekmoji</title>
     <link>https://tekmoji.com/</link>
@@ -54,7 +54,7 @@ $items
 
 
 rss_item_template = Template(
-r"""    <item>
+    r"""    <item>
         <title>$postname</title>
         <link>https://tekmoji.com/?post=$postname_quote</link>
         <description>$postname</description>
@@ -178,8 +178,7 @@ def process(notebook_folder, output_folder, force_recreate=False):
         data_sitemap.append(sitemap_entry_template.substitute(postname=quote(postname)))
         data_rss.append(
             rss_item_template.substitute(
-                postname=postname,
-                postname_quote=quote(postname)
+                postname=postname, postname_quote=quote(postname)
             )
         )
 

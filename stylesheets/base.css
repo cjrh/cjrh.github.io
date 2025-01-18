@@ -6,6 +6,13 @@
 }
 
 @font-face {
+    font-family: "Alice";
+    src: url("/font/alice/Alice-Regular.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
     font-family: "InterBig";
     src: url("/font/Inter/Inter-VariableFont_slnt,wght.ttf");
     font-weight: bold;
@@ -13,7 +20,7 @@
 }
 
 :root {
-    --head-font-family: "InterBig", sans-serif;
+    --head-font-family: "Alice", sans-serif;
     --body-font-family: 'Inter', sans-serif;
     --code-font-family: 'FiraCode', monospace;
     --cursor-button: url("/img/gam1390.cur"), auto;
@@ -94,12 +101,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 44px;
+  font-size: 64px;
   line-height: 1.2em;
 }
 
 h2 {
-  font-size: 26px;
+  font-size: 36px;
   line-height: 1.5em;
 }
 

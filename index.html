@@ -56,7 +56,7 @@
     <div class="semifixed" style="display: flex; flex-direction: column; margin: 10px">
     <aside id="mainlogo">
         <p class="ttext">tekmoji</p>
-        <p class="minstrel" @click="showmail"><i class="fab fa-envelope"></i> Caleb Hattingh</p>
+        <p class="minstrel" @click="showmail"><i class="fa-regular fa-envelope"></i> Caleb Hattingh</p>
     </aside>
     <aside id="links">
         <ul>
@@ -78,7 +78,7 @@
             <li><a href="https://stackoverflow.com/users/170656/caleb-hattingh" target="_blank">
                 <i class="fab fa-stack-overflow"></i> Stack Overflow</a></li>
             <li><a type="application/rss+xml" href="/rss.xml">
-                <i class="fab fa-rss"></i> RSS Feed</a></li>
+                <i class="fa-solid fa-rss"></i>RSS Feed</a></li>
             <!-- <li>Resume</li> -->
             <li class="break"></li>
         </ul>
@@ -144,20 +144,8 @@
     </div>
 </div>
 <!-- Load scripts last. -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/v4-shims.min.css" integrity="sha512-iaLhEHW3p+ZNgkDKBi4zEfH+aWAMGJ7I7njqD3jKnbN0ux4Gkumu2vjuI71YUov20OIPl3R32v8HO+V+6OgbvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script type="text/x-mathjax-config">
-      MathJax.Hub.Config(
-            {tex2jax: {
-                inlineMath: [['$','$'], ['\\(','\\)']],
-                displayMath: [['\\[','\\]'], ['$$','$$']]
-                }
-            }
-        );
-</script>
-<script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/v4-shims.min.css" integrity="sha512-U+fiq69HDM4etLVUiZeQxmJE5AZoft4ti4TIM95MqXV0IjBXgT2oHw5cNeIFqz3OE/axTKQIR8e7zlm3xbOVmg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <script src="/js/jquery-3.0.0.min.js"></script>
 <script src="https://unpkg.com/vue@2.x/dist/vue.min.js"></script>
@@ -364,6 +352,8 @@
         return this.extractParamFromURL(location.search, val)
       },
       showmail () {
+          // TODO: <dialog> element with open/close
+          //  https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
           let hostname = "tekmoji.com"
           alert(`caleb@${hostname}`)
       }

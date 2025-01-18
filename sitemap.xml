@@ -73,4 +73,8 @@
         <loc>https://tekmoji.com/?post=Understanding-monads</loc>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc>https://tekmoji.com/?post=Luxurious-git-branch-switch-with-fzf</loc>
+        <changefreq>weekly</changefreq>
+    </url>
 </urlset>

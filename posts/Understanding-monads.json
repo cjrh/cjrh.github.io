@@ -1,8 +1,9 @@
 {
     "timestamp": 1699630636.2763653,
     "creation_date": "Fri Nov 10 16:37:16 2023",
-    "timestamp_modified": 1699630501.7133248,
-    "modified_date": "Fri Nov 10 16:35:01 2023",
+    "timestamp_modified": 1722883478.1540563,
+    "modified_date": "Mon Aug  5 20:44:38 2024",
+    "hash": "7d61533119102dded5d12ebe2fdd21fc",
     "previous_post": "Another pointless comparison of Rust and C++ binary size",
-    "next_post": null
+    "next_post": "Luxurious-git-branch-switch-with-fzf"
 }

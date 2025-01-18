@@ -1,0 +1,79 @@
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=80556caa-c311-483e-b667-9c6dcbb88f32"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Luxurious-git-branch-switch-with-fzf">Luxurious git branch switch with fzf<a class="anchor-link" href="#Luxurious-git-branch-switch-with-fzf">¶</a></h1><p>Put the following in your <code>.bashrc</code>:</p>
+<div class="highlight"><pre><span></span><span class="c1"># This function must return either upstream/main or upstream/master,</span>
+<span class="c1"># depending on which one is present. If both are present it should</span>
+<span class="c1"># return upstream/main. If neither are present it should return</span>
+<span class="c1"># origin/main or origin/master, depending on which is present.</span>
+<span class="k">function</span><span class="w"> </span>test_remote_branch_exists<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">branch_name</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="w">    </span>git<span class="w"> </span>branch<span class="w"> </span>--remote<span class="w"> </span>--list<span class="w"> </span><span class="s2">"</span><span class="nv">$branch_name</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"</span><span class="nv">$branch_name</span><span class="s2">"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$branch_name</span><span class="s2">"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">""</span>
+<span class="o">}</span>
+
+<span class="nb">export</span><span class="w"> </span>-f<span class="w"> </span>test_remote_branch_exists
+
+
+<span class="k">function</span><span class="w"> </span>get_primary_remote<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">upstream_main_exists</span><span class="o">=</span><span class="k">$(</span>test_remote_branch_exists<span class="w"> </span><span class="s2">"upstream/main"</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$upstream_main_exists</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"upstream/main"</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="w">    </span><span class="nv">upstream_master_exists</span><span class="o">=</span><span class="k">$(</span>test_remote_branch_exists<span class="w"> </span><span class="s2">"upstream/master"</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$upstream_master_exists</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"upstream/master"</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="w">    </span><span class="nv">origin_main_exists</span><span class="o">=</span><span class="k">$(</span>test_remote_branch_exists<span class="w"> </span><span class="s2">"origin/main"</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$origin_main_exists</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"origin/main"</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="w">    </span><span class="nv">origin_master_exists</span><span class="o">=</span><span class="k">$(</span>test_remote_branch_exists<span class="w"> </span><span class="s2">"origin/master"</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$origin_master_exists</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"origin/master"</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="nb">export</span><span class="w"> </span>-f<span class="w"> </span>get_primary_remote
+
+<span class="k">function</span><span class="w"> </span>show_branch_diff<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">target_branch</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="w">    </span>git<span class="w"> </span>diff<span class="w"> </span>--color<span class="o">=</span>always<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>base_commit<span class="w"> </span><span class="s2">"</span><span class="nv">$target_branch</span><span class="s2">"</span><span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$target_branch</span><span class="s2">"</span>
+<span class="o">}</span>
+
+<span class="nb">export</span><span class="w"> </span>-f<span class="w"> </span>show_branch_diff
+
+<span class="k">function</span><span class="w"> </span>base_commit<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">target_branch</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="w">    </span>git<span class="w"> </span>merge-base<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>get_primary_remote<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$target_branch</span><span class="s2">"</span>
+<span class="o">}</span>
+<span class="nb">export</span><span class="w"> </span>-f<span class="w"> </span>base_commit
+
+<span class="c1"># Have to add the branch here</span>
+<span class="c1"># alias gcb='git branch --sort=-committerdate | fzf | xargs git checkout'</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">gcb</span><span class="o">=</span><span class="s1">'git branch | fzf --preview "show_branch_diff {-1}" | cut -c 3- | xargs git checkout'</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=133717c6-7d92-412b-991b-4283f4277230"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, the <code>gcb</code> command will show you a fuzzy finder with diff preview on all your git branches</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=3bcd3a8a-3bc8-4a98-b3c5-3614266d8011">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>

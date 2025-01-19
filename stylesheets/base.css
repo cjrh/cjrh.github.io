@@ -446,7 +446,7 @@ a:visited {
     /* color: #394066; */
     /* text-transform: lowercase; */
     /*font-variant: small-caps;*/
-    font-family: var(--head-font-family);
+    font-family: var(--body-font-family);
     font-size: 0.8rem;
     /* font-style: italic; */
 }

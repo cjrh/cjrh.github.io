@@ -9,6 +9,7 @@ start:
 regenerate:
     bash run.sh
 
+# Install evcxr Jupyter kernel for Rust cells
 install_evcxr:
     # https://github.com/evcxr/evcxr/blob/main/evcxr_jupyter/README.md
     cargo install --locked evcxr_jupyter
@@ -16,3 +17,7 @@ install_evcxr:
     # :dep evcxr_input
     # let name = evcxr_input::get_string("Name?");
     # let password = evcxr_input::get_password("Password?");
+
+# Serve the current directory
+serve:
+    miniserve --index index.html

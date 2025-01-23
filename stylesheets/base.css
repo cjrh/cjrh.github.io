@@ -110,7 +110,7 @@ h2 {
 }
 
 .inner_cell img {
-  position: absolute; /* Position the image absolutely within its containing block */
+  position: relative; /* Position the image absolutely within its containing block */
   left: 50%; /* Move the image to the center of the parent */
   transform: translateX(-50%); /* Shift the image back by half its width to center it */
   max-width: none; /* Allow the image to exceed its natural width */
@@ -368,6 +368,10 @@ pre > code {
   div#content-container {
     float: none;
   }
+
+  .inner_cell img {
+    width: 100%;
+  }
 }
 @media screen and (max-width: 600px), screen and (max-device-width: 600px) {
   html {
@@ -388,12 +392,12 @@ pre > code {
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 32px;
     border-bottom: 1px solid #000000;
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 26px;
   }
 
   aside {
@@ -408,7 +412,12 @@ pre > code {
   .ttext {
     font-size: 2rem;
   }
+
+  .inner_cell img {
+    width: 100%;
+  }
 }
+
 a, .button {
   cursor: url("/img/gam1390.cur"), auto;
 }

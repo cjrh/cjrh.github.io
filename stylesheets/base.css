@@ -297,7 +297,24 @@ div.highlight {
     /*border: 1px solid #cfcfcf;*/
     /*border-radius: 4px;*/
     /*background: #f7f7f7;*/
-    line-height: 1.21429em
+    line-height: 1.21429em;
+
+    /* Let's add a border-top and a border-bottom to the code blocks */
+    /* border-top: 1px solid #cfcfcf; */
+    /* border-bottom: 1px solid #cfcfcf; */
+    /* Also make a label that says "Code" in the :before pseudo-element */
+    /* &::before { */
+    /*     content: "Code"; */
+    /*     display: block; */
+    /*     font-size: 0.8rem; */
+    /*     font-weight: bold; */
+    /*     color: #999; */
+    /*     /1* padding: 5px; *1/ */
+    /*     border-bottom: 3px solid #999; */
+    /* } */
+
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
 }
 
 div.output_wrapper {
@@ -481,4 +498,11 @@ a:visited {
             linear-gradient(to right, var(--col1), var(--col2)),
             linear-gradient(to bottom left, var(--col3), var(--col4));
     background-attachment: fixed;
+}
+
+/* In the Print view, we want to hide the navigation info */
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
 }

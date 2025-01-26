@@ -53,7 +53,7 @@
 </head>
 <body>
 <div id="app">
-    <div class="semifixed" style="display: flex; flex-direction: column; margin: 10px">
+    <div class="semifixed no-print" style="display: flex; flex-direction: column; margin: 10px">
     <aside id="mainlogo">
         <p class="ttext">tekmoji</p>
         <p class="minstrel" @click="showmail"><i class="fa-regular fa-envelope"></i> Caleb Hattingh</p>
@@ -88,8 +88,9 @@
     </div>
     <div id="main">
         <div id="content-container">
+            <p style="margin-bottom: 0; font-size: 0.6rem; font-style: italic; text-align: center; color: #888;">Search or scroll to find a post.</p>
             <v-select
-                class="style-chooser"
+                class="style-chooser no-print"
                 :options="posts"
                 :value="selectedPost"
                 @input="setSelectedPost"
@@ -111,7 +112,7 @@
             <div id="content" v-html="post"></div>
             <button
                     id="prev-button"
-                    class="left button"
+                    class="left button no-print"
                     v-show="post_metadata.previous_post"
                     @click="previousPage">
                 <i class="fa fa-arrow-circle-left"></i>
@@ -119,7 +120,7 @@
             </button>
             <button
                     id="next-button"
-                    class="right button"
+                    class="right button no-print"
                     v-show="post_metadata.next_post"
                     @click="nextPage">
                 Next

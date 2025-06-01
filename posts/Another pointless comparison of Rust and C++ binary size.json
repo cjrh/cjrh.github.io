@@ -1,9 +1,9 @@
 {
     "timestamp": 1647751749.9125645,
     "creation_date": "Sun Mar 20 14:49:09 2022",
-    "timestamp_modified": 1647751749.9125645,
-    "modified_date": "Sun Mar 20 14:49:09 2022",
-    "hash": "2f28a284dd08f203a28fd2d52c425a9a",
+    "timestamp_modified": 1748813400.0447836,
+    "modified_date": "Sun Jun  1 23:30:00 2025",
+    "hash": "4647cd8092a68355f8265b0959de8286",
     "previous_post": "Backpack for learning Rust",
     "next_post": "Understanding-monads"
 }

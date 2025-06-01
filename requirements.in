@@ -1,6 +1,6 @@
 Cython
 jupyter
-numba
+numba>=0.61
 numpy
 scipy
 begins

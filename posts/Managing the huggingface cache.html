@@ -1,0 +1,80 @@
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=e1d80707-4af3-4cd1-8f3e-ee3a39d3789c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Managing-the-huggingface-cache">Managing the huggingface cache<a class="anchor-link" href="#Managing-the-huggingface-cache">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f135a335-bd37-4c94-a284-8ed97eedec16"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It turns out that huggingface provides a client that can help with this.</p>
+<div class="highlight"><pre><span></span>~/.cache/huggingface<span class="w">  </span>
+$<span class="w"> </span>pipx<span class="w"> </span>install<span class="w"> </span>huggingface_hub<span class="o">[</span>cli<span class="o">]</span>
+<span class="w">  </span>installed<span class="w"> </span>package<span class="w"> </span>huggingface-hub<span class="w"> </span><span class="m">0</span>.33.0,<span class="w"> </span>installed<span class="w"> </span>using<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.13.3
+<span class="w">  </span>These<span class="w"> </span>apps<span class="w"> </span>are<span class="w"> </span>now<span class="w"> </span>globally<span class="w"> </span>available
+<span class="w">    </span>-<span class="w"> </span>huggingface-cli
+<span class="w">    </span>-<span class="w"> </span>tiny-agents
+<span class="k">done</span>!<span class="w"> </span>✨<span class="w"> </span>🌟<span class="w"> </span>✨
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=827df57d-3fee-4096-86b5-76ad3d4ca850"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Having installed that, we can now inspect the cache:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=76c1a7da-7ec4-4ea3-aeaf-741a1eff8b1e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span>~/.cache/huggingface<span class="w">  </span>
+$<span class="w"> </span>huggingface-cli<span class="w"> </span>scan-cache
+REPO<span class="w"> </span>ID<span class="w">                  </span>REPO<span class="w"> </span>TYPE<span class="w"> </span>SIZE<span class="w"> </span>ON<span class="w"> </span>DISK<span class="w"> </span>NB<span class="w"> </span>FILES<span class="w"> </span>LAST_ACCESSED<span class="w">  </span>LAST_MODIFIED<span class="w">  </span>REFS<span class="w"> </span>LOCAL<span class="w"> </span>PATH<span class="w">                                                           </span>
+------------------------<span class="w"> </span>---------<span class="w"> </span>------------<span class="w"> </span>--------<span class="w"> </span>--------------<span class="w"> </span>--------------<span class="w"> </span>----<span class="w"> </span>--------------------------------------------------------------------<span class="w"> </span>
+Xenova/llama-3-tokenizer<span class="w"> </span>model<span class="w">             </span><span class="m">9</span>.1M<span class="w">        </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="w">     </span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="w">     </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--Xenova--llama-3-tokenizer<span class="w"> </span>
+google/flan-t5-large<span class="w">     </span>model<span class="w">             </span><span class="m">3</span>.1G<span class="w">        </span><span class="m">7</span><span class="w"> </span><span class="m">36</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span><span class="m">36</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--google--flan-t5-large<span class="w">     </span>
+google/flan-t5-small<span class="w">     </span>model<span class="w">           </span><span class="m">311</span>.1M<span class="w">        </span><span class="m">7</span><span class="w"> </span><span class="m">39</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span><span class="m">39</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--google--flan-t5-small<span class="w">     </span>
+google/flan-t5-xl<span class="w">        </span>model<span class="w">            </span><span class="m">11</span>.4G<span class="w">        </span><span class="m">9</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>hours<span class="w"> </span>ago<span class="w">    </span><span class="m">2</span><span class="w"> </span>hours<span class="w"> </span>ago<span class="w">    </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--google--flan-t5-xl<span class="w">        </span>
+
+Done<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0s.<span class="w"> </span>Scanned<span class="w"> </span><span class="m">4</span><span class="w"> </span>repo<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>a<span class="w"> </span>total<span class="w"> </span>of<span class="w"> </span><span class="m">14</span>.9G.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=771573d6-0b19-4fd1-b99a-16cfbe08780e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Suppose I want to remove the large cached <code>flan-t5-xl</code> model. The <code>delete-cache</code> command presents an interactive screen for selecting models for deletion:</p>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>huggingface-cli<span class="w"> </span>delete-cache
+?<span class="w"> </span>Select<span class="w"> </span>revisions<span class="w"> </span>to<span class="w"> </span>delete:<span class="w"> </span><span class="m">1</span><span class="w"> </span>revisions<span class="w"> </span>selected<span class="w"> </span>counting<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="m">11</span>.4G.<span class="w"> </span>
+<span class="w">  </span>○<span class="w"> </span>None<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span><span class="o">(</span><span class="k">if</span><span class="w"> </span>selected,<span class="w"> </span>nothing<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>deleted<span class="o">)</span>.
+<span class="w"> </span>
+Model<span class="w"> </span>Xenova/llama-3-tokenizer<span class="w"> </span><span class="o">(</span><span class="m">9</span>.1M,<span class="w"> </span>used<span class="w"> </span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="o">)</span>
+<span class="w">  </span>○<span class="w"> </span>72bff9ee:<span class="w"> </span>main<span class="w"> </span><span class="c1"># modified 2 days ago</span>
+<span class="w"> </span>
+Model<span class="w"> </span>google/flan-t5-large<span class="w"> </span><span class="o">(</span><span class="m">3</span>.1G,<span class="w"> </span>used<span class="w"> </span><span class="m">49</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="o">)</span>
+<span class="w">  </span>○<span class="w"> </span>0613663d:<span class="w"> </span>main<span class="w"> </span><span class="c1"># modified 49 minutes ago</span>
+<span class="w"> </span>
+Model<span class="w"> </span>google/flan-t5-small<span class="w"> </span><span class="o">(</span><span class="m">311</span>.1M,<span class="w"> </span>used<span class="w"> </span><span class="m">52</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="o">)</span>
+<span class="w">  </span>○<span class="w"> </span>0fc9ddf7:<span class="w"> </span>main<span class="w"> </span><span class="c1"># modified 52 minutes ago</span>
+<span class="w"> </span>
+Model<span class="w"> </span>google/flan-t5-xl<span class="w"> </span><span class="o">(</span><span class="m">11</span>.4G,<span class="w"> </span>used<span class="w"> </span><span class="m">2</span><span class="w"> </span>hours<span class="w"> </span>ago<span class="o">)</span>
+❯<span class="w"> </span>◉<span class="w"> </span>7d6315df:<span class="w"> </span>main<span class="w"> </span><span class="c1"># modified 2 hours ago</span>
+</pre></div>
+<p>Here I used the arrow keys to go down to the last entry, <code>flan-t5-xl</code>, and press <code>&lt;space&gt;</code> to select.  You will get another confirmation dialogue and after confirming, the deletion will proceed. You can again check the cache to verify that the item was deleted:</p>
+<div class="highlight"><pre><span></span>~/.cache/huggingface<span class="w">  </span>
+$<span class="w"> </span>huggingface-cli<span class="w"> </span>scan-cache
+REPO<span class="w"> </span>ID<span class="w">                  </span>REPO<span class="w"> </span>TYPE<span class="w"> </span>SIZE<span class="w"> </span>ON<span class="w"> </span>DISK<span class="w"> </span>NB<span class="w"> </span>FILES<span class="w"> </span>LAST_ACCESSED<span class="w">  </span>LAST_MODIFIED<span class="w">  </span>REFS<span class="w"> </span>LOCAL<span class="w"> </span>PATH<span class="w">                                                           </span>
+------------------------<span class="w"> </span>---------<span class="w"> </span>------------<span class="w"> </span>--------<span class="w"> </span>--------------<span class="w"> </span>--------------<span class="w"> </span>----<span class="w"> </span>--------------------------------------------------------------------<span class="w"> </span>
+Xenova/llama-3-tokenizer<span class="w"> </span>model<span class="w">             </span><span class="m">9</span>.1M<span class="w">        </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="w">     </span><span class="m">2</span><span class="w"> </span>days<span class="w"> </span>ago<span class="w">     </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--Xenova--llama-3-tokenizer<span class="w"> </span>
+google/flan-t5-large<span class="w">     </span>model<span class="w">             </span><span class="m">3</span>.1G<span class="w">        </span><span class="m">7</span><span class="w"> </span><span class="m">51</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span><span class="m">51</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--google--flan-t5-large<span class="w">     </span>
+google/flan-t5-small<span class="w">     </span>model<span class="w">           </span><span class="m">311</span>.1M<span class="w">        </span><span class="m">7</span><span class="w"> </span><span class="m">53</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span><span class="m">53</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w"> </span>main<span class="w"> </span>/home/caleb/.cache/huggingface/hub/models--google--flan-t5-small<span class="w">     </span>
+
+Done<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0s.<span class="w"> </span>Scanned<span class="w"> </span><span class="m">3</span><span class="w"> </span>repo<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>a<span class="w"> </span>total<span class="w"> </span>of<span class="w"> </span><span class="m">3</span>.5G.
+</pre></div>
+</div>
+</div>
+</div>

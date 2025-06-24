@@ -121,5 +121,11 @@
         <description>Koyeb Cloud Platform</description>
     </item>
 
+    <item>
+        <title>Managing the huggingface cache</title>
+        <link>https://tekmoji.com/?post=Managing%20the%20huggingface%20cache</link>
+        <description>Managing the huggingface cache</description>
+    </item>
+
 </channel>
 </rss>

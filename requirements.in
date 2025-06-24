@@ -1,5 +1,6 @@
 Cython
 jupyter
+jupyter-ai[all]
 numba>=0.61
 numpy
 scipy

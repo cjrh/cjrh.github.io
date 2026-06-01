@@ -3,7 +3,7 @@
 
 # Launch Jupyter Notebook
 start:
-    jupyter notebook notebooks/
+    jupyter lab notebooks/
 
 # Regenerate all blog posts from Jupyter notebooks
 regenerate:

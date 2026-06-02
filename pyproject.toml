@@ -1,0 +1,19 @@
+[project]
+name = "cjrh-github-io"
+version = "0"
+description = "Tooling and authoring environment for cjrh.github.io, a notebook-based static blog."
+requires-python = ">=3.13"
+dependencies = [
+    "cython",
+    "jupyter",
+    # AI authoring assist for JupyterLab (%%ai magics). Not used by blog generation.
+    "jupyter-ai[magics]",
+    "numba>=0.61",
+    "numpy",
+    "scipy",
+]
+
+[tool.uv]
+# This repo only builds a blog; it is not an installable package, so uv manages
+# the environment without trying to build or install the project itself.
+package = false

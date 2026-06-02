@@ -1,9 +1,13 @@
 @default:
     just -l
 
+# Install/sync the Python environment from pyproject.toml + uv.lock
+sync:
+    uv sync
+
 # Launch Jupyter Notebook
 start:
-    jupyter lab notebooks/
+    uv run jupyter lab notebooks/
 
 # Regenerate all blog posts from Jupyter notebooks
 regenerate:

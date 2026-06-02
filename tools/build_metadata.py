@@ -10,9 +10,7 @@ import hashlib
 from string import Template
 from urllib.parse import quote
 from collections import OrderedDict
-
-
-import begin
+import argparse
 
 
 sitemap_template = Template(
@@ -69,7 +67,6 @@ def filehash(filename: str) -> str:
     return m.hexdigest()
 
 
-@begin.start
 def process(notebook_folder, output_folder, force_recreate=False):
     """This command will process all IPython Notebook files found
     in Notebook Folder and will place the output html files into
@@ -195,3 +192,16 @@ def process(notebook_folder, output_folder, force_recreate=False):
     # load much faster.
     with open(join(output_folder, "latest.json"), "w") as f:
         json.dump(dict(post=last_post), f, indent=4)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=process.__doc__)
+    parser.add_argument("notebook_folder", help="Folder containing the .ipynb posts")
+    parser.add_argument("output_folder", help="Folder to write html and metadata into")
+    parser.add_argument(
+        "--force-recreate",
+        action="store_true",
+        help="Rebuild every post's html even if it is already up to date",
+    )
+    args = parser.parse_args()
+    process(args.notebook_folder, args.output_folder, args.force_recreate)

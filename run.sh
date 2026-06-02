@@ -1,2 +1,2 @@
 #!/bin/sh
-python ./tools/build_metadata.py ./notebooks/ ./posts/
+uv run python ./tools/build_metadata.py ./notebooks/ ./posts/

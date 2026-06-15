@@ -18,7 +18,7 @@ sitemap_template = Template(
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
-      <loc>https://tekmoji.com/</loc>
+      <loc>https://cjrh.info/</loc>
       <changefreq>weekly</changefreq>
    </url>
 $items
@@ -28,7 +28,7 @@ $items
 
 sitemap_entry_template = Template(
     r"""    <url>
-        <loc>https://tekmoji.com/?post=$postname</loc>
+        <loc>https://cjrh.info/?post=$postname</loc>
         <changefreq>weekly</changefreq>
     </url>"""
 )
@@ -37,12 +37,12 @@ sitemap_entry_template = Template(
 rss_template = Template(
     r"""<rss version="2.0">
 <channel>
-    <title>Tekmoji</title>
-    <link>https://tekmoji.com/</link>
+    <title>cjrh.info</title>
+    <link>https://cjrh.info/</link>
     <description>Caleb Hattingh's Blog</description>
     <image>
-      <url>https://tekmoji.com/favicon/favicon-96x96.png</url>
-      <link>https://tekmoji.com/</link>
+      <url>https://cjrh.info/favicon/favicon-96x96.png</url>
+      <link>https://cjrh.info/</link>
     </image>
 $items
 </channel>
@@ -54,7 +54,7 @@ $items
 rss_item_template = Template(
     r"""    <item>
         <title>$postname</title>
-        <link>https://tekmoji.com/?post=$postname_quote</link>
+        <link>https://cjrh.info/?post=$postname_quote</link>
         <description>$postname</description>
     </item>
 """

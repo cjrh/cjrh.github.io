@@ -1,4 +1,4 @@
-Sitemap: https://tekmoji.com/sitemap.xml
+Sitemap: https://cjrh.info/sitemap.xml
 User-agent: *
 Disallow: /tools/
 Disallow: /notebooks/drafts/
